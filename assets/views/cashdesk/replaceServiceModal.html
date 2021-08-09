@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <button type="button" title="Close" class="close" ng-click="cancel()">&times;</button>
+    <h3 class="modal-title">Select service to replace</h3>
+</div>
+<div class="modal-body">
+    <div class="container-fluid bg-white ">
+        <div class="row">
+            <div class="form-group">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="amount"> Services :  </label>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                   <select ng-model="selectedService">
+                                      <option value="">Select Service</option>
+                                      <option ng-repeat="service in services" value="{{service.id}}">{{service.name}} (<i
+                                                        class="fa fa-inr"></i> {{service.sales_price}})</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <!-- <button type="button" ng-click="saveEditRowComment()"
+                        class="col-md-12 padding-20 btn btn-success btn-squared btn-lg">
+                        <span class="text-large">  Save </span>
+                    </button> -->
+                <button type="button" ng-disabled="!selectedService" ng-click="replace()" class="btn btn-success float-right">
+                    Replace
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

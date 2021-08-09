@@ -1,0 +1,65 @@
+<!-- <script type="text/ng-template" id="myModalSettings.html"> -->
+    <style>
+    /* .modal.ng-aside.horizontal.left.fade.ng-scope.ng-isolate-scope.in.colorModal {
+    z-index: 99999 !important;
+}     */
+    </style>
+    
+    <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()">&times;</button>
+            <h3 class="modal-title">Legend</h3>
+        </div>
+        <div class="modal-body  settings-panel">
+            <div class="panel panel-transparent">
+                <div class="panel-heading padding-5">
+                    <h5 class="panel-title">Status</h5>
+                </div>
+              
+              <form name="appointmentStatusForm" id="id_appointmentStatusForm">
+                <div class="panel-body padding-5">
+                        <table class="month-selection-table">
+                               
+                                
+                                    <tr class="padding-5 margin-bottom-5" ng-repeat="status in appointment_status">
+                                        <td > <div class="panel-body text-center" ng-init="status.status_color">
+                                            <spectrum-colorpicker ng-model="status.status_color" options="{showInitial: true, showInput: true}"></spectrum-colorpicker></td>
+                                        <td><h5 class="margin-10 padding-top-20">{{status.appointment_status.status_name}}</h5></td>   
+                                    </tr>
+                                   
+                                   
+                                </table>
+                </div>
+                
+                <!-- <a class="cl-effect-4 text-azure" ng-click="resetColor()"><u> Reset color</u> </a> -->
+                <div class="panel-body ">
+                        <button type="button" class="btn btn-wide btn-success float-right" ng-click="saveColor()">Save </button>
+                </div>
+                </form>
+                
+            </div>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <style>
+      
+                    .sp-container.sp-light.sp-palette-buttons-disabled.sp-palette-disabled {
+                      z-index: 99999 !important;
+                      }
+                      /* .sp-container.sp-light.sp-input-disabled.sp-initial-disabled {
+                      z-index: 99999 !important;
+                      } */
+                      .sp-cf .sp-palette-row-initial{
+                          display: none;
+                      }
+                
+                      .sp-initial .sp-thumb .sp-cf{
+                        display: none;
+                      }
+                
+                    </style>

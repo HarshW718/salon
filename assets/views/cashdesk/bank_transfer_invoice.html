@@ -1,0 +1,165 @@
+<!-- start: FEATURED BOX LINKS -->
+<style>
+    .panel-transparent{
+        border:1px solid #ccc !important;   
+        min-height: 500px !important;
+    }
+    .invoice tbody>tr>td {
+        padding: 0px !important;
+    }
+    .invoice tfoot>tr>td {
+        padding: 0px !important;
+    }
+    .cashdeskHeading{
+        
+        padding: 5px !important;
+        min-height:10px !important;
+       
+    }
+    .badge{
+     font-size: 10px !important; 
+    }
+    .cashdeskbody{
+        
+        padding: 5px !important;
+        
+    }
+    
+</style>
+<div class="container-fluid bg-white" ng-controller="bankTransferCtrl">
+    <div class="row">
+        <div class="{{sideClass}}" id='leftside'>
+            <div class="list-group">
+                
+                
+               
+                <a class="list-group-item text-center" href="#!/app/pages/cashdesk_main"> <i class="fa fa-arrow-left"></i> <span class="text-large">Close </span>  </a>
+
+            </div>
+           
+        </div>
+        <div class='{{mailClass}}'>
+            <div class="row">
+                <div class="col-md-6">
+                     <div class="panel panel-white no-radius">
+
+                        <div class="panel-body no-padding">
+
+                            <div class="clearfix padding-5 space5">
+                                <div class="col-xs-3  no-padding">
+                                        <button type="button" class="btn btn-sm btn-primary" ng-click="hideSidebar()"><i class="fa fa-bars"></i></button>
+                                        <button type="button" class="btn btn-sm btn-primary" ng-click="predate()"><i class="fa fa-angle-left"></i></button>
+                                        
+                                        <button type="button" class="btn btn-sm btn-primary" ng-click="nextdate()"><i class="fa fa-angle-right"></i></button>
+                                        
+                                </div>
+                                <div class="col-xs-4  no-padding">
+                                    <div class="input-group">
+                                         <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="opened" datepicker-options="datepickerOptions" ng-required="true" close-text="Close" ng-click="open()" ng-change="dateChange()"/>
+                                         <span class="input-group-btn" >
+                                          <button type="button" class="btn btn-primary" ng-click="open()">
+                                           <i class="fa fa-calendar"></i>
+                                          </button> </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4 no-padding margin-left-5">
+                                    <div class="input-group">
+                                         <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt_end" is-open="opened_end" datepicker-options="datepickerOptions" ng-required="true" close-text="Close" ng-click="open_end()" ng-change="dateChange()"/>
+                                         <span class="input-group-btn" >
+                                          <button type="button" class="btn btn-primary" ng-click="open_end()">
+                                           <i class="fa fa-calendar"></i>
+                                          </button> </span>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    
+                </div>
+               
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="panel panel-transparent">
+                     <div class="panel-heading cashdeskHeading">
+                      <div class="panel-title">
+                       Unpaid
+                      </div>
+                     </div>
+                     <div class="panel-body cashdeskbody">
+                         
+                        <table class="table invoice">
+                            
+                            <tbody ng-if="invoiceList.length!=0">
+                                <tr ng-repeat="o in invoiceList | filter : {is_received: 0}:true">
+                              <td>
+                                    
+                                    <a  href="#!/app/pages/invoice/{{o.id}}/0"><i class="fa fa-file"></i>  {{o.customerName}}</a>
+
+                                    <!-- <a  href="JavaScript:void(0);" ng-click="openUnpaidInvoice(o.id)"><i class="fa fa-file"></i>  {{o.customerName}}</a> -->
+                              </td>
+                              <td class="text-right">
+                                  <span class="badge badge-danger"> <i class="fa fa-inr"></i>{{o.amount}}</span>
+                              </td>
+                              <td class="text-right">
+                                  <a  title="Is received ?" ng-click="clickIsReceived(o)" ><i class="fa fa-check"></i></a>
+                              </td>
+                             </tr>                            
+                            </tbody>
+                            <tbody ng-if="invoiceList.length==0">
+                                <tr>
+                                    <td style="border-bottom: none;"> No outstanding receipts.</td>
+                            </tr>
+                            
+                            </tbody>
+                        </table>
+                     </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel panel-transparent">
+                     <div class="panel-heading cashdeskHeading">
+                      <div class="panel-title">
+                      Paid
+                      </div>
+                     </div>
+                    <div class="panel-body cashdeskbody">
+                        <table class="table invoice">
+                            <tbody>
+                             <tr ng-repeat="r in invoiceList | filter : {is_received: 1}:true">
+                              <td> <a href="#!/app/pages/invoice/{{r.id}}/0">
+<i class="fa fa-file"></i> {{r.customerName}}
+</a>&nbsp;&nbsp;&nbsp; <strong>Received on:</strong> {{r.is_received_date|date : "d MMM y"}} </td>
+                              <td class="text-right">
+                                   <p  ng-bind-html="r.paymethod | trusted"></p>
+                              </td>
+                              <td class="text-right">
+                                  <span class="badge badge-success"> <i class="fa fa-inr"></i>{{r.amount | number:2}}</span>
+                              </td>
+                              <td class="text-right">
+                                 
+                                  <a  title="Is not received ?" ng-click="clickIsNotReceived(r)" ><i class="fa fa-window-close-o"></i></a>
+                              </td>
+                             </tr>
+                            
+                            </tbody>
+                            <tbody ng-if="invoiceList.length==0">
+                                <tr>
+                                    <td style="border-bottom: none;"> No paid receipts.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                   </div>
+            </div>
+            
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+

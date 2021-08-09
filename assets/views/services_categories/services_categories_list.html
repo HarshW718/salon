@@ -1,0 +1,26 @@
+<!-- start: TABLE WITH FILTERS -->
+<!-- <div class="margin-bottom-10 margin-top-10 "> -->
+<!-- </div> -->
+<div class="container-fluid bg-white" ng-controller="servicesCategoriesCtrl" data-ng-init="init()">
+    <div class="row">
+
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <a href="#!/app/pages/services" class="btn btn-wide btn-default"><i class="fa fa-tags"></i> Services</a>
+            <a href="#!/app/pages/services_categories" class="btn btn-wide btn-yellow"><i class="fa fa-folder"></i>
+                    Categories</a>
+            <button type="button" class="btn btn-wide btn-success pull-right" ng-click='add_editCategory(0)'><i
+                    class="fa  fa-plus-square"></i> Add</button>
+
+        </div>
+    </div>
+
+
+    <div class="row margin-top-5">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <table class="table table-bordered" datatable="" dt-options="dtOptionInvoiceRequest"
+                        dt-columns="dtColumnInvoiceRequest" dt-instance="dtIntanceInvoiceRequestCallback"
+                        dt-column-defs="dtColumnInvoiceRequestDefs" cellspacing="0" width="100%"></table>
+        </div>
+    </div>
+</div>
+

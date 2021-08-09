@@ -1,0 +1,195 @@
+<div class="modal-header">
+    <button type="button" title="Close" class="close" ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title"> <i class="fa fa-user-circle-o"></i> {{items.button[0]}} Customer</h3>
+</div>
+<form name="customerForm" id="id_customerForm">
+    <div class="modal-body">
+        <div class="container-fluid bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- <uib-tabset class="tabbable" active="active">
+                        <uib-tab index="0" heading="DATA"> -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <button type="submit" ng-click="submitCutomerForm()"
+                                    class="btn btn-wide btn-success">{{items.button[1]}}</button>
+                                <button type="button" class="btn btn-wide btn-danger"
+                                    ng-click="cancel($event)">Close</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="firstname">
+                                    First Name
+                                </label>
+                                <input type="text" class="form-control input-sm" id="firstname" name="firstname"
+                                    placeholder="First Name" ng-model="customer.firstname" maxlength="19" required />
+                                    <span class="error"
+                                ng-show="firstname_validation_message_display">{{firstname_validation_message}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname">
+                                    Last Name
+                                </label>
+                                <input type="text" class="form-control input-sm" id="lastname" name="lastname"
+                                    placeholder="Last Name" ng-model="customer.lastname" maxlength="19" />
+                                    
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile">
+                                    Mobile
+                                </label>
+                                
+                                <input type="tel"  class="form-control input-sm" id="mobile" name="mobile"
+                                placeholder="Mobile" maxlength="20" ng-model="customer.mobile" required pattern="\d*" numbers-only />
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="landline">
+                                Landline
+                                </label>
+                                
+                                <div class="input-group">
+                                <span class="input-group-addon">(0)</span>
+                               
+                                    <input type="tel" class="form-control" id="landline" name="landline" placeholder="Landline" maxlength="20"
+                                    ng-model="customer.landline" pattern="\d*" numbers-only >
+                                
+                                </div>
+                                <!-- <span class="error" ng-show="lanline_validation">Please enter valid number</span> -->
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">
+                                    Email
+                                </label>
+                                <input type="email" class="form-control input-sm" id="email" name="email"
+                                    placeholder="Email" ng-model="customer.email" ng-keyup="emailValidation()"
+                                     />
+                                <span class="error"
+                                    ng-show="email_validation_message_display">{{email_validation_message}}</span>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-xs-3 padding-right-5">
+                                    <label for="postal_code">
+                                        Postal code
+                                    </label>
+                                    <input type="text" class="form-control input-sm" id="postal_code" name="postal_code"
+                                        placeholder="123456" maxlength="6"ng-model="customer.postal_code"
+                                        >
+                                </div>
+
+                                <div class="col-xs-3 padding-left-5 padding-right-5">
+                                    <label for="house_no">
+                                        House No.
+                                    </label>
+                                    <input type="text" class="form-control input-sm" id="house_no" name="house_no" min="0"
+                                        placeholder="House No." ng-model="customer.house_no" ng-blur="findAddress()" pattern="\d*" numbers-only>
+                                </div>
+
+                                <div class="col-xs-4 padding-left-5 padding-right-5">
+                                    <label for="house_no">
+                                        House Letter
+                                    </label>
+                                    <input type="text" class="form-control input-sm" id="house_letter"
+                                        name="house_letter" placeholder="House Letter" replace="[^a-zA-Z]" with="" maxlength="8"ng-model="customer.house_letter"
+                                        ng-blur="fillAddress()">
+                                </div>
+                                <!-- <div class="col-xs-2 padding-left-5 padding-right-5">
+
+                                    <label for="postal_check">Click</label>
+                                    <p ng-show="is_check_correct" class="text-success text-large"><strong></strong><i
+                                            class="fa fa-check"></i> Correct</strong></p>
+                                    <button type="button" class="btn btn-info" ng-click="findAddress()"><strong><i
+                                                class="fa fa-check"></i></strong> Check</button>
+
+                                </div> -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address">
+                                    Address
+                                </label>
+                                <input type="text" class="form-control" id="address" name="address"
+                                    placeholder="Address" ng-model="customer.address" />
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="radio clip-radio radio-primary">
+                                <input type="radio" id="male" name="gender" value="male" ng-model="customer.gender"
+                                    required />
+                                <label for="male">
+                                    Male
+                                </label>
+                                <input type="radio" id="female" name="gender" value="female" ng-model="customer.gender"
+                                    required />
+                                <label for="female">
+                                    Female
+                                </label>
+                                <input type="radio" id="other" name="gender" value="other" ng-model="customer.gender"
+                                    required />
+                                <label for="other">
+                                    Other
+                                </label>
+                            </div>
+                            <span class="error"
+                                ng-show="gender_validation_message_display">{{gender_validation_message}}</span>
+
+                            <div class="form-group">
+                                <label for="city">
+                                    City
+                                </label>
+                                <input type="text" class="form-control input-sm" id="city" name="city"
+                                    placeholder="City" ng-model="customer.city" />
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday">
+                                    Birth Date
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="birthdate_display" maxlength="10"
+                                        uib-datepicker-popup="{{format}}" ng-model="dt"
+                                        is-open="opened" datepicker-options="datepickerOptions" 
+                                        close-text="Close" create-birthdate />
+                                    <span class="input-group-btn" style="vertical-align: top;">
+                                        <button type="button" class="btn btn-dark-blue" ng-click="open()">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label for="care_account_no">
+                                    Care Account No.
+                                </label>
+                                <input type="text" class="form-control input-sm" id="care_account" name="care_account"
+                                    placeholder="Care Account No." ng-model="customer.care_account_no" />
+                            </div> -->
+                            <div class="form-group">
+                                <label for="care_account_no">
+                                    Comments
+                                </label>
+                                <textarea class="form-control" id="comments" name="comments" rows="3"
+                                    ng-model="customer.comments">Comments</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- </uib-tab>
+                       
+                    </uib-tabset> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+
+    </div>
+</form>

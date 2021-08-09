@@ -1,0 +1,43 @@
+<div ng-keyup="keyPress($event)" id="appointmentDrag" tabindex="1">
+    <div class="modal-header">
+        <button type="button" class="close"  ng-click="cancel()">&times;</button>
+        <h3 class="modal-title">Message</h3>
+    </div>
+    <div class="modal-body bg-white">
+        <div class="container-fluid  bg-white">
+            <div class="row margin-top-5">
+                <div class="col-lg-7 col-md-7 col-sm-6">
+                    <span><i class="ti-calendar ti-calendar-drag"></i></span>&nbsp;&nbsp;Reappointment on: {{ date }} ?
+                </div>
+            <div class="col-lg-5 col-md-5 col-sm-6 pull-right">
+                <div class="checkbox clip-check check-primary checkbox-inline">
+                    <input type="checkbox" id="is_email"  ng-model="appointment.is_email">
+                    <label for="is_email">
+                        Email
+                    </label>
+                </div>
+                <div class="checkbox clip-check check-primary checkbox-inline">
+                    <input type="checkbox" id="checkbox11" value="1">
+                    <label for="checkbox11">
+                        SMS
+                    </label>
+                </div>
+            </div>
+            </div>
+            
+            <div class="alert alert-warning" ng-if="display_warning">
+                <strong>Warning!</strong>
+                <p>{{warning_1}}</p>
+                <p>{{warning_2}}</p>
+                
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success" ng-click="ok()">OK</button>
+        <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
+          
+    </div>
+</div>
+    
+   

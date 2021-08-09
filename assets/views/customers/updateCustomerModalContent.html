@@ -1,0 +1,844 @@
+<style>
+    .list-group{
+    margin-bottom:5px !important;
+    }
+    .list-group-item{
+    padding:5px 7px !important;
+    } 
+    .modal-content {
+    /* 80% of window height */
+   
+    min-height: 400px;
+    background: #fff!important;
+}
+    </style>
+<div class="modal-header">
+    <button type="button" class="close" title="Close" ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title"> <i class="fa fa-user-circle-o"></i> Customer Information</h3>
+</div>
+<div class="modal-body">
+    <div class="container-fluid bg-white">
+        <div class="row">
+            <div class="col-md-12">
+                <uib-tabset class="tabbable" active="active_main" style="background-color: #332e40 !important">
+                    <uib-tab index="0" heading="DATA">
+                        <form name="updatecustomerForm" id="id_updatecustomerForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group margin-bottom-5">
+                                                <button type="button" ng-click="submitCutomerForm()"
+                                                    class="btn btn-wide btn-success">Update</button>
+                                                <button type="button" class="btn btn-wide btn-danger"
+                                                    ng-click="cancel($event)">Close</button>
+                                            </div>
+                                            {{dt_update}}
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <div class="radio clip-radio radio-primary margin-bottom-5">
+                                              
+                                              
+                                                <input type="radio" id="male" name="gender" value="male"
+                                                    ng-click="existing($event)" ng-model="customer.gender" />
+                                                <label for="male">
+                                                    Male
+                                                </label>
+
+                                                <input type="radio" id="female" name="gender" value="female"
+                                                    ng-click="newCustomer($event)" ng-model="customer.gender" />
+                                                <label for="female">
+                                                    Female
+                                                </label>
+                                                <input type="radio" id="other" name="gender" value="other"
+                                                    ng-click="newCustomer($event)" ng-model="customer.gender" />
+                                                <label for="other">
+                                                    Other
+                                                </label>
+                                            </div>
+                                            <div class="form-group row margin-bottom-5">
+                                                <div class="col-xs-6">
+                                                    <input type="text" class="form-control input-sm" id="firstname"
+                                                        name="firstname" placeholder="First Name"
+                                                        ng-model="customer.firstname" maxlength="19" required />
+                                                        <span class="error"
+                                ng-show="firstname_validation_message_display">{{firstname_validation_message}}</span>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <input type="text" class="form-control input-sm" id="lastname"
+                                                        name="lastname" maxlength="19"placeholder="Last Name"
+                                                        ng-model="customer.lastname" />
+                                                       
+                                                </div>
+                                            </div>
+                                            <div class="form-group row margin-bottom-5">
+                                                <!-- using directive "number-only" which allow  number in text field 
+                                                compare-to.js
+                                                -->
+                                                <div class="col-xs-6">
+                                                                                                    
+                                                    <input type="tel"  class="form-control input-sm" id="mobile" name="mobile"
+                                                    placeholder="Mobile" maxlength="20" ng-model="customer.mobile" required pattern="\d*" numbers-only />
+
+                                                    </div>
+                                                <!-- using directive "number-only" which allow  number in text field 
+                                                compare-to.js
+                                                -->
+                                                <div class="col-xs-6">
+                                                   
+                                                    <input type="tel" class="form-control" id="landline" name="landline" placeholder="Landline" maxlength="20"
+                                                    ng-model="customer.landline" pattern="\d*" numbers-only >
+
+                                                    </div>
+                                            </div>
+
+                                            <div class="form-group margin-bottom-5">
+                                                <input type="email" class="form-control input-sm" id="email"
+                                                    name="email" placeholder="Email" ng-model="customer.email"
+                                                    />
+                                            </div>
+                                            <div class="form-group row margin-bottom-5">
+                                                <div class="col-xs-3 padding-right-5">
+                                                    <input type="text" class="form-control input-sm" id="postal_code"
+                                                        name="postal_code" placeholder="Postal Code:123456" maxlength="6"
+                                                        ng-model="customer.postal_code">
+                                                </div>
+                                                <div class="col-xs-3 padding-left-5 padding-right-5">
+                                                    <input type="text" class="form-control input-sm" id="house_no"
+                                                        name="house_no" min="0" placeholder="House No."
+                                                        ng-model="customer.house_no" ng-blur="findAddress()" pattern="\d*" numbers-only>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <input type="text" class="form-control input-sm" id="house_letter"
+                                                        name="house_letter" replace="[^a-zA-Z]" with="" maxlength="8"placeholder="House Letter"
+                                                        ng-model="customer.house_letter" ng-blur="fillAddress()" >
+                                                </div>
+                                                <!-- <div class="col-xs-2 padding-left-5 padding-right-5">
+                                                    <button type="button" class="btn btn-info" ng-click="findAddress()"><strong><i
+                                                                class="fa fa-check"></i></strong> Check</button>
+                                                </div> -->
+                                            </div>
+                                            <div class="form-group margin-bottom-5">
+                                                <input type="text" class="form-control" id="address" name="address"
+                                                    placeholder="Address" ng-model="customer.address" />
+                                            </div>
+                                            <div class="form-group margin-bottom-5">
+                                                <input type="text" class="form-control input-sm" id="city" name="city" placeholder="City"
+                                                    ng-model="customer.city" />
+                                            </div>
+                                            <div class="form-group margin-bottom-5">
+                                                <label for="birthday">
+                                                    Birth Date
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="birthdate_display" maxlength="10"
+                                                        uib-datepicker-popup="{{format}}" ng-model="tmp.dt_update"
+                                                        is-open="mydp.opened_date"
+                                                        datepicker-options="datepickerOptions" 
+                                                        close-text="Close" create-birthdate/>
+                                                    <span class="input-group-btn" style="vertical-align: top;">
+                                                        <button type="button" class="btn btn-dark-blue"
+                                                            ng-click="open_update()">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="form-group margin-bottom-5">
+                                                <input type="text" class="form-control input-sm" id="care_account"
+                                                    name="care_account" placeholder="Care Account No."
+                                                    ng-model="customer.care_account_no" />
+                                            </div> -->
+                                            <div class="form-group margin-bottom-5">
+                                                <textarea ng-model="customer.comments" class="form-control"
+                                                    id="comments" name="comments" rows="3"></textarea>
+                                            </div>
+                                            <!-- <p>Last edited 04-06-2019 15:55 8366-test@dermakliniek.nu</p> -->
+                                            <p>Last edited {{customer.updated_at }} by <span
+                                                    class="text-azure">{{customer_created_by_user.email}}</span></p>
+                                        </div>
+
+                                        <!-- <div class="col-lg-6">
+                                            <div class="row space20">
+                                                <div class="col-sm-4 padding-5">
+                                                    <a href="javascript:void(0)" ng-click="gotoAppointment()"
+                                                        class="btn btn-icon padding-top-10 btn-block bg-aliceblue no-border">
+                                                        <span class="margin-bottom-5 text-azure text-small"><strong>
+                                                                Appointment
+                                                            </strong></span>
+                                                        <i class="fa  fa-calendar-o block margin-bottom-5"></i>
+                                                        <span class=""> about 3 months </span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-4 padding-5">
+                                                    <a href="JavaScript:Void(0);"
+                                                        class="btn btn-icon padding-top-10 btn-block bg-aliceblue no-border">
+                                                        <span class="margin-bottom-5 text-azure text-small"><strong>
+                                                                Last
+                                                                visit
+                                                            </strong></span>
+                                                        <i class="fa fa-check-square-o block margin-bottom-5"></i>
+                                                        <span class=""> {{appHistory.lastApp}} </span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-4 padding-5">
+                                                    <a href="JavaScript:Void(0);"
+                                                        class="btn btn-icon padding-top-10 btn-block bg-aliceblue no-border">
+                                                        <span class="margin-bottom-5 text-azure text-small"><strong>
+                                                                Customer since
+                                                            </strong></span>
+                                                        <i class="fa fa-calendar-o block margin-bottom-5"></i>
+                                                        <span class=""> {{appHistory.since}} </span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-4 padding-5">
+                                                    <a href="JavaScript:Void(0);"
+                                                        class="btn btn-icon padding-top-10 btn-block bg-aliceblue no-border">
+                                                        <div class="margin-bottom-5 text-azure text-small"><strong>
+                                                                Services
+                                                            </strong>
+                                                        </div> -->
+                                                        <!-- <i class="fa fa-calendar-o block margin-bottom-5"></i> -->
+                                                        <!-- <div>{{appHistory.services}}</div>
+                                                        <div ng-if="appHistory.services>0"> To sell </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-4 padding-5">
+                                                    <a href="JavaScript:Void(0);"
+                                                        class="btn btn-icon padding-top-10 btn-block bg-aliceblue no-border">
+                                                        <div class="margin-bottom-5 text-azure text-small"><strong>
+                                                                Products
+                                                            </strong>
+                                                        </div> -->
+                                                        <!-- <i class="fa fa-calendar-o block margin-bottom-5"></i> -->
+                                                        <!-- <div>{{appHistory.product}}</div>
+                                                        <div ng-if="appHistory.product>0"> To sell </div> -->
+                                                    <!-- </a>
+                                                </div>
+                                                <div class="col-sm-4 padding-5">
+                                                    <a href="JavaScript:Void(0);"
+                                                        class="btn btn-icon padding-top-10 btn-block bg-aliceblue no-border">
+                                                        <div class="margin-bottom-5 text-azure text-small"><strong>
+                                                                Coupons
+                                                            </strong></div> -->
+                                                        <!-- <i class="fa fa-calendar-o block margin-bottom-5"></i> -->
+                                                        <!-- <div>{{remaining_coupon}}</div>
+                                                        <div ng-if="remaining_coupon > 0"> Valid </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-4 padding-5">
+                                                        <a href="JavaScript:Void(0);"
+                                                            class="btn btn-icon padding-top-10 btn-block bg-aliceblue no-border">
+                                                            <div class="margin-bottom-5 text-azure text-small"><strong>
+                                                                    Unpaid Invoice
+                                                                </strong></div> -->
+                                                            <!-- <i class="fa fa-calendar-o block margin-bottom-5"></i> -->
+                                                            <!-- {{bankunpaid_amount}} -->
+                                                            <!-- <i class="fa fa-inr"></i> -->
+                                                        <!-- </a>
+                                                    </div>
+                                                
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-sm-8 margin-top-20">
+                                                    <h5><strong>Settings</strong></h5> -->
+                                                    <!-- <p> <input type="checkbox" id="newsletter" value="newsletter"> Permission to send the email
+                                                    </p> -->
+                                                    <!-- <div class="checkbox clip-check check-primary">
+                                                        <input type="checkbox" id="new_appointment" ng-model="news_letter.checked" >
+                                                        <label for="new_appointment">
+                                                            Receive newsletter
+                                                        </label> -->
+                                                        <!-- <button type="button" -->
+                                                            <!-- class="btn btn-wide btn-default margin-left-10">Privacy</button> -->
+                                                    <!-- </div>
+                                                </div>
+                                            </div>
+
+                                        </div>... -->
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </uib-tab>
+                    <!-- <uib-tab index="2" heading="AGREEMENTS"> -->
+                    <!-- <uib-tab index="2" heading="APPOINTMENTS">
+                        <uib-tabset class="tabbable">
+                            <uib-tab index="0" heading="COMING" active="active_coming" >
+                                
+                                <div style="height:300px;overflow:auto;">
+                                <div ng-repeat="appointment in coming_data | groupBy: 'appointment_date'" ng-if="coming_data_display" >
+                                <p ng-show="appointment.group_by_key"> <strong class="text-large"> {{appointment.appointment_date | date}}   </strong></p>  
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge">{{appointment.created_by.name}}</span>
+                                        <span class="label" ng-style="{background:appointment.appointment_status.status_color}">{{appointment.appointment_status.status_name}}</span> <i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{appointment.start_time.substring(0, 5)}}&nbsp;&nbsp;{{appointment.service.name}}
+                                    </li>
+                                </ul>
+                                </div>
+                                
+                                <div ng-if="!coming_data_display">
+                                        <h1 class="text-center text-extra-large"> <i class="fa fa-calendar-o "></i></h1>
+                                        <h3 class="text-center">No appointments found</h3>
+                                        <h4 class="text-center">
+                                            Go to agenda to schedule appointments
+                                        </h4>
+                                </div>
+                            </div>
+                               
+                               
+                               
+                            </uib-tab>
+                            <uib-tab index="1" heading="PREVIOUS">
+                                
+                                <div style="height:300px;overflow:auto;">
+                                <div ng-repeat="appointment in previous_data | groupBy: 'appointment_date'" ng-if="previous_data_display">
+                                  <p ng-show="appointment.group_by_key"> <strong class="text-large">  {{appointment.appointment_date | date}} </strong>   </p>  <!--28 December 2018 -->
+                                  <!-- <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge">{{appointment.created_by.name}}</span>
+                                        <span class="label" ng-style="{background:appointment.appointment_status.status_color}">{{appointment.appointment_status.status_name}}</span> <i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{appointment.start_time.substring(0, 5)}}&nbsp;&nbsp;{{appointment.service.name}}
+                                    </li>
+                                </ul>
+                                </div>
+                           
+
+
+                                <div ng-if="!previous_data_display">
+                                        <h1 class="text-center text-extra-large"> <i class="fa fa-calendar-o "></i></h1>
+                                        <h3 class="text-center">No appointments found</h3>
+                                        <h4 class="text-center">
+                                            Go to agenda to schedule appointments
+                                        </h4>
+                                </div>
+                            </div>
+
+
+
+                            </uib-tab>
+                            <uib-tab index="2" heading="EXCEPTION">
+                            <uib-tab index="2" heading="CANCELLED">
+                                    <div style="height:300px;overflow:auto;">
+                                    <div ng-repeat="appointment in cancel_data | groupBy: 'appointment_date'" ng-if="cancel_data_display">
+                                            <p ng-show="appointment.group_by_key"> <strong class="text-large">  {{appointment.appointment_date | date}} </strong>   </p>  <!--28 December 2018 -->
+                                            <!-- <ul class="list-group">
+                                              <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-4"><span class="badge">{{appointment.created_by.name}}</span>
+                                                  <span class="label" ng-style="{background:appointment.appointment_status.status_color}">{{appointment.appointment_status.status_name}}</span> <i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{appointment.start_time.substring(0, 5)}}&nbsp;&nbsp;{{appointment.service.name}}
+                                                </div><div class="col-md-6"><div>Reason: &nbsp;<strong>{{appointment.appointments_log.cancel_reason}}</strong>
+                                                </div></div></div>
+                                                
+                                              </li>
+                                          </ul>
+                                          </div>
+                                     
+                                          <div ng-if="!cancel_data_display">
+                                                  <h1 class="text-center text-extra-large"> <i class="fa fa-calendar-o "></i></h1>
+                                                  <h3 class="text-center">No appointments found</h3>
+                                                  <h4 class="text-center">
+                                                      Go to agenda to schedule appointments
+                                                  </h4>
+                                          </div>
+                                        </div>
+                                   
+                            </uib-tab>
+                        </uib-tabset>
+                    </uib-tab>   -->
+                    <uib-tab index="3" heading="HISTORY">
+                        <uib-tabset class="tabbable">
+                            <!-- <uib-tab index="0" heading="ALL VOUCHERS" active="active_history">
+                                <div class="table-responsive" style="height: 450px;">
+                                    <table class="table table-bordered table-hover">
+                                        <tr style="cursor: pointer;" ng-repeat=" all in uniqueVoucher_list" ng-click="appHistoryRowClick(all.id)">
+                                            <td> <i class="fa fa-tag"></i> <a href="#!/app/pages/invoice/{{all.id}}/0" >{{all.invoice_date}}</a></td>
+                                            <td>{{all.final_invoice_no}}</td>
+                                            <td><i class="fa fa-eur"></i>{{all.total_invoice_amount | number : 2}}</td>
+
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </uib-tab> -->
+                            <uib-tab index="1" heading="SERVICES">
+                                <div class="table-responsive" style="height: 450px;" >
+                                    <table class="table table-bordered table-hover">
+                                        <tr ng-repeat=" s in voucher_list | filter : {which_one :'service'}:true">
+                                            <td><i class="fa fa-cogs"></i> <a>{{s.invoice_date}}</a></td>
+                                            <td>{{s.serviceName}}</td>
+                                            <td><i class="fa fa-eur"></i>{{s.single_row_total | number : 2}}</td>
+                                            <td>{{s.workerName}}</td>
+                                        </tr>
+                                 
+                                    </table>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="2" heading="PRODUCTS">
+                                 <div class="table-responsive" style="height: 450px;">
+                                    <table class="table table-bordered table-hover">
+                                        <tr ng-repeat=" p in voucher_list | filter : {which_one :'product'}:true">
+                                            <td><i class="fa fa-list-alt"></i> <a>{{p.invoice_date}}</a></td>
+                                            <td>{{p.productName}}</td>
+                                            <td><i class="fa fa-eur"></i>{{p.single_row_total | number : 2}}</td>
+                                            <td>{{p.workerName}}</td>
+                                        </tr>
+
+                                    </table>
+                                 </div>
+                            </uib-tab>
+
+                            <!-- <uib-tab index="4" heading="GIFT VOUCHERS">
+                                <div class="row" ng-if="giftResults.length==0">
+                                    <h1 class="text-center text-extra-large"> <i class="fa fa-gift"></i></h1>
+                                    <h3 class="text-center">No gift vouchers found</h3>
+                                    <h4 class="text-center">
+                                        Sell gift vouchers at the checkout
+                                    </h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4" ng-repeat=" g in voucher_list | filter : {which_one :'gift'}:true as giftResults" style="height: 450px;">
+                                       
+                                        <div class="panel panel-white no-radius text-center" >
+                                            <div class="panel-body"  ng-if="g.gift_used==0">
+                                          <span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x"></i> <i class="fa fa-gift fa-stack-1x fa-inverse"></i> </span>
+                                          <h4 class="StepTitle" >{{g.description}}</h4>
+                                          <p class="text-small" >
+                                           Valid
+                                          </p>
+                                         
+                                          <p class="links cl-effect-1">
+                                          <i class="fa fa-inr"></i>{{g.single_row_total | number : 2}}
+                                          </p>
+                                          
+                                         </div>
+                                        <div class="panel-body" ng-if="g.gift_used==1" style="color:#CCCCCC !important;">
+                                          <span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x " style="color:#CCCCCC !important;"></i> <i class="fa fa-gift fa-stack-1x fa-inverse"></i> </span>
+                                          <h4 class="StepTitle" style="color:#CCCCCC !important;">{{g.description}}</h4>
+                                          <p class="text-small">
+                                           No balance
+                                          </p>
+                                         
+                                          <p class="links cl-effect-1">
+                                              <span style="text-decoration: line-through;"><i class="fa fa-inr"></i> {{g.single_row_total | number : 2 }}</span>  <i class="fa fa-inr"></i>0.00
+                                          </p>
+                                          
+                                         </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab> -->
+                       
+
+
+                            <uib-tab index="5" heading="MEMBERSHIP">
+                                <div class="table-responsive" style="height: 450px;">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <th>Membership No</th>
+                                            <th>From Date</th>
+                                            <th>Valid Date</th>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            <tr ng-repeat=" m in members_list">
+                                                <td>{{m.cc_number}}</td>
+                                                <td>{{m.from_date}}</td>
+                                                <td>{{m.to_date}}</td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                 </div>
+                            </uib-tab>
+
+                        </uib-tabset>
+                    </uib-tab>
+                    <!-- <uib-tab index="4" heading="MEMOS" ng-if="userdata.role_id == 1 || userdata.role_id == 2">
+                        <button ng-hide="memo_list" type="button" ng-click="showMemoForm(0,$event)" class="btn btn-wide btn-success margin-bottom-5"><i
+                                class="fa fa-plus-square"></i>
+                            New</button>
+                       
+                        <table class="table table-bordered table-hover" ng-hide="memo_list" >
+                            <tr>
+                                <th>Title</th>
+                                <th>Note</th>
+                                <th>Action</th>
+                                
+                            </tr>
+                            <tr ng-click="showMemoForm(single_memo,$event)" ng-repeat="single_memo in memos">
+                                <td>{{single_memo.title}}</td>
+                                <td>{{single_memo.note}}</td>
+                                <td>
+                                    <a  href="javascript:void(0)"><i class="fa fa-edit text-large" ng-click="showMemoForm(single_memo)"></i></a>
+                                    <a class="margin-left-5"><i ng-click="memoDelete(single_memo)" class="fa fa-remove text-large"></i></a>
+                                </td>
+                            </tr>
+                            <tr ng-if="!memos.length">
+                                <td colspan="3" style="text-align: center;">No data found.</td>
+                            </tr>
+                            
+                        </table>
+                        <form name="memoForm" id="id_memoForm">
+                        <div class="row" ng-hide="memo_form">
+                                <div class="col-md-6">
+                                    <h3 ng-if="save_or_update == 'save'">Add Memo</h3>
+                                    <h3 ng-if="save_or_update == 'update'">Update Memo</h3>
+                                <table class="table">
+                                        <tr>
+                                            <th>Title</th>
+                                            <td> 
+                                                <div class="form-group">
+                                                   
+                                                    <span class="input-icon input-icon-right">
+                                                        <input type="text"  ng-model="memo_data.title" placeholder="Title" id="title" class="form-control" required>
+                                                        </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <th>Note</th>
+                                                <td> 
+                                                    <div class="form-group">
+                                                        <span class="input-icon input-icon-right">
+                                                            <textarea ng-model="memo_data.note" placeholder="Note" id="note" class="form-control" required>
+                                                            </textarea>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                    <th>
+
+                                                            <button type="button" ng-click="hideMemoForm()" class="btn btn-wide btn-danger"><i
+                                                                class="fa fa-remove"></i> Close</button>
+                                                        <button type="button" class="btn btn-wide btn-success" ng-click="saveMemoForm()" ><i class="fa fa-check"></i> {{save_or_update}}</button>
+
+
+                                                    </th>
+                                                    <td> 
+                                                        
+                                                    </td>
+                                                </tr>
+                                        
+                                    </table>
+                               </div>
+
+                        </div>
+                        </form>
+
+
+
+
+                    </uib-tab> -->
+                    <!-- <uib-tab index="5" heading="REPORT">
+                        <button type="button" ng-click="showReports()" class="btn btn-wide btn-success margin-bottom-5"><i class="fa  fa-plus-square"></i>
+                                                New Form</button>
+                        <div class="btn-group dropdown margin-bottom-5" uib-dropdown="">
+                             
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a ng-click="showReports('medical_reports')">
+                                        Medical quitionare
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng-click="showReports('consent_form')">
+                                        Treatment information
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng-click="showReports('treatment_report')">
+                                        Personal information
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <uib-tabset class="tabbable">
+                             <uib-tab index="0" heading="MEDICAL REPORT">
+                                <button type="button" ng-if="userdata.role_id != 3" ng-click="openCreateMedialCanvas()" class="btn btn-wide btn-success margin-bottom-5">Create</button> -->
+                                <!-- <a href="javascript:void(0)" class="pull-right" ng-click="openCreateMedialCanvas()">Create</a> -->
+                                <!-- <table class="table table-bordered table-hover">
+                                    <tr>
+                                        <th>Service</th>
+                                        <th>Title</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    <tr ng-click="editCanvas(pd.id,$event)" ng-repeat="pd in pedicureList | orderBy:'created_at':true">
+                                        <td>{{pd.title}}</td>
+                                     <td>{{pd.pedicure_report_date|date : "d MMM y"}}</td> 
+                                        <td ng-if="userdata.role_id != 3">
+                                            <a  href="javascript:void(0)"><i class="fa fa-edit text-large" ng-click="editCanvas(pd.id)"></i></a>
+                                            <a class="margin-left-5"><i ng-click="deleteCanvas(pd.id)" class="fa fa-remove text-large"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="!pedicureList.length">
+                                        <td colspan="3" style="text-align: center;">No data found.</td>
+                                    </tr>
+                                </table>
+                            </uib-tab>
+                            <uib-tab index="2" heading="CONSENT FORM" active="active_medical">
+                                    
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 margin-bottom-5">
+                                            <div class="form-group">
+                                                    <select class="form-control" ng-model="consent_form.form_id"
+                                                        >
+                                                        <option ng-disabled="true" value="" disabled="disabled"
+                                                            selected="selected">Select Consent Form</option>
+                                                        <option ng-repeat="c in consentFormList" ng-value="c.id">{{c.title}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                               
+                                    </div>
+
+                                    <div class="col-md-2 col-sm-2 margin-bottom-5">
+                                            <input type="text" placeholder="Select Date" ng-model="consent_form.date" class="form-control"
+                                            uib-datepicker-popup="{{format}}" is-open="consent_opened"
+                                            datepicker-options="datepickerOptions" ng-required="true"
+                                            close-text="Close" ng-click="open('consent')" />
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                            <div class="form-group float-left">
+                                                    <button type="button" ng-click="createConsentForm('consent')"  class="btn btn-wide btn-success margin-bottom-5 pull-right">Create</button>
+
+                                            </div>
+                                    </div>
+                                        
+                                </div>
+                                
+                                <table class="table table-bordered table-hover" id="consentTbl">
+                                    <tr>
+                                        <th>Submission Date</th>
+                                        <th>Title</th>
+                                        <th>Service</th>
+                                        <th>Worker Name</th>
+                                        <th>Send Mail</th>
+                                    </tr>
+                                    <tr ng-click="consentRowClick(cr,$event)" ng-repeat="cr in consentReportList | orderBy:'created_at':true">
+                                        <td ng-if="cr.form_ans_date != NULL">{{cr.form_ans_date|date : "d MMM y"}}</td>
+
+                                        <td ng-if="cr.form_ans_date == NULL">--:--:--</td>
+                                       
+                                       
+                                        <td>
+                                            {{cr.title}} -->
+                                            <!-- <a target="_blank" ng-if="cr.app_id != 0" href="#!/login/reportform/{{cr.user_company_id}}/{{cr.form_id}}/{{cr.customer_id}}/{{cr.app_id}}?admin">{{cr.title}}</a>
+
+                                            <a target="_blank" ng-if="cr.app_id == 0" href="#!/login/reportform/0/{{cr.form_id}}/0/{{cr.id}}?admin">{{cr.title}}</a> -->
+                                        
+                                        <!-- </td>
+                                        <td>{{cr.service_name}}</td>
+                                        <td>{{cr.name}}</td>
+                                        <td class="lastTd"> -->
+                                            
+                                            <!-- <a class="pointer padding-left-10" ng-click="editMedicalForm(cr.form_id)"><i class="fa fa-edit text-azure"></i></a> -->
+                                            
+                                            <!-- <a class="pointer" ng-click="emailToCustomer(cr)"><i class="fa fa-envelope text-azure"></i></a>
+                                        
+                                        
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="!consentReportList.length">
+                                        <td colspan="5" style="text-align: center;">No data found.</td>
+                                    </tr>
+                                    
+                                </table>
+                            </uib-tab> -->
+
+
+
+
+                            <!--#!/app/pages/form_builder/20-->
+                            <!-- <uib-tab index="1" heading="TREATMENT FORM">
+                                 <table class="table table-bordered table-hover">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Title</th>
+                                        <th>Service</th>
+                                        <th>Show at</th>
+                                    </tr>
+                                    <tr ng-repeat="tr in treatmentReportList">
+                                        <td>{{tr.created_at|date : "d MMM y h:mm"}}</td>
+                                        <td><a target="_blank" href="#!/login/reportform/{{tr.user_company_id}}/{{tr.form_id}}/{{tr.customer_id}}/{{tr.app_id}}?admin">{{tr.title}}</a></td>
+                                        <td>{{tr.service_name}}</td>
+                                        <td>{{tr.name}}</td>
+                                    </tr>
+                                    <tr ng-if="!treatmentReportList.length">
+                                        <td colspan="4" style="text-align: center;">No data found.</td>
+                                    </tr>
+                                </table>
+                            </uib-tab> -->
+                            <!-- <uib-tab index="3" heading="MEDICAL FORM">
+                                    <div class="row">
+                                            <div class="col-md-3 col-sm-3 margin-bottom-5">
+                                                    <div class="form-group">
+                                                            <select class="form-control" ng-model="medical_form.form_id"
+                                                                >
+                                                                <option ng-disabled="true" value="" disabled="disabled"
+                                                                    selected="selected">Select Medical Form</option>
+                                                                <option ng-repeat="c in medicalFormList" ng-value="c.id">{{c.title}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                       
+                                            </div>
+                                            <div class="col-md-2 col-sm-3 margin-bottom-5">
+                                                    <input type="text" placeholder="Select Date" ng-model="medical_form.date" class="form-control"
+                                                    uib-datepicker-popup="{{format}}" is-open="medical_opened"
+                                                    datepicker-options="datepickerOptions" ng-required="true"
+                                                    close-text="Close" ng-click="open('medical')" />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 margin-bottom-5">
+                                                    <div class="form-group float-left">
+                                                            <button type="button" ng-click="createConsentForm('medical')"  class="btn btn-wide btn-success margin-bottom-5 pull-right">Create</button>
+        
+                                                    </div>
+                                            </div>
+                                                
+                                        </div>
+                                <table class="table table-bordered table-hover">
+                                    <tr>
+                                        <th>Submission Date</th>
+                                        <th>Title</th>
+                                        <th>Service</th>
+                                        <th>Worker Name</th>
+                                        <th>Options</th>
+                                    </tr>
+                                    <tr  ng-click="medicalReportRowClick(mr,$event)" ng-repeat="mr in medicalReportList | orderBy:'created_at':true"> -->
+                                        <!-- <td>{{mr.form_ans_date|date : "d MMM y"}}</td> -->
+
+                                        <!-- <td ng-if="mr.form_ans_date != NULL">{{mr.form_ans_date|date : "d MMM y"}}</td>
+
+                                     <td ng-if="mr.form_ans_date == NULL">--:--:--</td>
+                                       
+                                        <td>
+                                            {{mr.title}} -->
+                                        <!-- <a target="_blank" ng-if="mr.app_id != 0" href="#!/login/reportform/{{mr.user_company_id}}/{{mr.form_id}}/{{mr.customer_id}}/{{mr.app_id}}?admin">{{mr.title}}</a>
+
+                                        <a target="_blank" ng-if="mr.app_id == 0" href="#!/login/reportform/0/{{mr.form_id}}/0/{{mr.id}}?admin">{{mr.title}}</a> -->
+                                        <!-- </td>
+                                        <td>{{mr.service_name}}</td>
+                                        <td>{{mr.name}}</td>
+                                        <td> -->
+                                                <!-- <a class="pointer padding-left-10" ng-click="editMedicalForm(mr.form_id)"><i class="fa fa-edit text-azure"></i></a>-->
+                                                <!-- <a class="pointer" ng-click="emailToCustomer(mr)"><i class="fa fa-envelope text-azure"></i></a> 
+                                        </td>
+                                    </tr>
+                                   
+                                    <tr ng-if="!medicalReportList.length">
+                                        <td colspan="5" style="text-align: center;">No data found.</td>
+                                    </tr>
+                                </table>
+                            </uib-tab>
+                           
+                        </uib-tabset>
+                    </uib-tab>
+                    <uib-tab index="6" heading="UPLOAD" ng-if="userdata.role_id == 1 || userdata.role_id == 2 || userdata.role_id == 4">
+
+                        <div nv-file-drop="" uploader="uploaderImages">
+                            <div class="row">
+                               
+                                    <h5>Select Files</h5>
+                                  
+                                           <div class="col-md-3 col-sm-3 margin-bottom-5">
+                                            <div ng-show="uploaderImages.isHTML5"> -->
+                                                <!-- 3. nv-file-over uploader="link" over-class="className" -->
+                                                <!-- <div class="well my-drop-zone margin-bottom-5 padding-5" nv-file-over=""
+                                                    uploader="uploaderImages">
+                                                    <h4 class="text-center text-extra-large"> <i
+                                                            class="fa fa-picture-o"></i>
+                                                            Base drop zone
+                                                    </h4> -->
+                                                    <!-- <span class="text-center"></span> -->
+                                                <!-- </div>
+                                            </div>
+                                            </div> -->
+                                            <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                                            <!-- <div class="col-md-2 col-sm-2 margin-bottom-5">
+                                            <span class="btn btn-dark-blue btn-o btn-file"> Select an image file
+                                                <input type="file" nv-file-select="" uploader="uploaderImages" multiple
+                                                    ng-model="files_name"
+                                                    onchange="angular.element(this).scope().onImageUpload()" />
+                                            </span>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 margin-bottom-5">
+                                            <span>
+                                                <button type="button" ng-click="moveToTrash()"
+                                                    class="btn btn-wide btn-o btn-danger"><i
+                                                        class="fa fa-trash-o"></i> Delete selected images</button>
+                                            </span>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2 margin-bottom-5">
+                                            <span>
+                                                <button type="button" ng-click="compareBwTwoImages()"
+                                                    class="btn btn-wide btn-o btn-info "><i
+                                                        class="fa fa-exchange"></i> Compare two images</button>
+                                            </span>
+                                            </div>
+                                     
+                               
+                            </div>
+                               
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel panel-white">
+
+                                                <div class="panel-body"> -->
+
+                                                    <!-- <div class="row">
+                                                        <div class="col-sm-6 col-md-3"
+                                                            ng-repeat="single_image in images">
+                                                            <div class="checkbox clip-check check-primary ng-scope">
+                                                                <input type="checkbox" id="{{single_image.id}}_ischeck"
+                                                                    class="checkBoxClass" name="check_image"
+                                                                    value="{{single_image.id}}"><label
+                                                                    for="{{single_image.id}}_ischeck"></label></div>
+                                                            <a href="#" class="thumbnail">
+                                                                <img src="uploads/{{single_image.image_name}}" alt="">
+                                                            </a>
+                                                    </div> -->
+
+                                                    <!-- <div class="row" ng-repeat="x in images">
+                                                        <div class="col-sm-6 col-md-3" ng-repeat="single_image in x">
+                                                            <div class="checkbox clip-check check-primary ng-scope">
+                                                                <input type="checkbox" id="{{single_image.id}}_ischeck"
+                                                                    class="checkBoxClass" name="check_image"
+                                                                    value="{{single_image.id}}"><label
+                                                                    for="{{single_image.id}}_ischeck"></label></div>
+                                                            <a href="#" class="thumbnail">
+                                                                <img src="uploads/{{single_image.image_name}}" alt="" height="200px" >
+                                                            </a>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- <h4 class="text-center">
+                                            Drag files here
+                                    </h4> -->
+                    <!-- </uib-tab> -->
+                </uib-tabset>
+
+            </div>
+            <!-- <a href="javascript:void(0)" ng-click="active_main = 2">
+                    ActiveCheck
+                </a> -->
+        </div>
+    </div>
+</div>

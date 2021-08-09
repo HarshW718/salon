@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <button type="button" title="Close" class="close" ng-click="cancel()">&times;</button>
+    <h3 class="modal-title"> <i class="fa fa-comment"></i> Comment</h3>
+</div>
+<div class="modal-body">
+    <div class="container-fluid bg-white ">
+        <div class="row">
+            <div class="form-group">
+                <table class="table table-borderless">
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <label for="amount"> Comment </label>
+
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <textarea ng-model="edited_row.single_row_comment" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    
+                                    <p><strong class="text-red">Note :</strong> This comment will be display in invoice with the name of item.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> 
+            </div>
+            <div class="col-md-12">
+
+                <!-- <button type="button" ng-click="saveEditRowComment()"
+                        class="col-md-12 padding-20 btn btn-success btn-squared btn-lg">
+                        <span class="text-large">  Save </span>
+                    </button> -->
+
+
+                <!-- <button type="button" ng-click="saveEditRowComment()"
+                    class="btn btn-success float-right">
+                    <span class="text-large">  Save </span>
+                    </button> -->
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

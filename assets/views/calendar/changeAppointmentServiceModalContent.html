@@ -1,0 +1,89 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title">Change  {{used_service_name}}</h3>
+</div>
+<div class="modal-body">
+    <div class="container-fluid  bg-white">
+
+        <div class="row margin-bottom-5">
+            <div class="form-group">
+
+                <div class="col-md-12">
+                    <!-- <span class="input-icon input-icon-right">
+                             <input type="text" class="form-control" id="name" name="search"
+                             placeholder="Search" ng-model="search.search_service" ng-keyup="onKeyUp()" required/>
+                             <i class=" ti-search"></i> </span> -->
+                    <span class="input-icon input-icon-right">
+                        <input type="text" class="form-control" id="name" name="search" placeholder="Search"
+                            ng-model="search.search_service" ng-keyup="onSearch()" />
+                        <i class="ti-search"></i> </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive margin-bottom-10" style="height:170px;">
+            <div ng-if="services.length == 0">
+                <h1 class="text-center text-extra-large"> <i class="fa fa-tags"></i></h1>
+                <h3 class="text-center">No services found</h3>
+                <h4 class="text-center">
+                    Linked services have been found, see management <strong>></strong> staff
+                </h4>
+            </div>
+            <table class="table table-pointer services_cat" ng-if="services.length > 0">
+                <tbody>
+                    <tr class="backgroundColor" ng-repeat-start="service_category in service_categories">
+                        <th colspan="2" ng-click="category1($index)"><span class="text-size-14"
+                                ng-style="{color:service_category.color}"><i
+                                    class="fa fa-folder-open-o padding-right-10"></i>
+                                {{service_category.name}}</span></th>
+                    </tr>
+                    <tr id="row_{{$index}}" ng-hide="hide_show_{{$index}}" ng-repeat-end>
+                        <td colspan="2">
+
+                            <table class="table table-borderless services">
+                                <tr ng-repeat="service in services | filter : {category_id: service_category.id}:true">
+                                    <td class="col-md-2" style="padding-left: 3%;">
+                                    <div class="radio clip-radio radio-primary margin-bottom-5">
+                                           
+
+                                                <input type="radio" id="{{service.id}}_ischeck_0" 
+                                                name="check_service" ng-model="current_service.service_id"
+                                                ng-click="serviceCheck(service)" ng-value="{{service.id}}" /> 
+                                                <label for="{{service.id}}_ischeck_0">{{service.name}}  </label>
+
+
+
+                                                
+                                      </div>
+
+                                    </td>
+                                    <td class="col-md-1 text-right p-r-1"><span ng-hide="ids[service.id]"><i
+                                                class="fa fa-inr"></i>{{service.sales_price}}</span>
+
+                                        <select class="cs-skin-elastic" name="duration" ng-model="service.duration"
+                                            ng-hide="!ids[service.id]" ng-change="serviceCheck(service)">
+                                            <option value="">Duration</option>
+                                            <option ng-selected="service.duration == duration_time.id"
+                                                ng-repeat="duration_time in durations" ng-value="duration_time.id">
+                                                {{duration_time.name}}
+                                            </option>
+                                        </select>
+
+                                    </td>
+
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="text-center text-extra-large" ng-show="service_categories.length==0">
+                        <td colspan="5"><strong class="text-red">No data found !!</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer create_client_model_footer">
+    <button class="btn btn-success" ng-click="saveChangeService()">Save</button>
+    <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
+</div>

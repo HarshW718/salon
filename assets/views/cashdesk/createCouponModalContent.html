@@ -1,0 +1,150 @@
+<div class="modal-header">
+    <button type="button" title="Close" class="close" ng-click="cancel()">&times;</button>
+    <h3 class="modal-title"><i class="fa fa-gift"></i> Create new coupon</h3>
+</div>
+<div class="modal-body">
+    <div class="container-fluid bg-white">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-sm-10">
+          
+                    <form name="customerForm" id="id_couponForm">
+                          
+                          
+                                    <div class="panel panel-white">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <span class="input-icon input-icon-right">
+                                                    <input type="text"  ng-model="coupon.description" placeholder="Description" id="description" class="form-control" required>
+                                                    <!-- <i class="fa fa-search"></i> </span> -->
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Services on card</th>
+                                                            <th scope="col"></th>
+                                                            <th scope="col"></th>
+                                                            <th scope="col">No of services</th>
+                                                            <th scope="col"></th>
+                        
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="(key,value) in service_for_form">
+                        
+                                                            <td>{{service_for_form[key].name}}</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>
+                                                                <span class="input-icon input-icon-right">
+                                                                    <!-- <input type="number" ng-model="coupon.service_for_form[key].id.no_of_services" class="form-control"> -->
+                                                                
+                                                                  <input type="number" min="1" name="service_{{value.id}}" id="service_{{value.id}}" ng-model="coupon['services'][value.id].no_of_services" class="form-control" pattern="\d*" required>
+                                                                </span>
+                                                            </td>
+                                                            <td><button type="btn" ng-click="removeServiceFrom_Form(service_for_form[key].id)" class="btn btn-danger"><i class="fa fa-remove"></button></td>
+                        
+                                                        </tr>
+                                                        <tr>
+                        
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>
+                        
+                                                            </td>
+                                                            <td><button type="button" class="btn btn-success" title="Add Service"
+                                                                    ng-click="showServiceModal()"><i class="fa  fa-plus-square"></i></button></td>
+                        
+                                                        </tr>
+                        
+                                                    </tbody>
+                                                </table>
+                        
+                                            </div>
+                                            
+                                            <div class="form-group" ng-show="service_below_form">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>Sale Price</strong></td>
+                                                            <td>
+                                                                <span class="input-icon input-icon-left">
+                                                                    <input type="text" ng-model="coupon.sale_price" placeholder="Sale Price" id="sale_price"
+                                                                        class="form-control" required.>
+                                                                    <i class="fa fa-inr"></i>
+                                                                </span>
+                                                                <span class="error" style="display: block;clear: both;"
+                                                                ng-if="sale_price_validation_message_display">{{sale_price_validation_message}}</span>
+                                                            </td>
+                                                            <td>including price</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>BTW</strong></td>
+                                                            <td>
+                                                                <span>
+                                                                       
+                                                                     <input type="number" pattern="\d*" ng-model="current_tax_id.tax_value" ng-disabled="true"  class="form-control">
+                                                                   
+                                                                   
+                                                                           
+                                                                </span>
+                                                            </td>
+                                                            <td>%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Validity</strong></td>
+                        
+                                                            <td>
+                                                                <span>
+                                                                    <input type="number" min="1" ng-model="coupon.validity" class="form-control">
+                        
+                                                                </span>
+                                                                <br>
+                                                                <span class="error" style="display: block;clear: both;"
+                                                                ng-if="validity_validation_message_display">{{validity_validation_message}}</span>
+                                                            </td>
+                                                            <td>months</td>
+                                                        </tr>
+                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- <div class="form-group">
+                                                <button type="button" ng-click="hideCouponForm()" class="btn btn-wide btn-danger"><i
+                                                        class="fa fa-remove"></i> Close</button>
+                                                <button type="button" class="btn btn-wide btn-success" ng-click="saveCouponForm()" ><i class="fa fa-check"></i> Save</button>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                               
+                                
+                           
+                            </form>
+           
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <strong> 2. Enter an entry date </strong>
+                <div class="form-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                    ng-model="entrance_date.date" is-open="opened" datepicker-options="datepickerOptions"
+                    ng-required="true" placeholder="entrance date" close-text="Close" ng-click="open()"
+                    ng-change="dateChanged()" />
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="end_date" datepicker-options="datepickerOptions"
+                    placeholder="valid up to date" readonly class="form-control" uib-datepicker-popup="{{format}}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" ng-click="saveCouponForm()"
+        class="btn btn-wide btn-success float-right margin-left-5">Add</button>
+    <button type="button" class="btn btn-wide btn-default float-right margin-left-5" ng-click="cancel()">Close</button>
+</div>

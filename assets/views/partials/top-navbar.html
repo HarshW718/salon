@@ -1,0 +1,39 @@
+<!-- start: TOP NAVBAR -->
+<!-- start: NAVBAR HEADER -->
+<div class="navbar-header">
+	<!-- <a href="#" class="sidebar-mobile-toggler pull-left hidden-md hidden-lg" ng-click="toggle('sidebar')" class="btn btn-navbar sidebar-toggle"> <i class="ti-align-justify"></i> </a> -->
+	<a class="navbar-brand" ui-sref="app.pages.calender"> <h3 style="margin-top:12px; color: #B8B8BE;">Bhakti Patel Salon</h3> </a>
+	<!-- <a href="#" class="sidebar-toggler pull-right visible-md visible-lg" ng-click="app.layout.isSidebarClosed = !app.layout.isSidebarClosed"> <i class="ti-align-justify"></i> </a> -->
+	<!-- <a class="pull-right menu-toggler visible-xs-block" id="menu-toggler" ng-click="navbarCollapsed = !navbarCollapsed"> <span class="sr-only">Toggle navigation</span> <i class="ti-view-grid"></i> </a> -->
+	</div>
+<!-- end: NAVBAR HEADER -->
+<!-- start: NAVBAR COLLAPSE -->
+<div class="navbar-collapse collapse" uib-collapse="navbarCollapsed" ng-init="navbarCollapsed = true" off-click="navbarCollapsed = true" off-click-if='!navbarCollapsed' off-click-filter="#menu-toggler">	
+    <ul class="nav navbar-left" ct-fullheight="window" data-ct-fullheight-exclusion="header" data-ct-fullheight-if="isSmallDevice" ng-repeat="menu in userdata.menu"> 
+            <!-- start: MESSAGES DROPDOWN -->
+
+            <!-- end: MESSAGES DROPDOWN -->
+            <!-- start: ACTIVITIES DROPDOWN -->
+        <li class="dropdown" uib-dropdown on-toggle="toggled(open)" ng-if="menu.show_menu == 'true' && menu.permit_user == true">
+            <a href="{{menu.menu_url}}" title="{{menu.menu_name}}" > <i class="{{menu.icon_name}}"></i> </a>
+        </li>
+    </ul>
+	
+	<ul class="nav navbar-right" ct-fullheight="window" data-ct-fullheight-exclusion="header" data-ct-fullheight-if="isSmallDevice">
+		<!-- start: MESSAGES DROPDOWN -->
+
+		<!-- start: USER OPTIONS DROPDOWN -->
+		<li class="dropdown current-user" uib-dropdown on-toggle="toggled(open)">
+    
+			<a href class="dropdown-toggle" uib-dropdown-toggle> 
+				<!-- <img src="assets/images/avatar-1.jpg" alt="{{userdata.name}}">  -->
+				<span class="username">Bhakti Patel <i class="ti-angle-down"></i></i></span> </a>
+			<ul class="dropdown-menu dropdown-dark">
+				<li>
+					<a href="Javascript:void(0)" ng-click="logout()" translate="topbar.user.LOGOUT"> Log Out </a>
+				</li>
+			</ul>
+		</li>
+		<!-- end: USER OPTIONS DROPDOWN -->
+	</ul>
+</div>

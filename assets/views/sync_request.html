@@ -1,0 +1,32 @@
+<div class="container-fluid bg-white ng-scope" ng-controller="sync_requestCtrl">
+        <div class="panel panel-transparent">
+
+            <div class="panel-heading padding-10">
+                <h3 class="panel-title"><strong>Send Sync Request</strong></h3>
+            </div>
+
+            <div class="panel-body padding-10">
+                <div class="row">
+                <div class="col-md-6">                        
+                        <div class="form-group">
+                            <label>
+                                    Please insert Email of company
+                            </label>
+                           <tags-input ng-model="company.email"></tags-input>
+
+                        </div>
+                    <button type="button" class="btn btn-wide btn-success margin-bottom-15" ng-click="sendSinkRequest()">Send request</button>  
+                               
+                </div>
+                <div class="col-md-6">
+                        <table class="table table-bordered" datatable="" dt-options="dtOptionInvoiceRequest"
+                            dt-columns="dtColumnInvoiceRequest" dt-instance="dtIntanceInvoiceRequestCallback"
+                            dt-column-defs="dtColumnInvoiceRequestDefs" cellspacing="0" width="100%"></table>
+                    
+                </div>
+            </div>
+               
+        </div>
+            </div>
+        </div>
+</div>

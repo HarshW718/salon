@@ -1,0 +1,36 @@
+<div class="modal-header">
+        <button type="button" class="close" title="Close" ng-click="cancel($event)">&times;</button>
+        <h3 class="modal-title">Cash-Out</h3>
+    </div>
+    
+    <div class="modal-body">
+        <div class="container-fluid calendar-modal  bg-white">
+            <div class="row">
+               <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="number" class="form-control input-sm" id="cash_out_amount"
+                             placeholder="Amount" ng-model="cash_out.amount"
+                            />
+                    </div> 
+                  
+                            <textarea placeholder="Small Note" ng-model="cash_out.small_note"></textarea>
+                   
+                    <div class="form-group">
+                          
+                                    <button type="button" class="btn btn-sm btn-danger float-right margin-right-5" ng-click="cancel()">close</button>
+            
+                                    <button type="button" class="btn btn-sm btn-success float-right margin-right-5" ng-click="saveCashOut()">save</button>
+            
+                                   
+                           
+                    </div>  
+               </div>
+              
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer create_client_model_footer">
+    
+        <!-- <button class="btn btn-danger" ng-click="cancel($event)">Close</button> -->
+    </div>
+    

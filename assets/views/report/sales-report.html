@@ -1,0 +1,212 @@
+<!-- start: FEATURED BOX LINKS -->
+<style>
+    .table{
+    margin-bottom:0px !important;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" integrity="sha256-FPJJt8nA+xL4RU6/gsriA8p8xAeLGatoyTjldvQKGdE=" crossorigin="anonymous"></script>
+<div class="container-fluid bg-white" ng-controller="salesReportCtrl">
+    <div class="row">
+        <form id="saleFilter" name="saleFilter">
+            <div class="col-sm-2 padding-left-5 padding-right-5" style="background: #d4d4d4;height: 625px;">
+                <span class="serviceProviderTitle" style="font-size:19px">
+                    <i class="glyphicon glyphicon-filter" style="font-size:19px"></i>Filters
+                </span>
+                <span class="serviceProviderTitle pull-right" style="font-size:19px">
+                    <a href="#!/app/pages/report" title="Close">
+                        <i class="glyphicon glyphicon-remove" style="font-size:19px"></i>
+                    </a>
+                </span>
+                <div class="pagesidebar">
+                    <div class="col-sm-12 topMargin">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        Start date:
+                        <input type="text" id="startDate" class="form-control datepicker" uib-datepicker-popup="{{format}}" ng-focus="startOpened = true" placeholder="Start Date" datepicker-options="startDateOptions" is-open="startOpened" name="startDate" ng-model="salesFilterForm.startDate" required="" ng-change="changeStartDate()" />
+                    </div>
+                    <div class="col-sm-12 topMargin">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        End date:
+                        <input type="text" id="endDate" class="form-control datepicker" uib-datepicker-popup="{{format}}" ng-focus="endOpened = true" placeholder="End Date" datepicker-options="endDateOptions" is-open="endOpened" name="endDate" ng-model="salesFilterForm.endDate" required="" ng-change="changeEndDate()" />
+                    </div>
+                    
+                        <div class="col-sm-12 topMargin">
+                            <button type="button" ng-click="previousDay()" class="btn btn-wide btn-success col-sm-12"><i class="fa  fa-arrow-left"></i></button>
+                        </div>
+                        <div class="col-sm-12 topMargin">
+                            <button type="button" ng-click="todayDay()" class="btn btn-wide btn-success col-sm-12">Today</button>
+                        </div>
+                        <div class="col-sm-12 topMargin">
+                            <button type="button" ng-click="nextDay()" class="btn btn-wide btn-success col-sm-12"><i class="fa  fa-arrow-right"></i></button>
+                        </div>
+                   
+ 
+                        <div class="col-sm-12 topMargin">
+                            <button type="button" ng-click="dialog.open()" class="btn btn-wide btn-success col-sm-12">month | Quarter</button>
+                        </div>
+                        <div kendo-dialog="dialog" id="dialog" k-visible="false" k-title="'Select quarter or month'" k-on-open="dialogVisible = true" k-on-close="dialogVisible = false" k-width="450" k-modal="false">
+                            <div class="col-sm-12" style="padding: 0;">
+                                <select class="form-control selectCustom" name="yearList" id="yearList" required="">
+                                    <option ng-repeat="y in yearList" value="{{y}}">{{y}}</option>
+                                </select>
+                            </div>
+                            <table class="quarterpicker" width="100%" style="font-size:13px;" border="1">
+                                <tbody>
+                                    <tr>
+                                        <td ng-click="getQurterDateMonth(0)">Jan</td>
+                                        <td ng-click="getQurterDateMonth(1)">Feb</td>
+                                        <td ng-click="getQurterDateMonth(2)">Mr</td>
+                                        <td ng-click="getQurterDateMonth(3)">Apr</td>
+                                        <td ng-click="getQurterDateMonth(4)">May</td>
+                                        <td ng-click="getQurterDateMonth(5)">Jun</td>
+                                        <td ng-click="getQurterDateMonth(6)">Jul</td>
+                                        <td ng-click="getQurterDateMonth(7)">Aug</td>
+                                        <td ng-click="getQurterDateMonth(8)">Sep</td>
+                                        <td ng-click="getQurterDateMonth(9)">Oct</td>
+                                        <td ng-click="getQurterDateMonth(10)">Nov</td>
+                                        <td ng-click="getQurterDateMonth(11)">Dec</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" ng-click="getQurterDate(1)">K1</td>
+                                        <td colspan="3" ng-click="getQurterDate(2)">K2</td>
+                                        <td colspan="3" ng-click="getQurterDate(3)">K3</td>
+                                        <td colspan="3" ng-click="getQurterDate(4)">K4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-12 topMargin">
+                            <select class="col-sm-12" name="selectedWeek" ng-model="selectedWeek" ng-change="changeWeek()">
+                                <option  value=""  selected="selected">Select week</option>
+                                <option ng-repeat="w in weeks track by $index" ng-value="{{$index+1}}">{{w}}</option>
+                            </select>
+                        </div>
+                    
+                    <div class="col-sm-12 topMargin" style="text-align:center;">
+                        <button type="button" ng-click="createReport('saleFilter','create_report')" class="btn btn-wide btn-success col-sm-12"><i class="fa  fa-refresh"></i>
+                            Create Report
+                        </button>
+                    </div>
+                        <div class="col-sm-12 topMargin" style="text-align:center;">
+                                <!-- ng-click="printPdf('printPdf')" -->
+                        <button type="button" ng-disabled="!products.length && !services.length"  ng-click="createReport('saleFilter','create_pdf')" class="btn btn-wide btn-success col-sm-12"><i class="fa fa-file-pdf-o"></i>
+                            Create Pdf
+                        </button>
+                    </div>
+                    <div class="col-sm-12 topMargin" style="text-align:center;">
+                        <button type="button" ng-disabled="!products.length  && !services.length" ng-click="downloadXls()" class="btn btn-wide btn-success col-sm-12"><i class="fa fa-file-pdf-o"></i>
+                            Export
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+        <div class="col-sm-10" id="printPdf">
+            <div class="panel panel-transparent">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-bar-chart-o fa-2x"></i> <span class="reportTitle"> Sales report</span>
+                    </div>
+                    <div ng-if="displayPeriod">
+                        Period: {{psDate}} TO {{peDate}}
+                    </div>
+                </div>
+                <div class="panel-body" id="salesReportexportable">
+               
+                    <div id="productSales">
+                    <div class="row" ng-if="products.length>0">
+                        <div class="table-responsive">
+                            <!-- <div class="pull-right" ng-if="displayIncludeVat">
+                                Amounts are <a style="color:#004999" href="javascript:void(0)" ng-click="changeVatProduct()"> exclusive of VAT</a>
+                            </div> -->
+                            <div class="pull-right" ng-if="!displayIncludeVat">
+                                Amounts <a style="color:#004999" href="javascript:void(0)" ng-click="changeVatProduct()"> include VAT</a>
+                            </div>
+                            <table id="productSalesTable" class="table table-pointer services_cat">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-2 col-sm-2"><span class="text-large">
+                                                Products</span></th>
+                                        <th class="col-md-1 col-sm-1 text-right"><span class="text-large">Sale</span></th>
+                                        <th class="col-md-1 col-sm-1 text-right"><span class="text-large">Number</span></th>
+                                        <!-- <th class="col-md-1 col-sm-1 text-right"><span class="text-large">Gem.</span></th> -->
+                                        <!-- <th class="col-md-1 col-sm-1 text-right"><span class="text-large">% of Total</span></th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-if="!products.length" style="text-align: center;">
+                                        <td colspan="11">Data not available</td>
+                                    </tr>
+                                    <tr ng-if="products.length>0" class="backgroundColor" ng-repeat-start="product_category in product_categories">
+                                        <th colspan="5"><span class="text-size-14"> {{product_category.name}}</span></th>
+                                    </tr>
+                                    <tr ng-if="products.length>0" id="row_{{$index}}" ng-repeat-end>
+                                        <td colspan="5">
+                                            <table class="table table-borderless services">
+                                                <tr ng-repeat="product in products | filter : {category_id: product_category.id}:true">
+                                                    <td class="col-md-2 col-sm-2"><span>{{product.name}}</span></td>
+                                                    <td ng-if="displayIncludeVat" class="col-md-1 col-sm-1 text-right p-r-1 myCustomClass"><i class="fa fa-inr"></i>{{product.amount | number:2}} </td>
+                                                    <td ng-if="!displayIncludeVat" class="col-md-1 col-sm-1 text-right p-r-1 myCustomClass"><i class="fa fa-inr"></i>{{product.withouttaxAmount | number:2}} </td>
+                                                    <td class="col-md-1 col-sm-1 text-right p-r-1">{{product.totalItem}}</td>
+                                                    <!-- <td ng-if="displayIncludeVat" class="col-md-1 col-sm-1 text-right p-r-1"><i class="fa fa-inr"></i>{{product.singleAmount | number:2}}</td> -->
+                                                    <td ng-if="!displayIncludeVat" class="col-md-1 col-sm-1 text-right p-r-1"><i class="fa fa-inr"></i>{{product.withoutTaxSingleAmount | number:2}}</td> 
+                                                    <!-- <td ng-if="displayIncludeVat" class="col-md-1 col-sm-1 text-right p-r-1">{{product.totalPer}} %</td> -->
+                                                     <td ng-if="!displayIncludeVat" class="col-md-1 col-sm-1 text-right p-r-1">{{product.totalPerWithoutTax}} %</td>
+                                                </tr>
+                                                <tr ng-repeat="product in products | filter : {category_id: product_category.id}:true | limitTo:1">
+                                                    <td ng-if="displayIncludeVat" class="col-md-1 col-sm-1 text-right p-r-1" style="color: #000 !important;font-weight: 600;" colspan="2"><i class="fa fa-inr"></i>{{product.totalCatAmount | number:2}}</td>
+                                                    <td ng-if="!displayIncludeVat" class="col-md-1 col-sm-1 text-right p-r-1" style="color: #000 !important;font-weight: 600;" colspan="2"><i class="fa fa-inr"></i>{{product.totalCatAmountWithoutTax | number:2}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                    <div id="serviceSale">
+                    <div class="row margin-top-30" ng-if="services.length>0" >
+                        <div class="table-responsive">
+                            <table id="serviceSalesTable" class="table table-pointer  services_cat">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-2 col-sm-2"><span class="text-large">
+                                                Services</span></th>
+                                        <th class="col-md-1 col-sm-1 text-right"><span class="text-large">Sale</span></th>
+                                        <th class="col-md-1 col-sm-1 text-right"><span class="text-large">Number</span></th>
+                                        <!-- <th class="col-md-1 col-sm-1 text-right"><span class="text-large">Gem.</span></th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-if="!services.length" style="text-align: center;">
+                                        <td colspan="11">Data not available</td>
+                                    </tr>
+                                    <tr ng-if="services.length>0" class="backgroundColor" ng-repeat-start="service_category in service_categories">
+                                        <th colspan="4"><span class="text-size-14"> {{service_category.name}}</span></th>
+                                    </tr>
+                                    <tr ng-if="services.length>0" id="row_{{$index}}" ng-repeat-end>
+                                        <td colspan="4">
+                                            <table class="table table-borderless services">
+                                                <tr ng-repeat="service in services | filter : {category_id: service_category.id}:true">
+                                                    <td class="col-md-2 col-sm-2"><span>{{service.name }}</span></td>
+                                                    <td class="col-md-1 col-sm-1 text-right p-r-1 myCustomClass"><i class="fa fa-inr"></i>{{service.amount | number:2}} </td>
+                                                    <td class="col-md-1 col-sm-1 text-right p-r-1">{{service.totalItem}}</td>
+                                                    <!-- <td class="col-md-1 col-sm-1 text-right p-r-1"><i class="fa fa-inr"></i>{{service.singleAmount | number:2}}</td> -->
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+               
+               
+               
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

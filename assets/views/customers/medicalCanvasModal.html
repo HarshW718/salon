@@ -1,0 +1,263 @@
+<style type="text/css">
+    .toolCircle {
+        border-radius: 60px;
+        box-shadow: 0px 0px 3px #000000;
+        /*padding: 2px 3px;*/
+        padding: 5px 7px;
+    }
+
+    .canvas-div-width {
+        /* width:36.39% !important; */
+        width: 33.6% !important;
+    }
+
+    .pedicure-title-width {
+        width: 78% !important;
+    }
+
+    .margin-top-6 {
+        margin-top: 6px !important;
+    }
+
+    .height-400 {
+        height: 400px !important;
+    }
+
+    .height-width-canvas {
+        width: 420px !important;
+        height: 420px !important;
+
+    }
+
+    .description-margin-top {
+        margin-top: 0px !important;
+        /* margin-top: 32px !important; */
+    }
+
+    .description-div-width {
+        width: 41.66666667% !important;
+    }
+
+    .shortcut-tag-size {
+        font-size: 24px !important;
+    }
+
+    .padding-left-description {
+        padding-left: 0px;
+    }
+
+    .shortcut-div-width {
+        width: 16.66666667% !important;
+    }
+
+    /*@media (min-width: 768px) and (max-width: 1024px) {
+        .toolCircle{
+            border-radius: 60px;
+            box-shadow: 0px 0px 3px #000000;
+            padding: 2px 3px;
+        }
+    }*/
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var canvas = document.querySelector("canvas");
+        if (canvas && canvas !== null) {
+            var ctx = canvas.getContext("2d");
+            var signaturePad = new SignaturePad(canvas);
+            $("#pencil").css('color', 'black');
+            // Rebinds all event handlers
+            signaturePad.on();
+            $("#resetCanvas").click(function () {
+                // Clears the canvas
+                signaturePad.clear();
+                signaturePad.on();
+                $(".canvasTools i").removeClass("toolCircle");
+                $("#pencil").addClass('toolCircle');
+                $("#eraser").css('color', '');
+                $("#pencil").css('color', 'blue');
+                ctx.lineWidth = 2;
+                ctx.globalCompositeOperation = 'source-over';
+            });
+
+            $("#pencil").click(function () {
+                $(".canvasTools i").removeClass("toolCircle");
+                $("#pencil").addClass('toolCircle');
+                //$("#pencil").css('color','black');
+                $("#eraser").css('color', '');
+                ctx.lineWidth = 2;
+                ctx.globalCompositeOperation = 'source-over';
+            });
+            $(".changeColor").click(function (e) {
+                $(".canvasTools i").removeClass("toolCircle");
+                $("#pencil").addClass('toolCircle');
+                var color = $(this).attr('id');
+                $("#pencil").css('color', color);
+                $("#eraser").css('color', '');
+                signaturePad.penColor = color;
+                ctx.lineWidth = 2;
+                ctx.globalCompositeOperation = 'source-over';
+            });
+
+            $("#eraser").click(function () {
+                $(".canvasTools i").removeClass("toolCircle");
+                $("#eraser").addClass('toolCircle');
+                $("#pencil").css('color', '');
+                $("#eraser").css('color', 'blue');
+                //var ctx = canvas.getContext('2d');
+                //ctx.lineWidth = 10 * 2;
+                ctx.globalCompositeOperation = 'destination-out';
+            });
+            $(document).on('click', '#openCamera', function (event) {
+                event.preventDefault();
+                $("#capturedImage").click();
+            });
+            setTimeout(function () {
+                $('.cke_contents').css('height', '400px');
+            }, 1000);
+        }
+
+    })
+    function uploadPicture() {
+        var FD = new FormData()
+        var fileInput = document.getElementById('capturedImage')
+        var file = document.getElementById('capturedImage').files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            console.log("e", e);
+            // var canvas= document.getElementById('canvas');
+            // var ctx = canvas.getContext('2d');
+            // ctx.clearRect(0, 0,  canvas.width, canvas.height);
+            $("#canvas").css("background-image", "url(" + e.target.result + ")");
+            $("#canvas").css("background-size", "450% 450% !important");
+            window.localStorage.is_uploaded = true
+        }
+
+        reader.readAsDataURL(file);
+    } 
+</script>
+<div id="myModalCanvas">
+    <div class="modal-header padding-5">
+        <button type="button" class="close" title="Close" ng-click="cancel($event)">&times;</button>
+        <h3 class="modal-title"> <i class="fa fa-file-o"></i> Medical Report</h3>
+    </div>
+    <div class="modal-body tools-modal">
+        <div class="container-fluid bg-white">
+
+            <div class="row">
+                <section id="page-title" class="padding-top-5 padding-bottom-5 margin-bottom-5 col-sm-12">
+                    <div class="row margin-bottom-5">
+                        <div class="col-md-2 col-sm-2">
+                            <input type="text" placeholder="Select Date" ng-model="medical_report.date"
+                                class="form-control input-sm" uib-datepicker-popup="{{format}}" is-open="opened"
+                                datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
+                                ng-click="open()" />
+                        </div>
+                        <div class="col-md-10 col-sm-10">
+                            <button ng-if="!showBtn" id="saveBtn" type="button" ng-click="saveCanvas()"
+                                class="btn btn-wide btn-success">save</button>
+                            <button ng-if="showBtn" id="updateBtn" type="button" ng-click="updateCanvas()"
+                                class="btn btn-wide btn-success">update</button>
+                            <button type="button" class="btn btn-wide btn-danger"
+                                ng-click="cancel($event)">cancel</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 col-sm-9 pedicure-title-width">
+                            <textarea ng-model="pedicureTitle" placeholder="Title" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </section>
+                <!-- <div class="col-md-12 col-sm-12" ng-if="userdata.role_id === 1 || userdata.role_id === 2">  -->
+                <div class="col-md-12 col-sm-12">
+                    <div class="canvas-width">
+                        <div class="top-height">
+                        <div class="row margin-bottom-5">
+                            <div class="col-md-12 col-sm-12" ng-if="isTablet">
+                                <!-- <i id="openCamera" class="fa fa-camera fa-2x margin-top-5"></i>
+                                <form id="canvasForm"> -->
+                                <!-- <input style="display:none;" id="capturedImage" ng-model="capturedImage" type="file" accept="image/*" capture="camera" onchange="uploadPicture()"/> -->
+                                <input id="capturedImage" ng-model="capturedImage" type="file" accept="image/*"
+                                    onchange="angular.element(this).scope().uploadPicture1()" />
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col-md-8 col-sm-8">
+                                <select class="form-control input-sm" ng-model="imageSelected"
+                                    ng-change="imageChange('{{imageSelected}}')" name="canvasImage" id="canvasImage"
+                                    ng-options="x for x in imagesList" required="">
+                                </select>
+                            </div>
+                        </div>
+                       </div>
+                        <canvas id="canvas" width="400" height="400"
+                            style="background: url('assets/images/sketch/legs.png') no-repeat;background-size:100% !important;border: 1px solid #b7b7b7;"
+                            crossorigin></canvas>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <h3 class="modal-title">Tools</h3>
+                                <div class="canvasTools">
+                                    <i title="Pen" id="pencil" class="toolCircle fa fa-pencil fa-2x"></i>
+                                    <i title="Eraser" id="eraser" class="fa fa-eraser fa-2x"></i>
+                                    <i title="Clear" id="resetCanvas" class="fa fa-trash fa-2x"></i>
+                                    <i title="Black" id="black" class="fa fa-circle fa-2x changeColor"
+                                        style="color:black"></i>
+                                    <i title="Red" id="red" class="fa fa-circle fa-2x changeColor"
+                                        style="color:red"></i>
+                                    <i title="Green" id="green" class="fa fa-circle fa-2x changeColor"
+                                        style="color:green"></i>
+                                    <i title="Blue" id="blue" class="fa fa-circle fa-2x changeColor"
+                                        style="color:blue"></i>
+                                    <i title="Orange" id="orange" class="fa fa-circle fa-2x changeColor"
+                                        style="color:orange"></i>
+                                    <i title="Purple" id="purple" class="fa fa-circle fa-2x changeColor"
+                                        style="color:purple"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="description-with" id="rt_description">
+                        <div class="top-height">
+                        <h4 style="padding-top: 4px;">Description <button type="button" class="btn btn-wide btn-success ng-scope" title="Copy"
+                            ng-click="copyDescription()" ng-if="!showBtn">Copy</button></h4>   
+                        </div>                                                 
+                        <div id="txtArea" ckeditor="options" ng-model="selectedFormSubs"></div>
+                    </div>
+                    <div class="shortcut-width">
+                        <div class="top-height">
+                        <h3 class="shortcut-tag-size">Shortcut tags</h3>
+                    </div>
+                        <div class="form-group">
+                            <div class="list-group">
+                                <li class="list-group-item" ng-repeat="frm in formSubsList">
+                                    <a href="javascript:void(0)"
+                                        ng-click="insertTitleValue(frm.id,frm.title_value)">{{frm.title}}</a>
+                                </li>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="list-group">
+                                <label for="allergy">
+                                    Allergies
+                                </label>
+                                <textarea rows="7" ng-model="allergies" placeholder="Allergies..." id="allergies"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="list-group">
+                                <label for="note">
+                                    Notes
+                                </label>
+                                <textarea rows="8" ng-model="note" placeholder="Notes..." id="note"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,229 @@
+<style>
+    .placeholder {
+        height: 380px;
+        display: inline-block;
+        width: 100%;
+        overflow: auto;
+    }
+    #id_taxForm .error{
+        display: block;
+        text-align: left;
+    }
+</style>
+<div class="container-fluid bg-white ng-scope" ng-controller="cashdeskSettingCtrl">
+    <div class="row">
+
+            <div class="col-md-2">
+                    <div class="list-group">
+        
+                        <a class="list-group-item text-center" href="#!/app/pages/cashdesk_main"> <i class="fa fa-arrow-left margin-right-10"></i> <span class="text-large">Back </span> </a>
+        
+                    </div>
+        
+                </div>
+        <div class="col-md-10">
+            <h3><i class="fa fa-cog fa-2x"></i>&nbsp;Settings</h3>
+        </div>
+        <div class="col-md-12">
+            <div>
+                <div class="container-fluid  bg-white">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <uib-tabset class="tabbable" active="active">
+                                <uib-tab index="0" ng-click="tabselected(0)" heading="PAYMENT METHODS">
+                                    <div class="container-fluid bg-white">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="text-bold">To Pay</span>
+                                                <hr>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <table class="table">
+                                                    <tbody>
+                                                       
+                                                       
+                                                        <tr ng-repeat="single_method in payment_methods">
+                                                            <td>
+                                                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                    <input type="checkbox" id="checkbox_{{single_method.id}}" value="single_method.id" 
+                                                                    
+                                                                        ng-model="single_method.is_check"
+                                                                        ng-change="paymentCheck(single_method)"
+                                                                    
+                                                                    >
+                                                                    <label for="checkbox_{{single_method.id}}">
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-default btn-sm dropdown-toggle pull-right" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="{{single_method.payment_icon}}" aria-hidden="true"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td>{{single_method.method_name}}</td>
+                                                       </tr>  
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </uib-tab>
+                                <!-- <uib-tab index="1" ng-click="tabselected(1)" heading="TAX RATES">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <button type="button" class="btn btn-wide btn-success margin-bottom-10" ng-click="addCategory()"><i
+                                                                class="fa  fa-plus-square"></i> Add</button>
+                                            <button type="button" class="btn btn-wide btn-success margin-bottom-10" ng-click="showTaxForm()"><i class="fa  fa-plus-square"></i> Add
+                                                Tax</button>
+                                            <form name="taxForm" id="id_taxForm">
+                                                <table class="table table-borderless table-outer-border margin-bottom-10" ng-hide="tax_form">
+                                                    <thead class="bg-thead">
+                                                        <tr>
+                                                            <th>Tax Type</th>
+                                                            <th>Tax Value(%)</th>
+                                                            <th class="hidden-xs"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group margin-bottom-0 ">
+                                                                    <span class="input-icon">
+                                                                        <input type="text" name="name" ng-model="tax.name" placeholder="Tax Type" id="name" class="form-control" style="width:auto !important;" required>
+                                                                        <i class="fa fa-folder"></i> </span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group margin-bottom-0">
+                                                                    <span class="input-icon">
+                                                                        <input type="number" class="form-control" name="tax_value" placeholder="Tax Value" ng-model="tax.tax_value" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" pattern="\d*" required />
+                                                                        <i class="fa fa-eur"></i> </span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="hidden-xs"><a><i ng-click="submitTaxForm()" class="fa fa-check-square text-large"></i></a><a class="margin-left-10"><i ng-click="hideTaxForm()" class="fa fa-remove text-large"></i></a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </form>
+                                            <div ng-hide="tax_list">
+                                                <table class="table table-bordered" datatable="" dt-options="dtOptionInvoiceRequest" dt-columns="dtColumnInvoiceRequest" dt-instance="dtIntanceInvoiceRequestCallback" dt-column-defs="dtColumnInvoiceRequestDefs" cellspacing="0" width="100%"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </uib-tab> -->
+                                <uib-tab index="2" ng-click="tabselected(2)" heading="INVOICE">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <button class="btn btn-success" ng-click="saveInvoiceTemplate()" ng-if="saveData"><i class="fa fa-plus-square"></i> Save</button>
+                                                <button class="btn btn-success" ng-click="updateInvoiceTemplate()" ng-if="!saveData"> <i class="fa fa-pencil-square-o"></i> Update</button>
+                                                <button class="btn btn-primary" ng-click="previewInvoiceTemplate()"><i class="fa fa-eye"></i> Preview</button>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" value="" ng-model="invoiceTemplate.id" ng-if="!saveData">
+                                        <div class="col-md-10">
+                                            <fieldset>
+                                                <legend ng-if="!saveData">
+                                                    <i class="fa fa-pencil-square-o"></i> Update template
+                                                </legend>
+                                                <legend ng-if="saveData">
+                                                    <i class="fa fa-pencil"></i> Create template
+                                                </legend>
+                                                <form role="form">
+                                                    <div class="form-group">
+                                                        <label for="invoice_title">Title</label>
+                                                        <input type="text" class="form-control" ng-model="invoiceTemplate.invoice_title" id="invoice_title" placeholder="Invoice title">
+                                                    </div>
+                                                    <div>
+                                                        <div ckeditor="options" ng-model="invoiceTemplate.tempate_description" id="invoice_temp" ready="onReady()"></div>
+                                                    </div>
+                                                </form>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <table class="table table-hover margin-top-20" id="sample-table-1">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="center">Add Placeholder</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="placeholder">
+                                                    <tr ng-repeat='p in placeHolders'>
+                                                        <td class="center" ng-click="addPlaceHolder(p.name)"><a href="javascript:void(0)">{{p.name}}</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </uib-tab>
+                                <uib-tab index="3" ng-click="tabselected(3)" heading="PREFIX">
+                                    <div class="row">
+                                        <div class="col-md-12" ng-if="displayForm">
+                                                <form name="prefixForm" id="prefixForm" novalidate>
+                                                    <div class="form-group">
+                                                        <input type="text" maxlength="8"  ng-model="prefix.prefix_title" name="prefix_title" required="" placeholder="Enter prefix title">
+                                                        <button class="btn btn-success" ng-click="savePreifix('prefixForm')" ng-if="!prefix.id"><i class="fa fa-plus-square"></i> Save</button>
+                                                        <button class="btn btn-success" ng-click="updatePrefix('prefixForm')" ng-if="prefix.id"> <i class="fa fa-pencil-square-o"></i> Update</button>
+                                                    </div>
+                                                </form>
+                                                
+                                        </div>
+                                        <div class="col-md-10" ng-if="tableDisplay">
+                                            <fieldset>
+                                                <legend>
+                                                    Prefix information
+                                                </legend>
+                                                <table class="table table-borderless table-outer-border margin-bottom-10">
+                                                    <thead class="bg-thead">
+                                                        <tr>
+                                                            <th>Prefix Title</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="text-align:left;">
+                                                                {{prefix.prefix_title}}
+                                                            </td>
+                                                            <td style="text-align:left;">
+                                                                <a><i ng-click="editPrefix(prefix.id)" class="fa fa-edit  text-large"></i></a>
+                                                                <a class="margin-left-10"><i ng-click="deletePrefix(prefix.id)" class="fa fa-remove text-large"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                       
+                                    </div>
+                                </uib-tab>
+
+
+                                <!-- <uib-tab index="4" ng-click="tabselected(4)" heading="INVOICE PASSWORD">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                                <form name="invoicePasswordForm" id="invoicePasswordForm" novalidate>
+                                                    <div class="form-group">
+                                                        <input type="{{passord_text}}" ng-model="invoice_password.invoice_password" name="password" required="" placeholder="Enter password here">
+
+                                                        <button class="btn btn-success" ng-click="textOrPassword()"> <i class="fa fa-eye"></i> </button>
+
+                                                        <button class="btn btn-success" ng-click="saveInvoicePassword()"ng-if="!invoice_password.id"><i class="fa fa-plus-square"></i> Save</button>
+                                                        <button class="btn btn-success" ng-click="saveInvoicePassword()" ng-if="invoice_password.id"> <i class="fa fa-pencil-square-o"></i> Update</button>
+                                                    </div>
+                                                </form>
+                                        </div>
+                                    </div>
+                                </uib-tab> -->
+
+
+                            </uib-tabset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,98 @@
+<div class="modal-header">
+    <button type="button" title="Close" class="close" ng-click="cancel()">&times;</button>
+    <h3 class="modal-title"> <i class="fa fa-tags"></i> Sales Products</h3>
+</div>
+<div class="modal-body" style="padding:0px !important">
+    <div class="container-fluid  bg-white modal-vh-100">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <span class="input-icon input-icon-right" style="margin-top: 6px;">
+                        <input kendo-auto-complete k-data-source="productList" style="width: 100%;" ng-model="search.search_product" ng-change="onKeyUp()" k-on-select="onKeyUp()" /> <i class="ti-search"></i>
+                        <!-- <input type="text" class="form-control" id="name" name="search" placeholder="Search"
+                                ng-model="search.search_product" ng-keyup="onKeyUp()" required />
+                            <i class=" ti-search"></i>  --></span>
+                </div>
+            </div>
+            <div class="col-md-7" style="margin-top: 6px">
+                <div class="form-group float-right">
+                    <select class="cs-skin-elastic" name="duration" ng-model="productTypeFilter" ng-change="filterByType()">
+                        <option value="" selected="selected">All</option>
+                        <option value="1">Sell Products</option>
+                        <option value="2">Salon Products</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="height:400px;margin-top:2%">
+            <div class="col-md-12">
+                <div class="table-responsive" ng-hide="main_table">
+                    <table class="table table-pointer  services_cat">
+                        <tbody>
+                            <tr class="backgroundColor" ng-repeat-start="product_category in product_categories">
+                                <th colspan="3" ng-click="category1($index)">
+                                    <span class="text-size-14"> <i class="fa fa-folder-open-o padding-right-10"></i>
+                                        {{product_category.name}}</span></th>
+                            </tr>
+                            <tr id="row_{{$index}}" ng-hide="hide_show_{{$index}}" ng-repeat-end>
+                                <td colspan="3">
+                                    <table class="table table-borderless all_services">
+                                        <tr ng-repeat="product in products | filter : {category_id: product_category.id}:true" id="tr_{{product.type}}">
+                                            <td class="col-md-2 padding-bottom-0 padding-top-0" style="padding-left: 3%;">
+                                                <div class="checkbox clip-check check-primary check-sm checkbox-inline">
+                                                    <input type="checkbox" id="{{product.id}}_ischeck_0" class="checkBoxClass" name="check_product" ng-model="ids[product.id]" ng-change="productCheck(product)" value="{{product.id}}" /> <label for="{{product.id}}_ischeck_0">{{product.name}}</label>
+                                                </div>
+                                            </td>
+                                            <td class="col-md-1 text-right p-r-1">{{product.stocke}}</td>
+                                            <td class="col-md-1 text-right p-r-1"><i class="fa fa-inr"></i>{{product.sale_price}}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr class="text-center text-extra-large" ng-show="product_categories.length==0">
+                                <td colspan="5"><strong class="text-red">No data found !!</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive" ng-hide="search_table">
+                    <table class="table table-pointer services">
+                        <tbody>
+                            <tr ng-repeat="product in searched_products | filter : {category_id: product_category.id}">
+                                <td class="col-md-2">
+                                    <div class="checkbox clip-check check-primary check-sm checkbox-inline">
+                                        <input type="checkbox" id="{{product.id}}_ischeck_0" class="checkBoxClass" name="check_product" ng-model="ids[product.id]" ng-change="productCheck(product)" value="{{product.id}}" /> <label for="{{product.id}}_ischeck_0">{{product.name}}</label>
+                                    </div>
+                                </td>
+                                <td class="col-md-1 text-right p-r-1">{{product.stocke}}
+                                </td>
+                                <td class="col-md-1 text-right p-r-1"><i class="fa fa-inr"></i>{{product.sale_price}}
+                                </td>
+                            </tr>
+                            <tr class="text-center text-extra-large" ng-show="!searched_products.length">
+                                <td colspan="5"><strong class="text-red">No data found !!</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--   <div class="row background-light padding-15" >
+                <span>
+                   <strong> put sales on : </strong>
+                   <select class="cs-skin-elastic" name="duration" ng-model="sasasa">
+                        <option value="all" ng-selected="true">All Products</option>
+                        <option value="1">Sell Products</option>
+                        <option value="2">Salon Products</option>
+                        </select>
+
+                </span>
+
+            </div>
+     -->
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-wide btn-default" ng-click="cancel()">Close</button>
+    <button type="button" class="btn btn-wide btn-success" ng-click="AddServiceProduct('products')">Add</button>
+</div>

@@ -1,0 +1,301 @@
+<!-- start: FEATURED BOX LINKS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" integrity="sha256-FPJJt8nA+xL4RU6/gsriA8p8xAeLGatoyTjldvQKGdE=" crossorigin="anonymous"></script>
+<style>
+    .total-report-table-class{
+        width: 33.33333333% !important;
+    }
+    .total-report-filter-div{
+        width: 25% !important;
+    }
+    .total-report-outer-div{
+        width: 75% !important;
+    }
+</style>
+<div class="container-fluid bg-white" ng-controller="totalReportCtrl">
+    <div class="row">
+        <form id="totlaReportFilter" name="totlaReportFilter">
+            <div class="col-sm-3 total-report-filter-div" style="background: #d4d4d4;height: 625px;">
+                <span class="serviceProviderTitle" style="font-size:19px">
+                    <i class="glyphicon glyphicon-filter" style="font-size:19px"></i>Filters
+                </span>
+                <span class="serviceProviderTitle pull-right" title="Close" style="font-size:19px">
+                    <a href="#!/app/pages/report" title="Close">
+                        <i class="glyphicon glyphicon-remove" style="font-size:19px"></i>
+                    </a>
+                </span>
+                <div class="pagesidebar">
+                    <div class="col-sm-12 topMargin">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        Start date:
+                        <input type="text" id="startDate" class="form-control datepicker" uib-datepicker-popup="{{format}}" ng-focus="startOpened = true" placeholder="Start Date" datepicker-options="startDateOptions" is-open="startOpened" name="startDate" ng-model="totalReportForm.startDate" required="" ng-change="changeStartDate()" />
+                    </div>
+                    <div class="col-sm-12 topMargin">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        End date:
+                        <input type="text" id="endDate" class="form-control datepicker" uib-datepicker-popup="{{format}}" ng-focus="endOpened = true" placeholder="End Date" datepicker-options="endDateOptions" is-open="endOpened" name="endDate" ng-model="totalReportForm.endDate" required="" />
+                    </div>
+                    <div class="col-sm-12 topMargin" style="margin: -15px;">
+                        <div class="col-sm-4">
+                            <button type="button" ng-click="previousDay()" class="btn btn-wide btn-success"><i class="fa  fa-arrow-left"></i></button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" ng-click="todayDay()" class="btn btn-wide btn-success">Today</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" ng-click="nextDay()" class="btn btn-wide btn-success"><i class="fa  fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 margin-top-20">
+                        <div class="col-sm-4 margin-right-5">
+                            <button type="button" ng-click="dialog.open()" class="btn btn-wide btn-success">month | Quarter</button>
+                        </div>
+                        <div kendo-dialog="dialog" id="dialog" k-visible="false" k-title="'Select quarter or month'" k-on-open="dialogVisible = true" k-on-close="dialogVisible = false" k-width="450" k-modal="false">
+                            <div class="col-sm-12" style="padding: 0;">
+                                <select class="form-control selectCustom" name="yearList" id="yearList" required="">
+                                    <option ng-repeat="y in yearList" value="{{y}}">{{y}}</option>
+                                </select>
+                            </div>
+                            <table class="quarterpicker" width="100%" style="font-size:13px;border:1px" >
+                                <tbody>
+                                    <tr>
+                                        <td ng-click="getQurterDateMonth(0)">Jan</td>
+                                        <td ng-click="getQurterDateMonth(1)">Feb</td>
+                                        <td ng-click="getQurterDateMonth(2)">Mr</td>
+                                        <td ng-click="getQurterDateMonth(3)">Apr</td>
+                                        <td ng-click="getQurterDateMonth(4)">May</td>
+                                        <td ng-click="getQurterDateMonth(5)">Jun</td>
+                                        <td ng-click="getQurterDateMonth(6)">Jul</td>
+                                        <td ng-click="getQurterDateMonth(7)">Aug</td>
+                                        <td ng-click="getQurterDateMonth(8)">Sep</td>
+                                        <td ng-click="getQurterDateMonth(9)">Oct</td>
+                                        <td ng-click="getQurterDateMonth(10)">Nov</td>
+                                        <td ng-click="getQurterDateMonth(11)">Dec</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" ng-click="getQurterDate(1)">K1</td>
+                                        <td colspan="3" ng-click="getQurterDate(2)">K2</td>
+                                        <td colspan="3" ng-click="getQurterDate(3)">K3</td>
+                                        <td colspan="3" ng-click="getQurterDate(4)">K4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-6 pull-right">
+                            <select name="selectedWeek" ng-model="selectedWeek" ng-change="changeWeek()">
+                                <option  value=""  selected="selected">Select week</option>
+                                <option ng-repeat="w in weeks track by $index" ng-value="{{$index+1}}">{{w}}</option>
+                            </select>
+                        </div>
+                    </div>
+                     
+                    <div class="col-sm-12 topMargin">
+                        Employee ({{employeeList.length}}):
+                        <select class="form-control" name="employee" ng-model="totalReportForm.employee">
+                            <option  value=""  selected="selected">All</option>
+                            <option ng-repeat="emp in employeeList" ng-value="emp.id">{{emp.name}}</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-sm-12 topMargin" style="text-align:center;">
+                        <button type="button" ng-click="createReport('totlaReportFilter','create_report')" class="btn btn-wide btn-success"><i class="fa  fa-refresh"></i>
+                            Create Report
+                        </button>
+                         <button type="button" ng-disabled="!revenueData.length && !totalPaymentMethod.length" ng-click="createReport('totlaReportFilter','create_pdf')" class="btn btn-wide btn-success"><i class="fa fa-file-pdf-o"></i>
+                            Create Pdf
+                        </button>
+                    </div>
+                    <div class="col-sm-12 topMargin"  style="text-align:center;">
+                         <button type="button" ng-disabled="!revenueData.length && !totalPaymentMethod.length" ng-click="downloadXls()" class="btn btn-wide btn-success"><i class="fa fa-file-pdf-o"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="col-sm-9 total-report-outer-div" id="printPdf">
+            <div class="panel panel-transparent">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-bar-chart-o fa-2x"></i> <span class="reportTitle"> Total report</span>
+                    </div>
+                    <div ng-if="displayPeriod">
+                        Period: {{psDate}} TO {{peDate}}
+                    </div>
+                </div>
+                <div class="panel-body" id="totalReportCtrlexportable">
+                    <div class="row" >  
+                        <div class="col-sm-4 total-report-table-class">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="3">Revenue</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="revenu in revenueData">
+                                                <td>
+                                                    <span class="label label-sm label-success">{{revenu.totalItem}}</span> {{revenu.nameofType}}
+                                                </td>
+                                                <td>
+                                                    {{revenu.amount | number:2}}
+                                                </td>
+                                            </tr>
+                                        
+                                        </tbody>
+                                        <tfoot>
+                                            <tr ng-if="!revenueData.length" style="text-align: center;">
+                                                <td colspan="3">Data not available</td>
+                                            </tr>
+                                            <tr ng-if="revenueData.length>0">
+                                                <td><strong>Total</strong></td>
+                                                <td>
+                                                    {{ revenueData | sumByColumn: 'amount'  | number:2}}
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 total-report-table-class">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="3">Receipts</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="r in totalPaymentMethod">
+                                                <td>
+                                                    <span class="label label-sm label-success">{{r.totalItem}}</span>  {{r.paymentType}}
+                                                </td>
+                                                <td>
+                                                    {{r.totalAmount | number:2}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr ng-if="!totalPaymentMethod.length" style="text-align: center;">
+                                                <td colspan="3">Data not available</td>
+                                            </tr>
+                                            
+                                            <tr ng-if="totalPaymentMethod.length>0">
+                                                <td><strong>Total</strong></td>
+                                                <td>
+                                                        {{ totalPaymentMethod | sumByColumn: 'totalAmount'  | number:2 }}
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 total-report-table-class">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="3">VAT per group</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="v in revenueData" ng-if="v.withouttax>0">
+                                                <td>
+                                                    <span class="label label-sm label-success">{{v.totalItem}}</span> {{v.nameofType}}
+                                                </td>
+                                                <td>
+                                                    {{v.withouttax | number:2}}
+                                                </td>
+                                            </tr>
+                                        
+                                        </tbody>
+                                        <tfoot>
+                                            <tr ng-if="!revenueData.length" style="text-align: center;">
+                                                <td colspan="3">Data not available</td>
+                                            </tr>
+                                            <tr ng-if="revenueData.length>0">
+                                                <td><strong>Total</strong></td>
+                                                <td>
+                                                        {{ revenueData | sumByColumn: 'withouttax'  | number:2 }}
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-4 total-report-table-class">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="3">Product Group By Tax</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="p_amount in productAmountGroupByTax">
+                                                <td>
+                                                    <span class="label label-sm label-success">{{p_amount.tax_no}}</span> {{p_amount.name}} ({{p_amount.tax_value}}%)
+                                                </td>
+                                                <td>
+                                                    {{p_amount.tax_amount | number:2}}
+                                                </td>
+                                            </tr>
+                                        
+                                        </tbody>
+                                        <tfoot>
+                                            <tr ng-if="!revenueData.length" style="text-align: center;">
+                                                <td colspan="3">Data not available</td>
+                                            </tr>
+                                            <tr ng-if="revenueData.length>0">
+                                                <td><strong>Total</strong></td>
+                                                <td>
+                                                    {{ productAmountGroupByTax | sumByColumn: 'tax_amount'  | number:2}}
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 total-report-table-class">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="3">Group By Tax Services</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="s_amount in serviceAmountGroupByTax">
+                                                <td>
+                                                    <span class="label label-sm label-success">{{s_amount.tax_no}}</span>  {{s_amount.name}} ({{s_amount.tax_value}}%)
+                                                </td>
+                                                <td>
+                                                    {{s_amount.tax_amount | number:2}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr ng-if="!totalPaymentMethod.length" style="text-align: center;">
+                                                <td colspan="3">Data not available</td>
+                                            </tr>
+                                            
+                                            <tr ng-if="totalPaymentMethod.length>0">
+                                                <td><strong>Total</strong></td>
+                                                <td>
+                                                        {{ serviceAmountGroupByTax | sumByColumn: 'tax_amount'  | number:2 }}
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,129 @@
+<div class="calendarparts bg-white" ng-controller="fullcalendarCtrl">
+    <div id="custom_notification_bar"><span class="text">
+        {{customer_notification_msg}} </span><span class="remove-custom_notification_bar" ng-click="remove_custom_notification()">X</span></div>
+
+    <div class="calendarparts-left">
+        <div class="pagesidebar">
+            <div uib-datepicker ng-model="dt" class="well well-sm clip-datepicker" datepicker-options="datepickerOptions" ng-change="calendarGoToDateFunc(dt)">
+            </div>
+            <table class="month-selection-table">
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <span ng-if="click_week > 0">+ {{click_week}}</span> Week {{week_no}}
+                    </td>
+                    <td colspan="2">
+                        <button class="btn btn-dark-blue today-class" ng-click="clickToday()">Today</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><button ng-click="clickOnWeek(1)" class="btn btn-dark-blue">+1</button></td>
+                    <td><button ng-click="clickOnWeek(2)" class="btn btn-dark-blue">+2</button></td>
+                    <td><button ng-click="clickOnWeek(3)" class="btn btn-dark-blue">+3</button></td>
+                    <td><button ng-click="clickOnWeek(4)" class="btn btn-dark-blue">+4</button></td>
+                </tr>
+                <tr>
+                    <td><button ng-click="clickOnWeek(5)" class="btn btn-dark-blue">+5</button></td>
+                    <td><button ng-click="clickOnWeek(6)" class="btn btn-dark-blue">+6</button></td>
+                    <td><button ng-click="clickOnWeek(7)" class="btn btn-dark-blue">+7</button></td>
+                    <td><button ng-click="clickOnWeek(8)" class="btn btn-dark-blue">+8</button></td>
+                </tr>
+                <tr>
+                    <td><button ng-click="clickOnWeek(9)" class="btn btn-dark-blue">+9</button></td>
+                    <td><button ng-click="clickOnWeek(10)" class="btn btn-dark-blue">+10</button></td>
+                    <td><button ng-click="clickOnWeek(11)" class="btn btn-dark-blue">+11</button></td>
+                    <td><button ng-click="clickOnWeek(12)" class="btn btn-dark-blue">+12</button></td>
+                </tr>
+            </table>
+            <div class="panel-body padding-3">
+                <div class="checkbox clip-check check-primary">
+                    <!-- <input type="checkbox" id="cancel_appointment"  ng-model="calendar_setting.display_cancel_appointment"> -->
+                    <input type="checkbox" id="cancel_appointment" ng-change="cancelAppointment()" ng-model="calendar_setting.display_cancel_appointment">
+                    <label for="cancel_appointment">
+                        Show cancel appointment
+                    </label>
+                </div>
+            </div>
+            <!--ng-if="loginUserData.role_id==1" -->
+            <button type="button" class="btn btn-primary btn-block btn-scroll btn-scroll-top ti-arrow-left  margin-bottom-10 " ng-click="openAside('left')">
+                <span>Settings</span>
+            </button>
+            <table class="month-selection-table">
+                <tr class="margin-bottom-5 border-bottom">
+                    <td colspan="2" class="text-center"><Strong>STATUS</Strong></td>
+                </tr>
+                <tr ng-repeat="status in appointment_status">
+                    <td width="30"><span class="margin-left-10"><i class="fa fa-square" ng-style="{color: status.status_color}"></i></span></td>
+                    <td><span>{{status.appointment_status.status_name}}</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="calendarparts-right">
+        <div class="block-content block-content-full">
+            <div class="form-group" ng-if="workers_dropdown == true">
+                <select class="form-control form-control-sm" ng-change="selectWorker()" ng-model="worker.id" ng-options="item.id as item.name for item in select_worker" required>
+                </select>
+            </div>
+            <!-- <div class="js-calendar p-xl-4" id="js-calendar"></div> -->
+            <div class="js-calendar p-xl-4" id="calendar"></div>
+        </div>
+    </div>
+    <style ng-if="yellow_time_line">
+    .fc-time-grid .fc-slats tr:hover td {
+        border-top: 2px solid #FFA031;
+    }
+
+    /* .fc-time-grid .fc-slats tr td:hover {
+                //background-color: #FFCE6F;
+                } */
+    .fc-time-grid .fc-slats tr:hover td span {
+        background-color: #FFA031;
+        color: #FFF;
+        padding: 2px;
+    }
+    </style>
+    <style ng-if="default_view == 'agendaDay'">
+    .fc-time-grid .fc-slats tr td:hover {
+        background-color: #FFCE6F;
+    }
+    </style>
+</div>
+<!-- end: CALENDAR -->
+<style>
+.fc-nonbusiness {
+    background: #aba6a6;
+}
+
+a.fc-event {
+    border-width: 2PX;
+
+}
+
+.tooltipevent {
+    background-color: rgba(0, 0, 0, .6) !important;
+    color: #fff !important;
+}
+
+.fc-widget-content>.test {
+
+    float: left;
+    height: 100%;
+}
+
+.fc-time-grid .fc-slats tr td .test:hover {
+    background-color: #FFCE6F;
+}
+.fc-scroller{
+        height: 100% !important;
+    }
+#ui-datepicker-div{
+    margin: 32px 0 0 -180px;
+}
+</style>
+<script>
+$('body').on('touchstart', function(e){
+    if($('#ui-datepicker-div').css('display') =='block'){
+        $('#ui-datepicker-div').hide();
+    }
+})
+</script>

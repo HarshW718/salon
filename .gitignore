@@ -1,0 +1,8 @@
+api/public/pedicure_images/*
+api/node_modules
+api/public/hot
+api/public/storages
+api/storage/*.key
+api/vendor
+company_logo/*
+uploads/*

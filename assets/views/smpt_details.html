@@ -1,0 +1,82 @@
+<div class="container-fluid bg-white ng-scope" ng-controller="smpt_detailsCtrl">
+    <div class="row">
+        <div class="panel panel-transparent">
+
+            <div class="panel-heading padding-10">
+                <h3 class="panel-title"><strong>SMTP details for mail </strong></h3>
+            </div>
+
+            <div class="panel-body padding-10">
+                <div class="col-md-7">
+                   
+                   
+                   
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="block">
+                                        MAIL_HOST
+                                </label>
+                                <input type="text" class="form-control input-sm" id="mail_host" name="mail_host" placeholder="MAIL_HOST"
+                                    ng-model="smpt_details.mail_host" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="block">
+                                      MAIL_PORT
+                                </label>
+                                <input type="text" class="form-control input-sm" id="mail_port" name="mail_port" placeholder="MAIL_PORT"
+                                    ng-model="smpt_details.mail_port" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="block">
+                                            MAIL_USERNAME
+                                    </label>
+                                    <input type="text" class="form-control input-sm" id="mail_username" name="mail_username" placeholder="MAIL_USERNAME"
+                                        ng-model="smpt_details.mail_username" />
+                                </div>
+                        </div>
+                    </div>
+                          
+                         
+                        <div class="row margin-top-15">
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="block">
+                                            MAIL_PASSWORD
+                                    </label>
+                                    <input type="password" class="form-control input-sm" id="mail_password" name="mail_password" placeholder="MAIL_PASSWORD"
+                                        ng-model="smpt_details.mail_password" ng-paste="$event.preventDefault()" />
+                                </div>
+                            </div> 
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="block">
+                                                CONFIRM_MAIL_PASSWORD
+                                        </label>
+                                        <input type="password" class="form-control input-sm" id="mail_password" name="mail_password" placeholder="CONFIRM_MAIL_PASSWORD"
+                                            ng-model="smpt_details.confirm_mail_password" ng-paste="$event.preventDefault()" />
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="row margin-top-15">
+
+                            <div class="col-md-12">
+                                    <button type="button" class="btn btn-wide btn-success float-right"
+                                    ng-click="submit_smptDetailsForm()">Update</button>
+                            </div>
+                            </div>
+                                    
+                               
+                    </div>
+                </div>
+               
+
+            </div>
+        </div>
+    </div>
+</div>

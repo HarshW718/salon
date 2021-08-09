@@ -1,0 +1,24 @@
+<div class="modal-header ng-scope">
+    <button type="button" class="close" title="Close" ng-click="cancel()">×</button>
+    <h3 class="modal-title ng-binding"> <i class="fa fa-eye"></i> Preview of email template</h3>
+</div>
+<form name="serviceForm" id="id_serviceForm" >
+<div class="modal-body">
+    <div class="container-fluid bg-white">
+        <div class="row">
+                <div class="col-md-12">
+                     <p ng-bind-html="myHTML | trusted"></p>
+                     <p id="newhtml"></p>
+                   
+
+                </div>
+            
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+<!--    <button type="button" class="btn btn-wide btn-success" ng-click='setInvoiceSetting(invoiceSetting)' >Save</button>-->
+    <button type="button" class="btn btn-wide btn-danger" ng-click="cancel()">Close</button>        
+</div>
+</form>
+

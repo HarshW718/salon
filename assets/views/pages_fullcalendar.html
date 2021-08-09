@@ -1,0 +1,700 @@
+<div class="container-fluid margin-top-5 bg-white" ng-controller="fullcalendarCtrl">
+    <div ng-if="calendarSidebarFlag == true">
+        <div class="pagesidebar">
+            <div uib-datepicker ng-model="dt" class="well well-sm clip-datepicker" datepicker-options=""  ng-change="calendarGoToDateFunc(dt)"></div>
+                <table class="month-selection-table">
+                    <tr>
+                        <td colspan="2" class="text-center">
+                            Week 27
+                        </td>
+                        <td colspan="2">
+                            <button class="btn btn-dark-blue today-class">Today</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><button class="btn btn-dark-blue active">+1</button></td>
+                        <td><button class="btn btn-dark-blue">+2</button></td>
+                        <td><button class="btn btn-dark-blue">+3</button></td>
+                        <td><button class="btn btn-dark-blue">+4</button></td>
+                    </tr>
+                    <tr>
+                        <td><button class="btn btn-dark-blue">+5</button></td>
+                        <td><button class="btn btn-dark-blue">+6</button></td>
+                        <td><button class="btn btn-dark-blue">+7</button></td>
+                        <td><button class="btn btn-dark-blue">+8</button></td>
+                    </tr>
+                    <tr>
+                        <td><button class="btn btn-dark-blue">+9</button></td>
+                        <td><button class="btn btn-dark-blue">+10</button></td>
+                        <td><button class="btn btn-dark-blue">+11</button></td>
+                        <td><button class="btn btn-dark-blue">+12</button></td>
+                    </tr>
+                </table><br>
+
+                <button type="button" class="btn btn-primary btn-block btn-scroll btn-scroll-top ti-arrow-left" ng-click="openAside('left')">
+                    <span>Settings</span>
+                </button>
+        </div>
+    </div>
+   
+    <div class="pagemain-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body calendar calendar-margin">
+                        <div class="block-content block-content-full">
+                            <!-- Calendar Container -->
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <!-- <a href="#" class="sidebar-toggler visible-md visible-lg " ng-click="calendarSidebar()"> <i class="fa fa-bars calendar-toggle"></i> </a> -->
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group" ng-if="workers_dropdown == true">
+                                        <select ng-model="worker.id" class="cs-select cs-skin-elastic workers-selector-dropdown">
+                                                <option value="{{x.id}}" ng-repeat="x in filteredResources">{{x.name}}</option>
+                                                <!-- <option value="Mr. Dominic Adams DVM">Mr. Dominic Adams DVM</option>
+                                                <option value="Serena Leffler">Serena Leffler</option>
+                                                <option value="Dr. Elbert Kris II">Dr. Elbert Kris II</option>
+                                                <option value="Michelle Crooks">Michelle Crooks</option> -->
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="js-calendar p-xl-4" id="js-calendar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+         
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <button type="button" class="close"  ng-click="cancel($event)">&times;</button>
+        <h3 class="modal-title">Create Appointment</h3>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid  bg-white">
+            <div class="row">
+                <uib-tabset justified="true" class="tabbable">
+                    <uib-tab heading="Create Appointment"  class="create-appointmet-tab-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                                Select Customer
+                                        </label>
+                                        <input type="text" class="form-control rmborder" id="exampleInputEmail1" placeholder="Search by name, Mobile or email" />
+                                    </div>
+                                    <div class="radio clip-radio radio-primary radio-inline"">
+                                        <input type="radio" id="radio4" name="vertical" value="radio4"  ng-click="existing($event)" />
+                                        <label for="radio4">
+                                            Existing
+                                        </label>
+                                    </div>
+                                    <div class="radio clip-radio radio-primary radio-inline">
+                                            <input type="radio" id="radio5" name="vertical" value="radio5" ng-click="newCustomer($event)" />
+                                            <label for="radio5">
+                                                    New customer
+                                            </label>
+                                    </div>
+                                    <div ng-if="visibility == true">    
+                                        <div class="radio clip-radio radio-primary radio-inline">
+                                            <input type="radio" id="radio1" name="inline" value="radio1" />
+                                            <label for="radio1">
+                                                Man
+                                            </label>
+                                        </div>
+                                        <div class="radio clip-radio radio-primary radio-inline">
+                                            <input type="radio" id="radio2" name="inline" value="radio2" />
+                                            <label for="radio2">
+                                                Woman
+                                            </label>
+                                        </div>
+                                        <div class="radio clip-radio radio-primary radio-inline">
+                                            <input type="radio" id="radio3" name="inline" value="radio3"  />
+                                            <label for="radio3">
+                                                Unknown
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="form-group row">
+                                            <div class="col-xs-6">
+                                                <input type="text" class="form-control" id="first_name" placeholder="First name" />
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <input type="text" class="form-control" id="last_name" placeholder="Last name" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-xs-6">
+                                                <!-- <input type="number" class="form-control" id="mobile" placeholder="Mobile" pattern="\d*"/> -->
+
+                                                <input type="tel"  class="form-control input-sm" id="mobile" name="mobile"
+                                                placeholder="Mobile" maxlength="20" ng-model="customer.mobile" required pattern="\d*" number-only />
+
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <!-- <input type="number" class="form-control" id="landline" placeholder="Landline" pattern="\d*"/> -->
+
+                                               
+
+                                                <input type="tel" class="form-control" id="landline" name="landline" placeholder="Landline" maxlength="20"
+                                                ng-model="customer.landline" pattern="\d*" number-only >
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" id="email" placeholder="Email" />
+                                        </div>
+                                        <div class="form-group row">
+                                        <div class="col-xs-3" style="padding-right:0px;">
+                                                <input type="text" class="form-control" id="pincode" placeholder="Pincode" pattern="\d*"/>
+                                            </div>
+                                            
+                                            <div class="col-xs-4" style="padding-right:0px;">
+                                                <input type="number" class="form-control" id="house_no" placeholder="House no" pattern="\d*"/>
+                                            </div>
+                                            <div class="col-xs-4" style="padding-right:0px;">
+                                                <input type="text" class="form-control" id="house_letter" placeholder="house letter" replace="[^a-zA-Z]" with="" maxlength="8"pattern="\d*"/>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                                <input type="text" class="form-control" id="address" placeholder="Address" />
+                                            </div>
+                                        <div class="form-group row">
+                                            <div class="col-xs-9">
+                                                <input type="text" class="form-control" id="postcode" placeholder="Post code" />
+                                            </div>
+                                            
+                                            
+                                            <!-- <div class="col-xs-4">
+                                                <p class="padding-top-5"><i class="fa fa-check "></i> <strong>Check</strong></p>
+                                            </div> -->
+                                        </div>
+                                        <!-- <div class="form-group">
+                                            <input type="text" class="form-control" id="address" placeholder="Address" />
+                                        </div> -->
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="residence" placeholder="Residence" />
+                                        </div>
+                                        <div class="form-group" ng-controller="DatepickerDemoCtrl">
+                                            <label> Birthdate </label>
+                                            <div class="input-group">
+                                                    <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="opened" datepicker-options="datepickerOptions" ng-required="true" close-text="Close" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary" ng-click="open()">
+                                                                <i class="fa fa-calendar"></i>
+                                                        </button> 
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <label for="form-field-mask-2">
+                                            Choose services
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"> <i class="fa fa-folder"></i> </span>
+                                            <input type="text" class="form-control rmborder" name="services" placeholder="Search..." ui-mask="Search..." ng-model="x">
+                                            <span class="input-group-addon"> <i class="fa fa-search"></i> </span>
+                                        </div>
+                                    </div>
+                                    
+                                        <table class="table table-bordered table-hover" id="sample-table-4">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                <a href="javascript:void(0)" class="btn btn-transparent btn-xs" tooltip-placement="top"><i class="fa fa-folder"></i></a> Services 1
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                <a href="javascript:void(0)" class="btn btn-transparent btn-xs" tooltip-placement="top"><i class="fa fa-folder"></i></a> Services 2
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                <a href="javascript:void(0)" class="btn btn-transparent btn-xs" tooltip-placement="top"><i class="fa fa-folder"></i></a> Services 3
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    <div class="form-group">
+                                        <textarea placeholder="Comment..." id="form-field-22" class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <span class="help-inline col-md-4 col-sm-6"> <i class="fa fa-paper-plane text-primary"></i> Confirmation</span>
+                                            <div class="col-md-8 col-sm-6">
+                                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                                    <input type="checkbox" id="checkbox10" value="1" checked="">
+                                                    <label for="checkbox10">
+                                                        Email
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                                    <input type="checkbox" id="checkbox11" value="1">
+                                                    <label for="checkbox11">
+                                                        SMS
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <span class="help-inline col-md-4 col-sm-6">Medical quitionare  </span>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <select class="cs-select cs-skin-elastic">
+                                                        <option value="" selected="">Options</option>
+                                                        <option value="Option 1">Personal detail 1</option>
+                                                        <option value="Option 2">Personal detail 2</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3">
+                                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                                    <input type="checkbox" id="checkbox14" value="1" >
+                                                    <label for="checkbox14">
+                                                        Email
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <span class="help-inline col-md-4 col-sm-6">Treatment information </span>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <select class="cs-select cs-skin-elastic">
+                                                        <option value="" selected="">Options</option>
+                                                        <option value="Option 1">Personal detail 1</option>
+                                                        <option value="Option 2">Personal detail 2</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3">
+                                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                                    <input type="checkbox" id="checkbox15" value="1" >
+                                                    <label for="checkbox15">
+                                                        Email
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <span class="help-inline col-md-4 col-sm-6">Personal detail </span>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <select class="cs-select cs-skin-elastic">
+                                                        <option value="" selected="">Options</option>
+                                                        <option value="Option 1">Personal detail 1</option>
+                                                        <option value="Option 2">Personal detail 2</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3">
+                                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                                    <input type="checkbox" id="checkbox16" value="1" >
+                                                    <label for="checkbox16">
+                                                        Email
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </uib-tab>
+                        <uib-tab heading="Blocking time" class="create-blocking-tab-heading">
+                            <table class="table table-bordered ">
+                                <tr>
+                                  <td>Type</td>
+                                  <td><div class="form-group col-md-6 margin-bottom-5">       
+                                          <!-- <select class="cs-select cs-skin-elastic">
+                                              <option value="" selected="">Options</option>
+                                              <option value="absent">Absent</option>
+                                              <option value="available">Available</option>
+                                          </select> -->
+                                        
+                                                <div class="radio clip-radio radio-primary radio-inline">
+                                                    <input type="radio" id="radio10" name="inline" value="radio10">
+                                                    <label for="radio10">
+                                                        Absent
+                                                    </label>
+                                                </div>
+                                                <div class="radio clip-radio radio-primary radio-inline">
+                                                    <input type="radio" id="radio12" name="inline" value="radio12" checked="checked">
+                                                    <label for="radio12">
+                                                        Assign Test
+                                                    </label>
+                                                </div>
+                                            </div>
+                                      </td>
+                                </tr>
+                                <tr>
+                                  <td>Description</td>
+                                  <td><div class="form-group margin-bottom-5">
+                                        <textarea laceholder="Large Text Field" id="form-field-12" class="form-control input-lg"></textarea>
+                                  </div></td>
+                                 
+                                </tr>
+                                <tr>
+                                  <td>Start End Time</td>
+                                  <td>
+                                        
+                                    <div class="form-group row margin-bottom-5">
+                                          <div class="col-xs-3">
+                                                <div uib-timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>  
+                                          </div>
+                                          <div class="col-xs-2">
+                                                <input class="form-control" disabled id="ex1" type="text" value="To" style="margin-top:30px;">
+                                          </div>
+                                          <div class="col-xs-3">
+                                                <div uib-timepicker ng-model="mytime1" ng-change="changed1()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>  
+                                          </div>
+                                          <div class="col-xs-3">
+                                                
+                                                  <div class="checkbox clip-check check-primary" style="margin-top:40px;">
+                                                          <input type="checkbox" id="whole_day" value="1">
+                                                          <label for="whole_day"> 
+                                                                  The whole day
+                                                          </label>
+                                                      </div> 
+                                          </div>
+                                  </div></td>
+                                </tr>
+                            </table>
+                        </uib-tab>
+                       
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer create_client_model_footer">
+    <button class="btn btn-success" ng-click="ok($event)">Save</button>
+    <button class="btn btn-danger" ng-click="cancel($event)">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="myModalSettings.html">
+    <div class="modal-header">
+        <button type="button" class="close"  ng-click="cancel($event)">&times;</button>
+        <h3 class="modal-title">Settings</h3>
+    </div>
+    <div class="modal-body  settings-panel">
+        <div class="panel panel-transparent">
+            <div class="panel-heading">
+                <h5 class="panel-title">Agenda scale</h5>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                        <select class="cs-select cs-skin-elastic" ng-model="timeSlot" ng-change="timeslotChange(timeSlot)">
+                        <option value="00:05:00">5min</option>
+                        <option value="00:10:00">10min</option>
+                        <option value="00:15:00">15min</option>
+                        <option value="00:20:00">20min</option>
+                        <option value="00:30:00">30min</option>
+                        <option value="01:00:00">1hour</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="panel-heading">
+                <h5 class="panel-title">Agenda Start-End Time</h5>
+            </div>
+            <div class="panel-body">
+                <form role="form" class="form-horizontal ng-pristine ng-valid">
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="email" placeholder="07:00" id="inputEmail3" class="form-control underline">
+                        </div>
+                        <label class="col-sm-1 control-label" for="inputEmail3">
+                            Start
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="password" placeholder="23:00" id="inputPassword3" class="form-control underline">
+                        </div>
+                        <label class="col-sm-1 control-label" for="inputPassword3">
+                            End
+                        </label>
+                    </div>
+                </form>
+            </div>
+        
+            <div class="panel-heading">
+                <h5 class="panel-title">Agenda first day(Weekly overview)</h5>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">  
+                    <select class="cs-select cs-skin-elastic">
+                        <option value="Sunday">Sunday</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Frieday">Frieday</option>
+                        <option value="Saturday">Saturday</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="panel-heading">
+                <h5 class="panel-title">Timeline</h5>
+            </div>
+            <div class="panel-body">
+                <div class="checkbox clip-check check-primary">
+                    <input type="checkbox" id="checkbox7" value="1">
+                    <label for="checkbox7">
+                        Show timeline
+                    </label>
+                </div>
+            </div>
+        
+            <div class="panel-heading">
+                <h5 class="panel-title">Show on appointment</h5>
+            </div>
+            <div class="panel-body">
+                <div class="checkbox clip-check check-primary">
+                    <input type="checkbox" id="checkbox12" value="1">
+                    <label for="checkbox12">
+                        Phone Number
+                    </label>
+                </div>
+                <div class="checkbox clip-check check-primary">
+                    <input type="checkbox" id="checkbox13" value="1">
+                    <label for="checkbox13">
+                        Comments
+                    </label>
+                </div>
+            </div>
+        </div>
+</script>
+
+<script type="text/ng-template" id="myModalDragConfirmation.html">
+    <div class="modal-header">
+                    <button type="button" class="close"  ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title">Message</h3>
+    </div>
+    <div class="modal-body bg-white">
+            <span><i class="ti-calendar ti-calendar-drag"></i></span>&nbsp;&nbsp;Reappointment on: {{ date }} ?
+            <br>
+            <div style="float:right">
+                    <div class="checkbox clip-check check-primary checkbox-inline">
+                        <input type="checkbox" id="checkbox10" value="1">
+                        <label for="checkbox10">
+                            Email
+                        </label>
+                    </div>
+                    <div class="checkbox clip-check check-primary checkbox-inline">
+                        <input type="checkbox" id="checkbox11" value="1">
+                        <label for="checkbox11">
+                            SMS
+                        </label>
+                    </div>
+            </div>
+            <br>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="cancel($event)">Cancel</button>
+        <button class="btn btn-success" ng-click="ok($event)">OK</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="myModalShowAppointment.html">
+    <div class="modal-header">
+                    <button type="button" class="close"  ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title">Show Appointment</h3>
+    </div>
+    <div class="modal-body show-appointment-form bg-white">
+            <div class="panel-body">
+                    <form role="form" class="form-horizontal ng-pristine ng-valid">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="inputEmail3">
+                                Customer
+                            </label>
+                            <div class="col-sm-10">
+                                <i class="ti-user"></i>&nbsp;<a href="#">Test Customer</a><br>
+                                <i class="ti-mobile"></i>12345 &nbsp; <i class="ti-email"></i> <i>No email backend</i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="inputPassword3">
+                                Date Time
+                            </label>
+                            <div class="col-sm-10">
+                                {{ date }}  <i class="ti-time"></i>  {{time}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="inputEmail3">
+                                Therapy
+                            </label>
+                            <div class="col-sm-10">
+                                Consult
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="inputPassword3">
+                                Status
+                            </label>
+                            <div class="col-sm-10">
+                                Scheduled
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="inputPassword3">
+                                Comments
+                            </label>
+                            <div class="col-sm-8">
+                                <textarea placeholder="enter a note only visible to employees" class="form-control autosize area-animated msd-elastic: \n; ng-pristine ng-valid ng-empty ng-touched" data-ng-model="bar" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 71px;"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+    </div>
+    <div class="modal-footer">
+        <div class="footer-option-dropdown">
+                <select class="cs-select cs-skin-slide">
+                    <option value=""></option>
+                    <option value=""  selected="">Options</option>
+                    <option value="copy">Change</option>
+                    <option value="view_detail">Rebook</option>
+                    <option value="view_client">To Copy</option>
+                    <option value="view_client">Delete</option>
+                    <option value="view_client">show appointment log</option>
+                </select>
+        </div>
+        <button class="btn btn-purple" ng-click="app_cancel($event)"><i class="fa fa-thumbs-down"></i> Cancel</button>
+        <!-- <button class="btn btn-warning" ng-click="ok($event)"><i class="fa fa-thumbs-up"></i> Confirm</button> -->
+        <button class="btn btn-success" ng-click="checkIn($event)"><i class="fa fa-check"></i> Checking in</button>
+        <button class="btn btn-success" ng-click="toPay($event)"><i class="fa fa-rupee"></i> To pay</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="onDropContent.html">
+    <div class="modal-header">
+    <h3 class="modal-title">Show appointment</h3>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid bg-white">
+                <table class="table">
+                       
+                          <tr>
+                            <th>customer</th>
+                            <td><i class="fa fa-user-o"></i> Test Name <br>
+                                <i class="fa fa-mobile"></i> 9166460308 <br>
+                                <i class="fa fa-envelope-o"></i> <span> <i class="fa fa-exclamation-circle text-orange"></i> no email known</span>
+                            </td>
+                          </tr>
+                          <tr>
+                                <th>Date Time</th>
+                                <td>Monday 1 july 2019 <span> <i class="fa fa-clock-o"></i> 12:00 - 12:20</span>
+                                </td>
+                              </tr>
+                        
+                      </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+            <div class="form-group col-md-3">
+                   
+                    
+                <div class="cs-select cs-skin-elastic" tabindex="0"><span class="cs-placeholder">Options</span>
+                    <div class="cs-options">
+                        <ul>
+                            <li data-option="" data-value="copy"><span>Copy</span></li>
+                            <li data-option="" data-value="view_detail"><span>View Details</span></li>
+                            <li data-option="" data-value="view_client"><span>View Client</span></li>
+                        </ul>
+                    </div>
+                    <select class="cs-select cs-skin-elastic">
+                        <option value=""  selected="">Options</option>
+                        <option value="copy">Copy</option>
+                        <option value="view_detail">View Details</option>
+                        <option value="view_client">View Client</option>
+                        
+                    </select></div></div>
+    <button class="btn btn-wide btn-danger" ng-click="cancel($event)"><i class="fa fa-thumbs-down"></i> Cancel</button>
+    <button class="btn btn-wide btn-warning" ng-click="cancel($event)"><i class="fa fa-thumbs-up"></i> Confirm</button>
+    <button class="btn btn-wide btn-success" ng-click="ok($event)"><i class="fa fa-check"></i> Checking in</button>
+    <button class="btn btn-wide btn-success" ng-click="ok($event)"><i class="fa fa-inr"></i> Checkout</button>
+    
+    
+    
+    </div>
+</script>
+
+<script type="text/ng-template" id="myModalShowAppointmentCancel.html">
+    <div class="modal-header">
+                    <button type="button" class="close"  ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title">Message</h3>
+    </div>
+    <div class="modal-body bg-white">
+            <br><br>
+            <span style="font-size:15px;"><i class="fa fa-thumbs-o-down appointment-cancel-thumb-down"></i> &nbsp;&nbsp;Mark appointments as canceled ?</span>&nbsp;&nbsp;
+            <div class="form-group">
+                    <br>
+                    <label class="col-sm-2 control-label" style="font-weight:bold;font-size:15px;">
+                        Reason
+                    </label>
+                    <div class="col-sm-3">
+                        <select class="cs-select cs-skin-elastic">
+                            <option value="" selected="">Options</option>
+                            <option value="Option1">Option1</option>
+                            <option value="Option1">Option2</option>
+                        </select>
+                    </div>
+                </div>
+            <br><br>
+            <div style="float:right">
+                    <div class="checkbox clip-check check-primary checkbox-inline">
+                        <input type="checkbox" id="checkbox10" value="1">
+                        <label for="checkbox10">
+                            Email
+                        </label>
+                    </div>
+            </div>
+            <br>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" ng-click="cancel($event)">Cancel</button>
+        <button class="btn btn-success" ng-click="cancel($event)">No, only this one</button>
+        <button class="btn btn-success" ng-click="cancel($event)">Yes, all cancellations</button>
+    </div>
+</script>
+
+<!-- end: CALENDAR -->
+<style>
+    td.fc-widget-content {
+        background: #f2f0ef;
+        border: 1px solid #d1cecc;
+    }
+</style>

@@ -1,0 +1,72 @@
+<!-- start: FORGOT -->
+<div ng-class="{'app-navbar-fixed': app.layout.isNavbarFixed == false}"></div>
+<div class="row"  ng-controller="allowCtrl">
+    <div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+        <div class="logo">
+            <img ng-src="{{app.layout.logo}}" alt="{{app.name}}"/>
+        </div>
+        <!-- start: FORGOT BOX -->
+        <div class="box-forgot">
+            <form class="form-forgot">
+                <fieldset>
+                    <legend>
+                        Request
+                    </legend>
+                    
+
+                    <div class="alert alert-success" ng-if="sync==true">
+                        <button data-ct-dismiss="alert" class="close">
+                            ×
+                        </button>
+                        <strong>Done!</strong> 
+                         {{msg}}
+                    </div>
+
+
+                    <div class="alert alert-danger" ng-if="syncError">
+                        <button data-ct-dismiss="alert" class="close">
+                            ×
+                        </button>
+                        <strong>Warning!</strong>
+                        {{msg}}
+                        
+                    </div>
+                    
+                    <div class="alert alert-warning" ng-if="syncInfo">
+                        <button data-ct-dismiss="alert" class="close">
+                            ×
+                        </button>
+                        
+                        {{msg}}
+                        
+                    </div>
+                    
+                    <button type="button" class="btn btn-wide btn-success" ng-if="btn==1" ng-click="denied()">
+                            Yes
+                       </button>
+                   
+                    
+                        <button type="button" class="btn btn-wide btn-success" ng-if="btn==2" ng-click="sync()">
+                            Yes
+                       </button>
+                    
+                    <div class="form-actions">
+                        <p>
+                            <a ui-sref="login.signin" >
+                             Click for Log-in 
+                            </a>
+                        </p>
+                          
+                    </div>
+                </fieldset>
+            </form>
+            <!-- start: COPYRIGHT -->
+            <div class="copyright">
+                2019 © Salon CRM
+            </div>
+            <!-- end: COPYRIGHT -->
+        </div>
+        <!-- end: FORGOT BOX -->
+    </div>
+</div>
+<!-- end: FORGOT -->

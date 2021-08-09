@@ -1,0 +1,327 @@
+<style>
+    .table>tbody>tr>td{
+        border-top: none !important;
+        border-bottom: none !important;
+    }
+    .inner-panel-heading{
+        position: relative;
+        padding-bottom:5px;
+        min-height: 10px;
+    }
+    .main-panel-heading{
+        position: relative;
+        min-height: 30px;
+    }
+    .main-panel-white{
+        background-color: #ffffff;
+        position: relative;
+        color: #5b5b60;
+        border-bottom:1px solid rgba(0, 0, 0, 0.07)
+    }
+    .main-panel-tools{
+        position: absolute;
+        right: 10px;
+        top: 0px;
+        font-size: 12px;
+    }
+    
+</style>
+<div class="container-fluid  bg-white ng-scope" ng-controller="workersDetailviewCtrl">
+    <div class="row">
+        <div class="col-sm-10">
+            <img src="assets/images/default-user.png" class="workers-img-icon">
+            <span class="workers-img-label">{{users.name}}</span>
+        </div>
+        <div class="col-sm-2">
+            <a href="#!/app/pages/management/service_provider" class="btn btn-small btn-default pull-right"><i class="fa fa-angle-double-left"></i></a>
+        </div>
+        <div class="col-md-12">
+            <div>
+                <div class="container-fluid bg-white mngmnt-workers-tab">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <uib-tabset class="tabbable" active="active">
+                                <uib-tab index="0" heading="ACCOUNT">
+                                    <div class="panel panel-transparent">
+                                        <div class="panel-body">
+                                            <form role="form" class="ng-pristine ng-valid" id="editUser">
+                                                <div class="col-md-12">
+                                                    <div class="form-group"> 
+                                                        <button type="button"  class="btn btn-success"  ng-click="editUser('editUser')">Update</button>
+                                                        <a href="#!/app/pages/management/service_provider" class="btn btn-primary border-radius-0">Close</a>
+                                                    </div>  
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <input type="hidden" name="id"  id="id" class="form-control" ng-model="users.id" >
+                                                                <input type="text" name="first_name" placeholder="First Name" id="first_name" class="form-control" ng-model="users.first_name" required="">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <input type="text" placeholder="Last Name" id="last_name" class="form-control" ng-model="users.last_name" name="last_name"  required="">
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <input type="text" placeholder="Display Name" id="name" class="form-control" ng-model="users.name" required="" name="name">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                 <input type="email" placeholder="Email" id="email" class="form-control" ng-model="users.email" required="" name="email">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                     <div class="form-group">
+                                                        <div class="row">
+                                                           <!--  <div class="col-md-6">
+                                                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                    <input type="checkbox" id="checkbox10" value="1" ng-model="users.is_sync_google">
+                                                                    <label for="checkbox10">
+                                                                        Sync with google calendar
+                                                                    </label>
+                                                                </div>
+                                                            </div> -->
+                                                            <div class="col-md-6">
+                                                               <div class="checkbox">
+                                                                <switch ng-model="users.is_active" ng-init="is_active = true" class="green"></switch>
+                                                                <label for="checkbox10">
+                                                                    Status
+                                                                </label>
+                                                               </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+
+                                                        <div>
+                                                           <textarea class="form-control autosize area-animated msd-elastic: \n; ng-pristine ng-untouched ng-valid ng-empty"  style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 55px;" ng-model="users.discription" name="description" placeholder="Description"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div>
+                                                            <textarea class="form-control autosize area-animated msd-elastic: \n; ng-pristine ng-untouched ng-valid ng-empty"  style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 55px;" ng-model="users.certificate_number" name="certificate_number" placeholder="Course certificate number"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </uib-tab>
+                                <uib-tab index="1" heading="SERVICES">
+                                    
+                                   <div class="col-md-8">
+    <button type="button" class="btn btn-wide btn-success"
+    ng-click="submit_checkedService()">Update</button>
+    <div class="table-responsive">
+        <table class="table table-pointer">
+            <thead>
+                <tr>
+                    <th class="col-md-3"><span class="text-large"><i class="fa fa-folder-open-o padding-right-10"></i>
+                    Description</span></th>
+                    
+                    <th class="col-md-1"><span class="text-large">Used Service</span></th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat-start="service_category in service_categories">
+                    <th  ng-click="category1($index)" ><span class="text-size-14 text-blue "><i
+                        class="fa fa-folder-open-o padding-right-10"></i> {{service_category.name}}</span></th>
+                        <th>
+                            <div class="checkbox clip-check check-primary margin-bottom-0 margin-top-0">
+                                <input type="checkbox" id="{{$index}}_checkbox_cat" ng-change="checkByCategory(service_category.id)" ng-model="selected_cat[service_category.id]" value="{{service_category.id}}">
+                                <label for="{{$index}}_checkbox_cat">
+                                </label>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr id="row_{{$index}}" ng-hide="hide_show_{{$index}}" ng-repeat-end>
+                        <td colspan="2">
+                            
+                            <table class="table table-borderless">
+                                <tr ng-repeat="service in services | filter : {category_id: service_category.id}">
+                                    <td class="col-md-3"><span class="text-azure p-le-20">{{service.name}}</span></td>
+                                    <td class="col-md-1">
+                                        <div class="checkbox clip-check check-primary margin-bottom-0 margin-top-0">
+                                            <input type="checkbox" id="{{service.id}}_checkbox" ng-change="singleCheck(service,services,selected_service)"  ng-model="selected_service[service.id]" value="{{service.id}}">
+                                            <label for="{{service.id}}_checkbox"></label>
+                                        </div>
+                                    </td>
+                                </tr> 
+                            </table>
+                        </td>
+                    </tr>
+                    <tr ng-show="!service_categories"><td colspan="2"><strong>No data found !!</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+                                    
+                                   
+                                </uib-tab>
+                                <uib-tab index="2" heading="WORKING HOURS">
+                                    <div class="panel panel-transparent">
+                                        <div class="panel-body">
+                                            <form role="form" class="ng-pristine ng-valid worker-detail-authorization mngmnt-workers-workinghours">
+                                                <div class="form-group"> 
+                                                    <button class="btn btn-success" ng-click="addWorkingTime()">Update</button>
+                                                    <a href="#!/app/pages/management/service_provider" class="btn btn-primary border-radius-0">Close</a>
+                                                </div>  
+                                                <div class="form-group"> 
+                                                    <h4>Availability per week</h4>
+                                                </div>  
+                                                <div class="form-group"> 
+                                                    <span><i>“Set the working hours of this service provider by clicking on net plusje you can list the working hours , for example, a lunch break"
+                                                        </i></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-4"><span class="help-inline"><br>even / odd week schedule</span></div>
+                                                        <div class="col-md-2 col-sm-3">
+                                                            <div class="checkbox">
+                                                                <span class="green switch green ng-not-empty ng-valid checked" ng-click="undefined ? switchsetting1 : switchsetting1 = !switchsetting1" ng-class="{ checked:switchsetting1, disabled:undefined }" ng-model="switchsetting1" ng-init="switchsetting1 = true"><small></small><input type="checkbox" ng-model="switchsetting1" style="display:none" class="ng-pristine ng-untouched ng-valid ng-not-empty"><span class="switch-text"> </span></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   <div class="row">
+                                                       <div class="col-md-12" ng-repeat="(key,value) in columns">
+                                                           <div class="col-md-1 col-sm-2"><span class="help-inline"><strong>{{value.dayname}}</strong></span> </div>
+                                                          
+                                                           <div class="col-md-12" ng-repeat="(innerkey,innervalue) in value.timeSlot">
+                                                             
+                                                                <div class="col-md-1 col-sm-1">
+                                                                    <div class="checkbox clip-check check-primary">
+                                                                        <input type="checkbox"        id="{{innerkey}}_ischeck_{{key}}" ng-model="columns[key].timeSlot[innerkey].is_check"> 
+                                                                       
+                                                                        <label for="{{innerkey}}_ischeck_{{key}}" >
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-2">
+                                                                   
+<input type="time" id="{{key}}_isinput_{{innerkey}}" name="input" ng-model="columns[key].timeSlot[innerkey].from_time"  placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" ng-disabled="columns[key].timeSlot[innerkey].is_check"/>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-2">
+
+<input type="time"  name="input" ng-model="columns[key].timeSlot[innerkey].to_time"
+       placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" ng-disabled="columns[key].timeSlot[innerkey].is_check"/>
+                                                                </div>
+                                                               
+                                                                <div class="col-md-1 col-sm-2">
+                                                                    <button type="button" class="btn btn-success btn-sm" ng-click="addSlot(key,innerkey)" ng-if="innerkey==0 && columns[key].timeSlot[innerkey].is_check==false" >
+                                                                        <i class="fa fa-plus"></i>
+                                                                    </button>   
+                                                                    <button type="button" class="btn btn-default btn-sm" ng-if="innerkey!=0" ng-click="removeSlot(key,innerkey)"> 
+                                                                        <i class="fa fa-minus"></i>
+                                                                    </button>   
+                                                                </div>
+                                                           </div>
+                                                       </div>
+                                                       
+                                                    </div>
+                                                   
+                                                </div>  
+                                            </form>
+                                        </div>
+                                    </div>
+                                </uib-tab>
+                                <uib-tab index="3" heading="AUTHORIZATION">
+                                    <div class="panel panel-transparent">
+                                        <div class="panel-body">
+                                            <form role="form" class="ng-pristine ng-valid worker-detail-authorization" id="editAuthUser">
+                                                <div class="form-group"> 
+                                                    <button type="button" class="btn btn-success" ng-click="editAuthUser('editAuthUser')">Update</button>
+                                                    <a href="#!/app/pages/management/service_provider" class="btn btn-primary border-radius-0">Close</a>
+                                                </div>  
+                                                <div class="form-group"> 
+                                                    <h4>Rights</h4>
+                                                </div>  
+                                                <div class="form-group"> 
+                                                    <span><i>“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br>
+                                                            “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                                                        </i></span>
+                                                </div>
+                                                 <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2 col-sm-3"><span class="help-inline">  User role</span></div>
+                                                        <div class="col-md-1 col-sm-2"><i class="fa fa-info-circle text-primary"></i></div>
+                                                        <div class="col-md-2 col-sm-2">
+                                                            <select class="cs-select cs-skin-elastic" ng-model="users.role" required="">
+                                                                <option value="">Select Role</option>
+                                                                <option value="1" ng-selected=" users.role==1">The admin</option>
+                                                                <option value="2" ng-selected=" users.role==2">Workers</option>
+                                                                <option value="3" ng-selected=" users.role==3">Accountants</option>
+                                                                <option value="4" ng-selected=" users.role==4">Receptional</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2 col-sm-3"><span class="help-inline">  book appointments</span></div>
+                                                        <div class="col-md-2 col-sm-2"><i class="fa fa-info-circle text-primary"></i></div>
+                                                        <div class="col-md-2 col-sm-3">
+                                                            <div class="checkbox">
+                                                                <switch ng-model="users.book_app"  class="green"></switch>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2 col-sm-3"><span class="help-inline">Agenda</span></div>
+                                                        <div class="col-md-2 col-sm-2"> <i class="fa fa-info-circle text-primary"></i></div>
+                                                        <div class="col-md-4 col-sm-3">
+                                                            <div class="checkbox">
+                                                                <switch ng-model="users.agenda" class="green"></switch>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2 col-sm-3"><span class="help-inline">Casedesk</span></div>
+                                                        <div class="col-md-2 col-sm-3"> <i class="fa fa-info-circle text-primary"></i></div>
+                                                        <div class="col-md-4 col-sm-3">
+                                                            <div class="checkbox">
+                                                                <switch ng-model="users.casedesk" class="green"></switch>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2 col-sm-3"><span class="help-inline"> Managemanet</span></div>
+                                                        <div class="col-md-2 col-sm-3"> <i class="fa fa-info-circle text-primary"></i></div>
+                                                        <div class="col-md-4 col-sm-3">
+                                                            <div class="checkbox">
+                                                                <switch ng-model="users.managemanet"  class="green"></switch>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2 col-sm-3"><span class="help-inline"> Reports</span></div>
+                                                        <div class="col-md-2 col-sm-3"> <i class="fa fa-info-circle text-primary"></i></div>
+                                                        <div class="col-md-4 col-sm-3">
+                                                            <div class="checkbox">
+                                                                <switch ng-model="users.reports" class="green"></switch>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>  
+                                            </form>
+                                        </div>
+                                    </div>
+                                </uib-tab>
+                            </uib-tabset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .clip-check label:after {
+        left: -3px !important;
+    }
+</style>

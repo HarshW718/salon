@@ -1,0 +1,240 @@
+<div class="modal-header">
+    <button type="button" class="close" title="Close" ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title">Show Appointment</h3>
+</div>
+<div class="modal-body show-appointment-form bg-white">
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-md-12">
+
+
+                    <table class="table table-bordered" ng-if="change_customer_info">
+                            <tbody>
+                                    <tr>
+                                            <th style="width:25%" scope="row">Change Customer</th>
+                                            <td style="width:50%">
+                
+                                                    <ui-select ng-model="change_customer.customer" theme="bootstrap"
+                                                    on-select="onSelectCallback($item)" ng-change="changeCustomer()">
+                                                    <ui-select-match placeholder="Select in the list...">
+                                                        {{$select.selected.full_name}}
+                                                    </ui-select-match>
+                                                    
+                                                    <ui-select-choices repeat="item in people | filter: $select.search">
+                
+                                                        <!-- refresh="yourFunction($select.search)" -->
+                                                        <small>
+                                                            <strong>name :</strong> <span
+                                                                ng-bind-html="item.full_name| highlight: $select.search">
+                                                            </span>
+                                                            </span>
+                                                            <br>
+                                                            <!-- <strong>email :</strong> <span
+                                                        ng-bind-html="item.email | highlight: $select.search"></span><br> -->
+                                                            <strong>mobile :</strong> <span
+                                                                ng-bind-html="item.mobile | highlight: $select.search"></span><br>
+                                                            <strong>postal code :</strong> <span
+                                                                ng-bind-html="item.postal_code | highlight: $select.search"></span><br>
+                                                            <strong>dob :</strong> <span
+                                                                ng-bind-html="item.birthday | highlight: $select.search "></span>
+                
+                                                        </small>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                
+                
+                                               
+                                            </td>
+                                            <td>
+                                                    <button  class="btn btn-success" ng-click="saveChangeCustomer();">Save</button>
+
+                                                    <button  class="btn btn-danger margin-left-5" ng-click="closeChangeCustomer();">Close</button>
+                                            </td>
+
+                                        </tr>
+                            </tbody>
+                    </table>
+
+                    <table class="table table-bordered" ng-if="!change_customer_info">
+                        <tbody>
+                            <tr>
+                                <th style="width: 25%" scope="row">Customer</th>
+                                <td colspan="3">
+                                    <i class="fa fa-user"></i>&nbsp;&nbsp; {{appointments_details.customer_gender}}&nbsp;&nbsp;
+
+                                    <a  ng-click="openUpdateCustomerModal(appointments_details.customer)" class="text-azure"><u> {{appointments_details.customer_name}} </u> </a>&nbsp;&nbsp;
+                                    
+                                    <i class="fa fa-mobile" style="font-size:19px"></i>&nbsp;&nbsp; {{appointments_details.customer_mobile |  space}} 
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-envelope"></i> {{appointments_details.customer_email}} 
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <th style="width: 25%" scope="row">Gender</th>
+                                <td><i class="fa fa-{{appointments_details.customer_gender}}"></i> &nbsp;{{appointments_details.customer_gender}}</td>
+                            </tr> -->
+                            <tr>
+                                <th style="width: 25%" scope="row">Collaborator</th>
+                                <td><i class="fa fa-bookmark-o"></i> &nbsp;{{appointments_details.collaborator}}</td>
+                            </tr>
+                            <tr>
+                                <th style="width: 25%" scope="row">Duration of appointment</th>
+                                <td><span class="span-22">{{appointments_details.day}}, {{appointments_details.month_name}} {{appointments_details.date}}, {{appointments_details.year}} &nbsp;&nbsp;<i class="fa fa-clock-o"> {{appointments_details.start_time}} - {{appointments_details.end_time}} </i></span>
+                                <table class="table table-bordered table-22"><!-- {{customer_medical_report}} -->
+                                    <tr>
+                                      <th>Allergies</th>
+                                      <th>Note</th>
+                                    </tr>
+                                    <tr ng-repeat="reports in customer_medical_report" ng-show="reports.allergies != '' || reports.note != ''">
+                                      <td>{{reports.allergies}}</td>
+                                      <td>{{reports.note}}</td>
+                                    </tr>
+                                </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="width: 25%" scope="row">Service</th>
+                                <td>{{appointments_details.service_name}}</td>
+                            </tr>
+                            <tr>
+                                <th style="width: 25%" scope="row">Status</th>
+                                <td>{{appointments_details.status}}</td>
+                            </tr>
+                            <tr>
+                                <th style="width: 25%" scope="row">Comments </th>
+                                <td style="text-align:center !important;"> <textarea placeholder="Enter a note only visible to employees" class="form-control autosize area-animated msd-elastic: \n; ng-pristine ng-valid ng-empty ng-touched" ng-model="appointments_details.comments" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 71px;" ng-change="changeTextarea()" >{{appointments_details.comments}} </textarea>
+                                
+                                    <button ng-if="comment_button" class="margin-top-5 btn btn-wide btn-success" title="Save Comments" ng-click="saveComments()"><i class="fa fa-check"></i> Save</button>
+
+                                    <button ng-if="comment_button" class="margin-top-5 btn btn-wide btn-danger" ng-click="clearComments()" title="Clear Comments"><i class="fa fa-remove"></i> Clear</button>
+                                </td>
+                            </tr>
+    
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<div class="modal-footer">
+
+    <div class="btn-group float-left" uib-dropdown is-open="status.isopen" ng-if="!change_customer_info">
+        <button type="button" class="btn btn-wide btn-default uib-dropdown-toggle " uib-dropdown-toggle
+            ng-disabled="disabled">
+            <span><i class="fa fa-down"></i> Options... </span> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" >
+            <!-- <li ng-if="button_display_according_to_status">
+                <a href="#" ng-click="changeAppointmentService()">
+                    <strong> <i class="fa fa-edit"></i></strong>&nbsp;&nbsp;&nbsp;&nbsp;Change Service
+                </a>
+            </li>
+            <li ng-if="button_display_according_to_status" class="divider margin-top-5 margin-bottom-5"></li>
+
+
+            <li ng-if="button_display_according_to_status && (walk_in_customer_id == 0)">
+                <a href="#" ng-click="changeCustomerInfo()">
+                    <strong> <i class="fa fa-edit"></i></strong>&nbsp;&nbsp;&nbsp;&nbsp;Change Customer
+                </a>
+            </li>
+            <li ng-if="button_display_according_to_status && (walk_in_customer_id == 0)" class="divider margin-top-5 margin-bottom-5"></li> -->
+
+            <li ng-if="button_display_according_to_status">
+                <a href="#" ng-click="editAppointment()">
+                    <strong> <i class="fa fa-edit"></i></strong>&nbsp;&nbsp;&nbsp;&nbsp;Edit
+                </a>
+            </li>
+            <li ng-if="button_display_according_to_status" class="divider margin-top-5 margin-bottom-5"></li>
+
+
+            <li ng-if="button_display_according_to_status">
+                <a href="#" ng-click="rebookAppointment()">
+                    <strong><i class="fa fa-calendar"></i> </strong>&nbsp;&nbsp;&nbsp;&nbsp;Rebook
+                </a>
+            </li>
+            <li ng-if="button_display_according_to_status" class="divider margin-top-5 margin-bottom-5"></li>
+            <li>
+                <a href="#" ng-click="copyAppointment()">
+                    <strong><i class="fa  fa-copy"></i></strong>&nbsp;&nbsp;&nbsp;&nbsp;To copy
+                </a>
+            </li>
+            <li ng-if="button_display_according_to_status" class="divider margin-top-5 margin-bottom-5"></li>
+            <li ng-if="button_display_according_to_status">
+                <a href="#" ng-click="appointmentDelete()">
+                    <strong><i class="fa fa-trash-o"></i></strong>&nbsp;&nbsp;&nbsp;&nbsp;Delete
+                </a>
+            </li>
+            <li class="divider margin-top-5 margin-bottom-5"></li>
+            <li>
+                <a href="#" ng-click="openLogList()">
+                    <strong> <i class="fa fa-file-text-o"></i></strong>&nbsp;&nbsp;&nbsp;&nbsp;Show appointment log
+                </a>
+            </li>
+
+            <li class="divider margin-top-5 margin-bottom-5"></li>
+           <!--  <li>
+                <a href="#" ng-click="openCreateMedialCanvas()">
+                    <strong> <i class="fa fa-file-text-o"></i></strong>&nbsp;&nbsp;&nbsp;&nbsp; Create Medical Report
+                </a>
+            </li> -->
+        </ul>
+    </div>
+
+    <div ng-if="!change_customer_info">
+
+    <button ng-if="button_display_according_to_status" class="btn btn-wide btn-success"
+        ng-click="sendConfirmationMail()">Send Confirmation</button>
+
+    <button class="btn btn-wide btn-success"
+        ng-click="openCreateMedialCanvas()">Create Medical Report</button>
+    <button ng-if="button_display_according_to_status" class="btn btn-wide btn-purple"
+        ng-click="appointmentCancelConfirmCheckin('cancel',appointments_details.appointment_id)"><i
+            class="fa fa-thumbs-down"></i>&nbsp;&nbsp;Cancel</button>
+
+
+    <!-- <button ng-if="button_display_according_to_status" class="btn btn-wide btn-warning" ng-click="appointmentCancelConfirmCheckin('confirm',appointments_details.appointment_id)"><i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;Confirm</button> -->
+
+
+    <button ng-if="button_display_according_to_status" class="btn btn-wide btn-success"
+        ng-click="appointmentCancelConfirmCheckin('check_in',appointments_details.appointment_id)"><i
+            class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Checking in</button>
+
+    <!-- <button ng-if="button_display_according_to_status" class="btn btn-wide btn-success" ng-click="toPay(appointments_details.appointment_id)"><i class="fa fa-inr"></i>&nbsp;&nbsp;To pay</button> -->
+
+
+    <button ng-if="button_display_according_to_status" class="btn btn-wide btn-success"
+        ng-click="appointmentCancelConfirmCheckin('to_pay',appointments_details.appointment_id)"><i
+            class="fa fa-inr"></i>&nbsp;&nbsp;To pay</button>
+
+        
+        <button ng-if="appointments_details.appointment_status_id == 3"
+            class="btn btn-wide btn-warning" ng-click="uncheckAppointment()"><i
+                class="fa fa-window-close-o"></i>&nbsp;&nbsp;Uncheck in
+        </button>
+
+
+
+    <button ng-if="appointments_details.appointment_status_id == 3 || appointments_details.appointment_status_id == 4"
+        class="btn btn-wide btn-default" ng-click="openRecipt('to_pay')"><i
+            class="fa fa-file"></i>&nbsp;&nbsp;
+
+
+        <span ng-if="appointments_details.appointment_status_id == 4">Open Receipt</span><span
+            ng-if="appointments_details.appointment_status_id == 3">Go to Cashdesk</span>
+    </button>
+
+
+
+</div>
+
+
+
+</div>
+<style type="text/css">
+    .table {
+        margin-bottom:0px !important;
+    }
+</style>

@@ -1,0 +1,149 @@
+<div class="container-fluid bg-white ng-scope" ng-controller="workersCtrl">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <img src="assets/images/default-user.png" class="workers-img-icon">
+            <span class="workers-img-label">New Staff</span>
+            <a href="#!/app/pages/management/service_provider" title="Close" class="btn btn-sm btn-danger pull-right"><i class="fa fa-close"></i></a>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <uib-tabset class="tabbable" active="active">
+                <uib-tab index="0" heading="ACCOUNT">
+                    <div class="panel panel-transparent">
+                        <div class="panel-body">
+                            <form role="form" class="ng-pristine ng-valid" id="addUser">
+                                <div class="row">
+                                    <button type="button" ng-click="addUser('addUser')" class="btn btn-success">Save</button>
+                                    <a href="#!/app/pages/management/service_provider" class="btn btn-primary border-radius-0">Close</a>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="first_name">First name</label>
+                                                        <input type="text" name="first_name" placeholder="First Name" id="first_name" class="form-control" ng-model="users.first_name" required="" maxlength="19">
+                                                        <span class="error"
+                                ng-show="firstname_validation_message_display">{{firstname_validation_message}}</span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="last_name">Last name</label>
+                                                        <input type="text" placeholder="Last Name" id="last_name" class="form-control" ng-model="users.last_name" name="last_name"  required="" maxlength="19">
+                                                        <span class="error"
+                                ng-show="lastname_validation_message_display">{{lastname_validation_message}}</span>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="password">Password</label>
+                                                        <input type="password" placeholder="Password" id="password" class="form-control" ng-model="users.password" required="" name="password">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="confirm_password">Repeat Password</label>
+                                                        <input type="password" placeholder="Confirm Password" id="confirm_password" ng-model="users.confirm_password" class="form-control" required="" name="confirm_password">
+                                                        <label ng-if=' users.password!=undefined && users.password!="" &&  users.confirm_password!="" && users.confirm_password!=undefined && (users.password!=users.confirm_password)' class="error" for="confirm_password">Password don't match.</label>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="name">Display name</label>
+                                                        <input type="text" placeholder="Display Name" id="name" class="form-control" ng-model="users.name" required="" name="name" maxlength="19">
+                                                        <span class="error"
+                                ng-show="displayname_validation_message_display">{{displayname_validation_message}}</span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="email">Email</label>
+                                                        <input type="email" placeholder="Email" id="email" class="form-control" ng-model="users.email" required="" name="email">
+                                                    </div>
+
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <label for="mobile">Mobile</label>
+                                                        <input type="number" placeholder="Mobile" id="mobile" class="form-control" ng-model="users.mobile" required="" name="mobile">
+                                                    </div>
+                                                    <!-- <div class="col-md-6">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline checkboxuser">
+                                                            <input type="checkbox" id="checkbox10" value="1"   ng-checked="users.is_sync_google" ng-model="users.is_sync_google">
+                                                                
+                                                            <label for="checkbox10">
+                                                                Sync with google calendar
+                                                            </label>
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="col-md-6">
+                                                        <div class="checkbox">
+                                                        <switch ng-model="users.is_active" ng-init="is_active = true" class="green"></switch>
+                                                        <label for="checkbox10">
+                                                            Status
+                                                        </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea class="form-control autosize area-animated msd-elastic: \n; ng-pristine ng-untouched ng-valid ng-empty"  style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 55px;" ng-model="users.discription" name="description" placeholder="Description"></textarea>
+                                            </div>
+                                            <!-- <div class="form-group">
+                                                <label for="certificate_number">Certificate Number</label>
+                                                <input type="text" placeholder="Certificate number" id="certificate_number" class="form-control" ng-model="users.certificate_number" required="" name="certificate_number">
+
+                                                <textarea id="certificate_number" class="form-control" ng-model="users.certificate_number" required="" name="certificate_number">Certificate number</textarea>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div> 
+                            </form>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="1" heading="AUTHORIZATIONS">
+                    <div class="panel panel-transparent">
+                        <div class="panel-body">
+                                <div class="form-group"> 
+                                    <h4>Rights</h4>
+                                </div>  
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3"><span class="help-inline">  User role</span></div>
+                                        <div class="col-md-1 col-sm-2"><i class="fa fa-info-circle text-primary"></i></div>
+                                        <div class="col-md-2 col-sm-4">
+                                            <select class="cs-select cs-skin-elastic" ng-model="users.role" >
+                                                <option value="">Select Role</option>
+                                                <option value="1">The admin</option>
+                                                <option value="2">Worker</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="" ng-repeat="user_role in user_role">
+                                    <div class="row">
+                                                    <div class="col-md-2 col-sm-3"><span class="help-inline">  {{user_role.menu_name}}</span></div>
+                                                    <div class="col-md-2 col-sm-2"><i class="fa fa-info-circle text-primary"></i></div>
+                                                    <div class="col-md-2 col-sm-3">
+                                                        <div class="checkbox">
+                                                        <switch ng-model="user_role.ng_name"  class="green"></switch>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </div>
+                                    </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>

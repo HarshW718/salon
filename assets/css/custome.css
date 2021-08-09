@@ -1,0 +1,150 @@
+.fc-header-title h2{margin-top:0;white-space:nowrap;font-size:18px;font-family:Helvetica,Arial,sans-serif!important}.fc-state-default.fc-corner-right{border-top-right-radius:0!important;border-bottom-right-radius:0!important}.fc-state-default.fc-corner-left{border-top-left-radius:0!important;border-bottom-left-radius:0!important}.fc-header-right>.fc-state-active{font-weight:700;color:#fff;background:#000}.well-sm{padding:0!important}.uib-daypicker{border:1px solid #000}.uib-daypicker thead button{background:#000!important;border-radius:0;color:#fff}.setting-button{width:100%!important}.fc-agenda-slots tr{height:40px!important}.custom_div{margin-top:-63px!important}table.month-selection-table{border:1px solid #000;width:100%}table.month-selection-table button{border-radius:0;background:#f2f0ef;color:#828080;border:1px solid #fff;width:100%}table.month-selection-table .active,table.month-selection-table button:hover{background:#000!important;border-color:transparent!important}.clip-datepicker button.active{background-color:#000!important;color:#000}.clip-datepicker button span.text-current::before,.clip-datepicker button span.text-info::before{border-left:6px solid transparent;border-top:6px solid #31708f;content:"";height:0;position:absolute;right:2px;top:2px;width:0}.workers-selector-dropdown>span{background-color:#fff;z-index:100;border:1px solid #c8c7cc;height:26px!important;line-height:15px}.settings-panel .panel-heading{border-bottom:1px solid #d3d3d3;padding-left:0;padding-bottom:0}.settings-panel .panel-body{padding-left:0;padding-bottom:0}.ti-calendar-drag{font-size:20px;margin-top:100px}h3.modal-title{font-size:18px}.modal-footer,.modal-header{padding:7px}.create-appointmet-tab-heading,.create-blocking-tab-heading{font-size:15px}.show-appointment-form .form-horizontal .control-label{text-align:left;font-weight:700}.footer-option-dropdown{float:left;width:150px}.appointment-cancel-thumb-down{font-size:20px}.app-cancel-reason-block{font-weight:700}.create_invoice_form{border-left:1px solid gray}.create_invoice_rightblock label{font-weight:700;text-align:left}.create_invoice_rightblock input{text-align:right}.create_invoice_services_table tbody tr{background-color:#fff!important}.cashdesk-left-sidebar i{float:left;font-size:15px}.cashdesk-left-sidebar .fa-print-button{border:1px solid #a9a9a9;background:#ededed}.cashdesk-left-sidebar button{border-radius:0;border:1px solid #fff}.ui-primary{color:#fff;text-decoration:none;outline:0;background-color:#6d7678}.pagesidebar{float:left;width:100%}.clip-datepicker table{width:100%}.pagesidebar .btn-sm{padding:1px 0}.btn-primary:hover{background-color:#000!important;border-color:#000}@media (max-width:991px){.navbar .navbar-collapse{padding-left:260px}.navbar .navbar-left>li>a{margin-right:0;padding:5px}.navbar .navbar-left,.navbar .navbar-right{margin-right:0}.fc-content{clear:none}}@media (max-width:767px){.pagesidebar{float:left;width:100%}.pagemain-content{margin-left:0;clear:both;clear:both}}.workers-img-icon{width:70px;border-radius:50%}.workers-img-label{font-weight:700;font-size:15px}.mngmnt-workers-tab button{border-radius:0}.mngmnt-workers-tab label{padding:5px;text-align:right;font-weight:700}.serviceProviderTitle{font-size:20px}.serviceProviderTitle i{font-size:30px;padding:10px}.service-provider-img-icon{width:25px;border-radius:50%}.worker-detail-authorization .help-inline{text-align:right}.mngmnt-workers-workinghours .row{padding:1px}.worker-detail-service-expamdable-panel span{padding:5px;font-size:15px}.add-service-dropdown-menu li{padding:9px;border-bottom:1px solid #66696c;cursor:pointer}.create_client_model_footer button{width:15%}@media (min-width:768px){.worker-detail-service-expamdable-panel{width:50%}}.switch{width:35px!important;height:20px!important}.switch small{width:20px!important;height:20px!important}.switch.checked small{left:15px!important}.panel-lightblue{border:none!important;background:#00000024}span.btn.btn-default.form-control.ui-select-toggle{background:#e2e2e4}span.btn.btn-default.form-control.ui-select-toggle{border-top:none!important;border-right:none!important;border-left:none!important;border-bottom:1px solid #c8c7cc!important}input.form-control.ui-select-search.ng-valid.ng-dirty.ng-valid-parse.ng-empty.ng-touched{border-top:none!important;border-right:none!important;border-left:none!important;border-bottom:1px solid #c8c7cc!important}input.form-control.ui-select-search.ng-pristine.ng-valid.ng-empty.ng-touched{border-top:none!important;border-right:none!important;border-left:none!important;border-bottom:1px solid #c8c7cc!important}.btn-default-focus{outline:0!important;box-shadow:none!important}textarea{border-top:none!important;border-right:none!important;border-left:none!important;border-bottom:1px solid #c8c7cc!important}input[type=color],input[type=date],input[type=datetime-local],input[type=datetime],input[type=email],input[type=month],input[type=number],input[type=password],input[type=search],input[type=tel],input[type=text],input[type=time],input[type=url],input[type=week],select,textarea{border-top:none!important;border-right:none!important;border-left:none!important;border-bottom:1px solid #c8c7cc!important}.cs-skin-elastic>span{border-top:none!important;border-right:none!important;border-left:none!important;border-bottom:1px solid #c8c7cc!important}.calendar-toggle{background:#394557;color:#fff}td.uib-time.am-pm{padding:2px}.croppedBox-custome{width:auto!important;height:auto!important}.clip-check{left:4px!important}.zindex{z-index:999999!important}.form-group{margin-bottom:5px!important}.container-fullw{padding-bottom:5px!important}.modal_dialog_css.modal-dialog{height:calc(100% - 75px)}.modal_content_css.modal-content{height:100%}.modal_dialog_css .modal-header{height:100%;overflow:auto}#ui-datepicker-div{border:1px solid #000;background-color:#fff;z-index: 100 !important;}.ui-datepicker-header{background-color:#000;padding:5px}.ui-datepicker-prev{float:left;position:relative;top:2px}.ui-datepicker-prev::before{font-family:'Glyphicons Halflings';font-style:normal;font-weight:400;line-height:1;content:"\e079";font-size:17px;color:#fff}.ui-datepicker-next{float:right;position:relative;top:2px}.ui-datepicker-next::before{font-family:'Glyphicons Halflings';font-style:normal;font-weight:400;line-height:1;content:"\e080";font-size:17px;color:#fff}.ui-datepicker-next span,.ui-datepicker-prev span{display:none}.ui-datepicker-title{margin:0 auto;text-align:center;width:110px}.ui-datepicker-title select{background-color:transparent!important;border-color:transparent!important;color:#fff!important;font-size:17px!important;font-weight:700;padding:0!important}#ui-datepicker-div td a,#ui-datepicker-div th span{padding:3px 6px;display:block;text-align:center}#ui-datepicker-div .ui-state-default.ui-state-active{background-color:#000;border-radius:4px;color:#fff}#ui-datepicker-div .ui-state-default{color:#8e8e93;font-size:12px;line-height:1.8}.ui-datepicker-title select option{color:#8e8e93;font-size:14px}#hiddenField{display:none}.btn ui-select-match{font-size:12px}span.fc-button.fc-button-prev.fc-state-default.fc-corner-left{margin-left:3px}.calendar-margin{margin-top:-40px}@media (max-width:768px){table.fc-agenda-slots.fc-agenda-slots-margin{margin-top:60px}}.timeline{position:absolute;border:none;border-top:1px solid red!important;width:100%;margin:0;padding:0;z-index:999}.error{color:#b01818 !important;}.p-le-20{padding-left:20px}.btn{padding:4px 6px;font-size:12px}.backgroundColor{background-color:#f9f9f9}.services>tbody>tr>td,.services>tbody>tr>th,.services>tfoot>tr>td,.services>thead>tr>td{padding:4px 0!important;border-bottom:1px solid #f0f0f0!important}.services{margin-bottom:0!important}.services>tbody>tr>th{padding-left:1%!important}.services>tbody>tr>td{padding-left:4%!important}.services_cat>tbody>tr>td,.services_cat>tbody>tr>th,.services_cat>tfoot>tr>td,.services_cat>thead>tr>td{padding:0 0!important;border-bottom:none!important}.services>tbody>tr .p-r-1{padding-right:1%!important}.checkboxuser label:after{left:0!important}
+.userservices .table {
+    margin-bottom: 0;
+}
+.userservices .table > tbody > tr > th, .userservices .table > tbody > tr > td {
+    padding: 0px;
+}
+.userservices .table .table > tbody > tr > td {
+    border-bottom: 1px solid #e2e2e4 !important;
+     padding: 3px 8px;
+}
+.userservices .table > tbody > tr > th {
+    background-color: #f9f9f9;
+     padding: 3px 8px;
+}
+.userservices .table > tbody > tr > th, .userservices .table > tbody > tr > td{width: 75%;}
+.calendarparts{padding-left: 2px;margin-top: 2px;}
+.calendarparts-left{width: 200px;float: left;}
+.calendarparts-right{margin-left: 210px;padding-top: 5px;}
+.calendarparts-left .well{border: none;margin-bottom: 10px;}
+.calendarparts-right .fc-toolbar.fc-header-toolbar{margin-bottom:0px;}
+.calendarparts-right .fc-toolbar.fc-header-toolbar .ui-datepicker-trigger{padding: 0 0 0 5px;border: none;background-color: transparent;}
+.calendarparts-right .fc-toolbar.fc-header-toolbar .fa-calendar-check-o{font-size: 18px;margin-top: 5px;}
+select.form-control-sm{height: 20px;padding-top: 2px !important;padding-bottom: 2px !important; display: block;width: 160px;margin: 0 auto;position: relative;left: 25px;}
+#id_appointmentForm .clip-radio{margin-top: 0;}
+.btn.btn-primary.float-right{width: 32.3px;height: 32px;}
+.calendar-modal .nav-tabs>li>a{padding: 5px 20px;}
+.userservices .clip-check label:before{height: 15px;width: 15px;}
+.userservices .clip-check input[type=checkbox]:checked+label:before{border-width: 1px;background-color: #6d7678;} 
+.userservices .clip-check label:after{top: -3px;height: 15px;width: 15px;left: -2px !important;} 
+.cs-skin-elastic .cs-options{display:none; max-height: 150px;overflow-y: auto;}
+.cs-select.cs-active.cs-skin-elastic .cs-options{display:block; }
+.cs-skin-elastic .cs-options>ul::before {box-shadow: none;}
+.dataTables_filter{text-align: right;}
+.dataTables_paginate .pagination{float: right;margin: 0;}
+.input-group-btn .btn{font-size: 14px;padding: 6px 12px;}
+.settings-panel .clip-check{margin: 0;}
+.settings-panel .clip-check{left: 0 !important;}
+.padding-3 {padding: 3px!important;}
+.modal-vh-100{height: calc(100vh - 150px);overflow: auto;}
+.fc-time-grid-container{max-height: calc(100vh - 115px);}
+.weekview .fc-time-grid-container{max-height: calc(100vh - 160px);}
+.agendaview .fc-time-grid-container{max-height: calc(100vh - 140px);}
+.host .tags{margin: 0;}
+.tabbable .nav-tabs > li > a{padding: 15px;}
+@media (max-width:991px) and (min-width:767px){
+	.text-extra-large {
+	    font-size: 12px!important;
+	}
+	body .fc .fc-toolbar > * > *{margin-left: 0;margin-right: 3px;}
+	.fc-toolbar .fc-center{position:relative;top: -5px;}
+	.calendarparts-right .fc-toolbar.fc-header-toolbar .ui-datepicker-trigger{top: -3px;}
+	.calendarparts-right{margin-left: 210px;padding-top: 5px; height:  calc(100vh - 80px);}
+}
+.w-100{width: 100%;}
+.fc-ltr .fc-time-grid .fc-event-container {
+    margin-right: 2px !important;
+}
+#calendar.fc-unthemed td{border-left-color: #000;}
+
+.tools-modal {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+.icon-border{
+    display: inline-block;
+    width: 70px;
+    height: 50px;
+    border: 1px solid #969696;
+    text-align: center;
+    line-height:60px;
+    vertical-align: middle;
+}
+.icon-border h3{
+    display: inline-block;
+    margin-bottom: 0;
+    font-size: 32px;
+}
+.icon-border h3 .fa{
+    vertical-align: middle;
+}
+.total-pay .input-sm{
+    width: 200px;
+    text-align: right;
+}
+.total-pay h4,.total-pay h3{
+    margin-bottom: 0;
+}
+.bg-lite-grey{
+    background-color: #f3f3f3;
+    padding: 5px;
+}
+.compare-modal .modal-lg, .largeWidth-modal .modal-lg{
+    width: auto !important;
+    max-width: 1200px !important;
+}
+.canvas-width{
+    width: 405px;
+    float: left;
+}
+.top-height{
+    height: 40px;
+}
+.description-with{
+    width: 470px;
+    float: left;
+    margin: 0 15px;
+}
+.shortcut-width{
+    width: 260px;
+    float: left;
+}
+@media (max-width:1199px) {
+    .calendarparts-right{margin-left: 0;}
+    .calendarparts-right.margin-left-0{
+        margin-left: 210px!important;
+    }
+    .description-with{
+        width: 305px;
+    }
+    .shortcut-width{
+        width: 190px;
+    }
+    .compare-modal .modal-lg, .largeWidth-modal .modal-lg{
+        margin: 30px;
+    }
+}
+@media (max-width:992px) {
+    .modal-dialog,.compare-modal .modal-lg, .largeWidth-modal .modal-lg{
+        width: auto;
+        margin: 30px;
+    }
+   .total-popup-custom .modal-dialog{
+        max-width: 600px;
+        margin: 30px auto;
+    }
+    .create_invoice_form {
+        border-left:none;
+    }
+    .description-with{
+        width: 100%;
+        margin:15px 0 0;
+    }
+    .shortcut-width{
+        float:none;
+        padding-top: 20px;
+        clear: both;
+        width: auto;
+    }
+}

@@ -1,0 +1,554 @@
+<div class="modal-header">
+    <button type="button" class="close" title="Close" ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title">{{day_name}} {{display_date}} <i class="fa fa-clock-o"></i> <strong> {{starttime}} </strong> <strong>To</strong> <strong> {{endtime}} </strong> </h3>
+</div>
+
+<div class="modal-body">
+    <div class="container-fluid calendar-modal  bg-white">
+        <div class="row">
+            <uib-tabset justified="true" class="tabbable">
+                <uib-tab heading="Create Appointment" class="create-appointmet-tab-heading">
+                    <form name="appointmentForm" id="id_appointmentForm">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="row" ng-if="customerList">
+                                    <div class="col-sm-10">
+                                        <!-- <div class="form-group" ng-if="visibility != true"> -->
+                                        <div class="form-group">
+
+                                            <ui-select ng-model="person.selected" theme="bootstrap"
+                                                on-select="onSelectCallback($item)" ng-change="changeCustomer()">
+
+                                                <ui-select-match placeholder="Select in the list...">
+                                                    {{$select.selected.full_name}}
+                                                </ui-select-match>
+
+                                                <ui-select-choices repeat="item in people"
+                                                    refresh="yourFunction($select.search)">
+
+                                                    <!-- refresh="yourFunction($select.search)" -->
+                                                    <small>
+                                                        <strong>name :</strong> <span
+                                                            ng-bind-html="item.full_name| highlight: $select.search">
+                                                        </span>
+                                                        </span>
+                                                        <br>
+                                                        <!-- <strong>email :</strong> <span
+                                                        ng-bind-html="item.email | highlight: $select.search"></span><br> -->
+                                                        <strong>mobile :</strong> <span
+                                                            ng-bind-html="item.mobile | space"></span><br>
+                                                        <strong>postal code :</strong> <span
+                                                            ng-bind-html="item.postal_code | highlight: $select.search"></span><br>
+                                                        <strong>dob :</strong> <span
+                                                            ng-bind-html="item.birthday | highlight: $select.search "></span>
+
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group" ng-if="!is_it_for_upate">
+                                            <button type="button" class="btn btn-primary text-large"
+                                                ng-click="newCustomer()"><i class="fa fa-user-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="formData">
+                                    <div class="radio clip-radio radio-primary margin-bottom-5">
+                                        <input type="radio" id="male" name="gender" value="male"
+                                            ng-click="existing($event)" ng-model="customer.gender" />
+                                        <label for="male">
+                                            Male
+                                        </label>
+                                        <input type="radio" id="female" name="gender" value="female"
+                                            ng-model="customer.gender" />
+                                        <label for="female">
+                                            Female
+                                        </label>
+                                        <input type="radio" id="other" name="gender" value="other"
+                                            ng-model="customer.gender" />
+                                        <label for="other">
+                                            Other
+                                        </label>
+                                        <button type="button" class="btn btn-primary float-right"
+                                            ng-click="oldCustomer()" ng-if="closeBtn"><i
+                                                class="fa fa-remove"></i></button>
+                                    </div>
+                                    <span class="error"
+                                        ng-show="gender_validation_message_display">{{gender_validation_message}}</span>
+
+                                    <div class="form-group row margin-bottom-5">
+                                        <div class="col-xs-6">
+                                            <input type="text" class="form-control input-sm" id="firstname"
+                                                name="firstname" placeholder="First Name" ng-model="customer.firstname" maxlength="19"
+                                                required />
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <input type="text" class="form-control input-sm" id="lastname"
+                                                name="lastname" placeholder="Last Name" ng-model="customer.lastname" maxlength="19"
+                                                required />
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group row margin-bottom-5">
+                                        <!-- using directive "number-only" which allow  number in text field 
+                                                            compare-to.js
+                                                            -->
+                                        <div class="col-xs-6">
+
+                                            <input type="tel" class="form-control input-sm" id="mobile" name="mobile"
+                                                placeholder="Mobile" maxlength="20" ng-model="customer.mobile" required
+                                                pattern="\d*" numbers-only />
+
+
+                                        </div>
+                                        <!-- using directive "number-only" which allow  number in text field 
+                                                            compare-to.js
+                                                            -->
+                                        <div class="col-xs-6">
+
+                                            <input type="tel" class="form-control" id="landline" name="landline"
+                                                placeholder="Landline" maxlength="20" ng-model="customer.landline"
+                                                pattern="\d*" numbers-only>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group margin-bottom-5">
+                                        <input type="email" class="form-control input-sm" id="email" name="email"
+                                            placeholder="Email" ng-model="customer.email" ng-keyup="emailValidation()"
+                                            required />
+                                        <span class="error"
+                                            ng-show="email_validation_message_display">{{email_validation_message}}</span>
+                                    </div>
+                                    <div class="form-group row margin-bottom-5">
+                                        <div class="col-xs-5 padding-right-5">
+                                            <input type="text" class="form-control input-sm" id="postal_code"
+                                                name="postal_code"  maxlength="6" placeholder="Postal Code:1234AB"
+                                                ng-model="customer.postal_code" ng-blur="findAddress()" ng-keyup="postalCodeValidation($event)">
+                                                <!-- ng-keyup="postalCodeValidation($event)" -->
+                                        </div>
+                                        <div class="col-xs-3 padding-left-5 padding-right-5">
+                                            <!-- <input type="number" class="form-control input-sm" id="house_no"
+                                                name="house_no" min="0" placeholder="House No." ng-model="customer.house_no"
+                                                ng-blur="findAddress()" pattern="\d*" numbers-only> -->
+
+                                                <input type="text" class="form-control input-sm" id="house_no"
+                                                name="house_no" placeholder="House No." ng-model="customer.house_no"
+                                                ng-blur="findAddress()" pattern="\d*" numbers-only>
+
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <input type="text" replace="[^a-zA-Z]" with="" maxlength="8" class="form-control input-sm" id="house_letter"
+                                                name="house_letter" placeholder="House Letter"
+                                                ng-model="customer.house_letter" ng-blur="fillAddress()">
+                                        </div>
+                                        <!-- <div class="col-xs-2 padding-left-5 padding-right-5">
+                                            <button type="button" class="btn btn-info"
+                                                ng-click="findAddress()"><strong><i class="fa fa-check"></i></strong>
+                                                Check</button>
+                                        </div> -->
+                                    </div>
+                                    <div class="form-group margin-bottom-5">
+                                        <input type="text" class="form-control" id="address" name="address"
+                                            placeholder="Address" ng-model="customer.address" />
+                                    </div>
+                                    <div class="form-group margin-bottom-5">
+                                        <input type="text" class="form-control input-sm" id="city" name="city"
+                                            placeholder="City" ng-model="customer.city" />
+                                    </div>
+                                    <div class="form-group margin-bottom-5">
+                                        <label for="birthday">
+                                            Birth Date
+                                        </label>
+                                        <div class="input-group">
+
+                                            <input type="text" id="birthdate_display" maxlength="10"
+                                                ng-model="tmp.dt_update" 
+                                                class="form-control" placeholder="dd-mm-yyyy" is-open="mydp.opened_date"
+                                                datepicker-options="datepickerOptions"
+                                                uib-datepicker-popup="{{format}}" create-birthdate/>
+
+                                                <!-- ng-keyup="createBirthdate($event)" -->
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-dark-blue"
+                                                    ng-click="open_update()">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="row margin-bottom-5">
+                                    <div class="form-group">
+
+                                        <div class="col-md-12">
+                                            <!-- <span class="input-icon input-icon-right">
+                                         <input type="text" class="form-control" id="name" name="search"
+                                         placeholder="Search" ng-model="search.search_service" ng-keyup="onKeyUp()" required/>
+                                         <i class=" ti-search"></i> </span> -->
+                                            <span class="input-icon input-icon-right">
+                                                <input type="text" class="form-control" id="name" name="search"
+                                                    placeholder="Search" ng-model="search.search_service"
+                                                    ng-keyup="onSearch()" />
+                                                <i class="ti-search"></i> </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="table-responsive margin-bottom-10" style="height:170px;">
+                                    <div ng-if="services.length == 0">
+                                        <h1 class="text-center text-extra-large"> <i class="fa fa-tags"></i></h1>
+                                        <h3 class="text-center">No services found</h3>
+                                        <h4 class="text-center">
+                                            Linked services have been found, see management <strong>></strong> staff
+                                        </h4>
+                                    </div>
+
+                                    <table class="table table-pointer services_cat" ng-if="services.length > 0">
+                                        <tbody>
+                                            <tr class="backgroundColor"
+                                                ng-repeat-start="service_category in service_categories">
+                                                <th colspan="2" ng-click="category1($index)"><span class="text-size-14"
+                                                        ng-style="{color:service_category.color}"><i
+                                                            class="fa fa-folder-open-o padding-right-10"></i>
+                                                        {{service_category.name}}
+
+                                                    </span>
+
+                                                </th>
+                                            </tr>
+                                            <tr id="row_{{$index}}" ng-hide="hide_show_{{$index}}" ng-repeat-end>
+                                                <td colspan="2">
+
+                                                    <table class="table table-borderless services">
+                                                        <tr
+                                                            ng-repeat="service in services | filter : {category_id: service_category.id}:true">
+                                                            <td class="col-md-2" style="padding-left: 3%;">
+
+                                                                <div class="checkbox clip-check check-primary check-sm checkbox-inline"
+                                                                    ng-if="!is_it_for_upate">
+                                                                    <input type="checkbox" id="{{service.id}}_ischeck_0"
+                                                                        class="checkBoxClass" name="check_service"
+                                                                        ng-model="ids[service.id]"
+                                                                        ng-change="serviceCheck(service)"
+                                                                        value="{{service.id}}" /> <label
+                                                                        for="{{service.id}}_ischeck_0">{{service.name}}</label>
+
+
+                                                                    <span ng-if="service.coupon.length > 0 "
+                                                                        
+                                                                        title="Coupon {{single_coupon.cc_number}}  {{single_coupon.hmt_used}} / {{single_coupon.no_of_services}}" ng-repeat="single_coupon in service.coupon" ><span ng-if="single_coupon.where_from == 0" class="badge badge-warning margin-top-10" >{{single_coupon.cc_number}}
+                                                                    </span>
+                                                                    </span>
+
+                                                                </div>
+
+
+                                                                <div class="radio clip-radio radio-primary margin-bottom-5"
+                                                                    ng-if="is_it_for_upate">
+
+                                                                    <input type="radio" id="{{service.id}}_ischeck_0"
+                                                                        name="check_service"
+                                                                        ng-model="current_service.service_id"
+                                                                        ng-click="serviceCheckRadio(service)"
+                                                                        ng-value="{{service.id}}" />
+                                                                    <label
+                                                                        for="{{service.id}}_ischeck_0">{{service.name}}
+                                                                    </label>
+
+
+                                                                </div>
+
+
+                                                                <!-- <div class="radio clip-radio radio-primary margin-bottom-5">
+                                                                
+                                                                    <input type="radio" id="{{service.id}}_ischeck_0" name="check_service" ng-model="current_service.service_id"
+                                                                        ng-click="serviceCheck(service)" ng-value="{{service.id}}" />
+                                                                    <label for="{{service.id}}_ischeck_0">{{service.name}} </label>
+                                                                
+                                                                </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                            </td>
+                                                            <td class="col-md-1 text-right p-r-1"><span
+                                                                    ng-hide="ids[service.id]"><i
+                                                                        class="fa fa-inr"></i>{{service.sales_price}}</span>
+
+                                                                <select class="cs-skin-elastic" name="duration"
+                                                                    ng-model="service.duration"
+                                                                    ng-hide="!ids[service.id]"
+                                                                    ng-change="serviceCheck(service)">
+                                                                    <option value="">Duration</option>
+                                                                    <option
+                                                                        ng-selected="service.duration == duration_time.id"
+                                                                        ng-repeat="duration_time in durations"
+                                                                        ng-value="duration_time.id">
+                                                                        {{duration_time.name}}
+                                                                    </option>
+                                                                </select>
+
+                                                            </td>
+
+
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr class="text-center text-extra-large"
+                                                ng-show="service_categories.length==0">
+                                                <td colspan="5"><strong class="text-red">No data found !!</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="form-group">
+                                    <textarea ng-model="appointment.comment" placeholder="Comment..." id="comment" class="form-control"></textarea>
+                                        <p><strong class="text-red">Note :</strong> This comment will be display when you open receipt from calendar.</p>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <span class="help-inline col-md-4 col-sm-4"> <i
+                                                class="fa fa-paper-plane text-primary"></i> Confirmation</span>
+                                        <div class="col-md-8 col-sm-6">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input type="checkbox" ng-model="appointment.is_email" id="is_email">
+                                                <label for="is_email">
+                                                    Email
+                                                </label>
+                                            </div>
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input type="checkbox" ng-model="appointment.is_sms" id="is_sms">
+                                                <label for="is_sms">
+                                                    SMS
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <span class="help-inline col-sm-4 col-sm-6">Consent Form </span>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <select class="form-control" ng-model="appointment.consent_frm_id"
+                                                    ng-change="changeConsent(consentFormSelected)">
+                                                    <option ng-disabled="true" value="" disabled="disabled"
+                                                        selected="selected">Select option</option>
+                                                    <option ng-repeat="c in consentFormList" ng-value="c.id">{{c.title}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input type="checkbox" id="consentFormChk" value="1">
+                                                <label for="consentFormChk">
+                                                    Email
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <div class="row">
+                                        <span class="help-inline col-md-4 col-sm-6">Treatment Form </span>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <select class="form-control" ng-model="appointment.treatment_frm_id"
+                                                    ng-change="changeTreatment(treatmentFormSelected)">
+                                                    <option ng-disabled="true" value="" disabled="disabled"
+                                                        selected="selected">Select option</option>
+                                                    <option ng-repeat="t in treatmentFormList" ng-value="t.id">
+                                                        {{t.title}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input type="checkbox" id="treatmentFormChk" value="1">
+                                                <label for="treatmentFormChk">
+                                                    Email
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="form-group">
+                                    <div class="row">
+                                        <span class="help-inline col-sm-4 col-sm-6">Medical Form </span>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <select class="form-control" ng-model="appointment.medical_frm_id"
+                                                    ng-change="changeMedical(medicalFormSelected)">
+                                                    <option ng-disabled="true" value="" disabled="disabled"
+                                                        selected="selected">Select option</option>
+                                                    <option ng-repeat="m in medicalFormList" ng-value="m.id">{{m.title}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input type="checkbox" id="medicalFormChk" value="1">
+                                                <label for="medicalFormChk">
+                                                    Email
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-danger btn-wide float-right " ng-click="cancel($event)">
+                                   close
+                                </button>
+                                <button type="submit" class="btn btn-success btn-wide float-right margin-right-5"
+                                    ng-click="submitAppointmentForm('id_appointmentForm')">
+                                    <span ng-if="is_it_for_upate">
+                                        Update</span>
+                                    <span ng-if="!is_it_for_upate">
+                                        Save</span>
+                                </button>
+
+
+                                <!-- <button type="submit" class="btn btn-success btn-wide float-right"
+                                ng-click="submitAppointmentForm('id_appointmentForm')">Save</button> -->
+
+
+                            </div>
+                        </div>
+
+                    </form>
+                </uib-tab>
+                <uib-tab heading="Blocking time" class="create-blocking-tab-heading" ng-if="!is_it_for_upate">
+
+
+                    <form name="blockTimeForm" id="id_blockTimeForm">
+                        <table class="table table-bordered ">
+                            <tr>
+                                <td>Type</td>
+                                <td>
+                                    <div class="form-group col-md-6 margin-bottom-5">
+                                        <!-- <select class="cs-select cs-skin-elastic">
+                                              <option value="" selected="">Options</option>
+                                              <option value="absent">Absent</option>
+                                              <option value="available">Available</option>
+                                          </select> -->
+
+                                        <div class="radio clip-radio radio-primary radio-inline">
+                                            <input type="radio" id="absent" name="block_time_type"
+                                                ng-model="block_time.block_time_type" value="absent">
+                                            <label for="absent">
+                                                Absent
+                                            </label>
+                                        </div>
+                                        <div class="radio clip-radio radio-primary radio-inline">
+                                            <input type="radio" id="assigned" name="block_time_type"
+                                                ng-model="block_time.block_time_type" value="assign_task">
+                                            <label for="assigned">
+                                                Assign Task
+                                            </label>
+                                        </div>
+
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>
+                                    <div class="form-group margin-bottom-5">
+                                        <textarea laceholder="Large Text Field" id="form-field-12"
+                                            class="form-control input-lg"
+                                            ng-model="block_time.block_time_description"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Start End Time</td>
+                                <td>
+                                    <div class="form-group row margin-bottom-5">
+                                        <!-- <div class="col-xs-3">
+                                            <div uib-timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-model="block_time.start_time"></div>
+                                        </div> -->
+
+                                        <div class="col-xs-2">
+                                            <select class="form-control" ng-model="block_time.start_time"
+                                                ng-change="onChangeStartTime()">
+
+                                                <option ng-repeat="x in start_time_duration" ng-value="x">{{x}}</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-xs-1 padding-top-5">
+                                            To
+                                        </div>
+
+                                        <div class="col-xs-2">
+
+                                            <select class="form-control" ng-model="block_time.end_time"
+                                                ng-change="onChangeStartEndTime()">
+                                                <option ng-repeat="x in end_time_duration" ng-value="x">{{x}}</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- <div class="col-xs-2">
+                                            <input class="form-control" disabled id="ex1" type="text" value="To"
+                                                style="margin-top:30px;">
+                                        </div>
+                                       
+                                        <div class="col-xs-3">
+                                            <div uib-timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-model="block_time.end_time"></div>
+                                        </div> -->
+
+                                        <div class="col-xs-3">
+                                            <div class="checkbox clip-check check-primary">
+                                                <input type="checkbox" id="whole_day" ng-change="checkWholeday()"
+                                                    ng-model="block_time.whole_day">
+                                                <label for="whole_day">
+                                                    The whole day
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <button type="submit" class="btn btn-success btn-wide float-right"
+                            ng-click="submitBlockTime()">Save</button>
+                    </form>
+
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>
+<div class="modal-footer create_client_model_footer">
+
+    <!-- <button class="btn btn-danger" ng-click="cancel($event)">Close</button> -->
+</div>
