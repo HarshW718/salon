@@ -490,11 +490,19 @@ class InvoiceController extends Middleweb_Controller
             if($single_invoice['service_treatment_date'] && $single_invoice['service_treatment_date'] != "0000-00-00 00:00:00"){
                 $treatment_date_display = date("d-m-Y",strtotime($single_invoice['service_treatment_date']));
             }
+            $display_name='';
+            if($single_invoice['display_name'] == '')
+            {
+                    $display_name = $single_invoice['name'];
+            }
+            else{
+                $display_name=$single_invoice['display_name'];
+            }
             //<td style='padding:5px;'>" . $single_invoice['discount_amount'] . "</td>
             $item_details_middle .=  "
                 <tr>
                     <td style='padding:5px;font-size:10px;font-weight:bold;'>".$treatment_date_display."</td>
-                    <td style='padding:5px;font-size:10px;font-weight:bold;'>".$single_invoice['quantity']." x ".$single_invoice['display_name'].$single_row_comment." ".$discount."</td>
+                    <td style='padding:5px;font-size:10px;font-weight:bold;'>".$single_invoice['quantity']." x ".$display_name.$single_row_comment." ".$discount."</td>
                     <td style='text-align: center;font-size:10px;font-weight:bold;'>₹" . $item_total_price . "</td>
                 </tr>";
             if ($data_id != 0) {
