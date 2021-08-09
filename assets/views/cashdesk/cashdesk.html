@@ -1,0 +1,484 @@
+<!-- start: FEATURED BOX LINKS -->
+<div class="container-fluid bg-white" ng-controller="cashdeskCtrl">
+    <div class="row">
+        <div class="col-md-2 cashdesk-left-sidebar">
+            <div class="row">
+                <div class="list-group" ng-if="userdata.role_id === 1">
+                    <a class="list-group-item text-center" href="javascript:void(0)" ng-click="goBackToMain()"> <i
+                            class="fa fa-arrow-left"></i> <span class="text-large">Back</span> </a>
+
+                    <a class="list-group-item text-center" href="#!/app/pages/cashdesk/settings"> <i
+                            class="fa fa-cog"></i> <span class="text-large">Settings </span> </a>
+                </div>
+                <div class="list-group" ng-if="userdata.role_id === 3">
+                    <a class="list-group-item text-center" href="javascript:void(0)" ng-click="goBackToMain()"> <i
+                            class="fa fa-arrow-left"></i> <span class="text-large">Back</span> </a>
+
+                    <a class="list-group-item text-center" href="#!/app/pages/cashdesk/settings"> <i
+                            class="fa fa-cog"></i> <span class="text-large">Settings </span> </a>
+                </div>
+                <div class="list-group" ng-if="userdata.role_id === 2">
+                    <a class="list-group-item text-center" href="javascript:void(0)" ng-click="goBackToMain()"> <i
+                            class="fa fa-arrow-left"></i> <span class="text-large">Back</span> </a>
+
+                </div>
+                <div class="list-group" ng-if="userdata.role_id === 4">
+                    <a class="list-group-item text-center" href="javascript:void(0)" ng-click="goBackToMain()"> <i
+                            class="fa fa-arrow-left"></i> <span class="text-large">Back</span> </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-10">
+            <div class="row create_invoice_form">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="row">
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                    <div class="input-group">
+                                        <input type="text" readonly class="form-control" placeholder="Walk-in-customer"
+                                            ng-model="customer.full_name">
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="sarchFieldHideShow()"
+                                                class="btn btn-default">
+                                                <i class="fa  fa-sort-down"></i>
+                                            </button> </span>
+                                    </div>
+                                    <div class="form-group" ng-if="ui_select_customer">
+                                        <ui-select ng-model="invoice.customer" theme="bootstrap"
+                                            on-select="onSelectCallback($item)" ng-change="changeCustomer()">
+                                            <ui-select-match placeholder="Select in the list...">
+                                                {{$select.selected.full_name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in people | filter: $select.search">
+
+                                                <!-- refresh="yourFunction($select.search)" -->
+                                                <small>
+                                                    <strong>name :</strong> <span
+                                                        ng-bind-html="item.full_name| highlight: $select.search">
+                                                    </span>
+                                                    </span>
+                                                    <br>
+                                                    <!-- <strong>email :</strong> <span
+                    ng-bind-html="item.email | highlight: $select.search"></span><br> -->
+                                                    <strong>mobile :</strong> <span
+                                                        ng-bind-html="item.mobile | highlight: $select.search"></span><br>
+                                                        <strong>Membership :</strong> 
+                                                        <span ng-bind-html="item.membership_id | highlight: $select.search"></span>
+                                                       
+                                                </small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+
+
+
+                                    <!-- Select Male Service Dropdown -->
+                                    
+                                    <div class="input-group margin-top-5" ng-show="salesPriceVal == true">
+                                        <div class="width100" ng-dropdown-multiselect="" options="services_male" selected-model="select_services_male" extra-settings="multiselectSelectSetting" translation-texts="service_male_text">
+                                        </div>
+                                       
+   
+                                        <span class="input-group-addon pointer" ng-click="clickMaleAddService()" id="basic-addon2"><i class="fa fa-plus text-large" ></i></span>
+                                    </div>
+                                    
+                                    <!-- Select Male Service Membership Dropdown -->
+
+                                    <div class="input-group margin-top-5" ng-show="membershipPriceVal == true">
+                                        <div class="width100" ng-dropdown-multiselect="" options="services_male_membership" selected-model="select_services_male_membership" extra-settings="multiselectSelectSetting" translation-texts="service_male_text">
+                                        </div>
+                                       
+   
+                                        <span class="input-group-addon pointer" ng-click="clickMaleAddService1()" id="basic-addon2"><i class="fa fa-plus text-large" ></i></span>
+                                    </div>
+
+                                     <!-- Select female Service Dropdown -->
+                                    
+                                     <div class="input-group margin-top-5" ng-show="salesPriceVal == true">
+                                        <div class="width100" ng-dropdown-multiselect="" options="services_female" selected-model="select_services" extra-settings="multiselectSelectSetting" translation-texts="service_female_text">
+                                        </div>
+                                       
+                                        
+                                        <span class="input-group-addon pointer" ng-click="clickAddService()" id="basic-addon2"><i class="fa fa-plus text-large" ></i></span>
+                                    </div>
+                                    <!-- Select FeMale Service Membership Dropdown -->
+
+                                    <div class="input-group margin-top-5" ng-show="membershipPriceVal == true">
+                                        <div class="width100" ng-dropdown-multiselect="" options="services_female_membership" selected-model="select_services_female_membership" extra-settings="multiselectSelectSetting" translation-texts="service_female_text">
+                                        </div>
+                                       
+   
+                                        <span class="input-group-addon pointer" ng-click="clickAddService1()" id="basic-addon2"><i class="fa fa-plus text-large" ></i></span>
+                                    </div>
+
+
+                                    
+
+                                    <!-- Select Product Dropdown -->
+
+                                    <div class="input-group margin-top-5">
+                                        <div class="width100" ng-dropdown-multiselect="" options="products"
+                                            selected-model="select_products" extra-settings="multiselectSelectSetting" translation-texts="product_text">
+                                        </div>
+                                        <span class="input-group-addon pointer" id="basic-addon2" ng-click="clickAddProduct()"><i class="fa fa-plus text-large"  ></i></span>
+                                    </div>
+                                    <div class="btn-group  margin-top-5" uib-dropdown ng-show = "checkMembership == true">
+                                        <button type="button" class="btn btn-default btn-squared btn-lg" uib-dropdown-toggle>
+                                            <i class="fa fa-plus text-large"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <!-- <li>
+                                                <a href="#" ng-click="openServicesProductsGiftsCoupons('gifts')">
+                                                    <i class="fa fa-gift"></i>&nbsp;&nbsp;&nbsp;Gifts
+                                                </a>
+                                            </li> -->
+                                            <!-- <li ng-if="invoice.customer != null" class="divider"></li> -->
+                                            <li ng-if="invoice.customer != null">
+                                                <a href="#" ng-click="openServicesProductsGiftsCoupons('coupons')">
+                                                    <i class="fa fa-check-square-o"></i>&nbsp;&nbsp;&nbsp;Create Membership
+                                                </a>
+                                            </li>
+                                            <!-- <li ng-if="invoice.customer != null" class="divider"></li> -->
+                                            <!-- <li ng-if="invoice.customer != null">
+                                                <a href="#" ng-click="createCoupon()">
+                                                    <i class="fa fa-check-square-o"></i>&nbsp;&nbsp;&nbsp;Create Membership
+                                                </a>
+                                            </li> -->
+        
+                                        </ul>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        </div>
+                        
+                        <div class="col-md-5 col-sm-5  text-right margin-left-20">
+                            <table class="table table-borderless">
+
+                                <tbody>
+                                    
+                                    <tr>
+                                        <td >Invoice Number</td>
+                                        <td>
+                                           
+                                                    <input type="text"  placeholder="Prefix" id="number" ng-model="display_invoice_number" class="form-control" readonly> 
+                                               
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Invoice Date</td>
+                                        <td>
+                                            <input type="text" ng-model="invoice.invoice_date" class="form-control"
+                                                uib-datepicker-popup="{{formatsInvoiceDate}}" is-open="opened"
+                                                datepicker-options="datepickerOptions" ng-required="true"
+                                                close-text="Close" ng-click="open('invoice_date')" />
+                                        </td>
+                                    </tr>
+                                  <!--   <tr>
+                                        <td>Treatment  Date</td>
+                                        <td>
+                                            <input type="text" ng-model="invoice.treatment_date" class="form-control" uib-datepicker-popup="{{format}}" is-open="treatment_opened"  datepicker-options="datepickerOptions" ng-required="true" close-text="Close" ng-change="changeDate()" ng-click="open('treatment')" />
+                                        </td>
+                                    </tr> -->
+                                    <tr>
+                                        <td>Select Staff <i class="fa fa-sort-down"></i></td>
+                                        <td>
+                                            <select ng-model="invoice.to_pay_id" class="form-control ">
+                                                <option ng-repeat="staff_single in staff_data"
+                                                    ng-selected="staff_single.id == first_staff_id"
+                                                    ng-value="staff_single.id">
+                                                    {{staff_single.name}} </option>
+                                            </select>
+                                            
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row margin-top-10">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Treatment  Date</th>
+                                        <!--<th>Prestatie code</th>-->
+                                        <th></th>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <!-- <th style="width:15px;">Discount</th> -->
+                                        <!--<th>VAT</th>-->
+                                        <!-- <th>Worker</th> -->
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr ng-repeat="single_data in table_data">
+                                        <td width ="12%" ng-if="single_data.which_one == 'service'">
+                                            <input type="text" ng-model="single_data.service_treatment_date" class="form-control" uib-datepicker-popup="{{format1}}" is-open="single_data.dt_open"  datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
+                                            ng-change="changeDate()"  ng-click="open('service_treatment_date',$index)" />
+                                        </td>
+                                         <td width ="12%" ng-if="single_data.which_one != 'service'">-</td>
+                                        <!--<td width ="12%" ng-if="single_data.prestatie_code">-->
+                                        <input type="text" ng-model="single_data.prestatie_code" class="form-control" readonly /></td>
+                                        <td width ="12%" ng-if="!single_data.prestatie_code">-</td>
+                                        <td>
+
+                                            <!-- <div class="checkbox clip-check check-primary check-sm checkbox-inline">
+                                                    <input
+                                                    type="checkbox" id="{{single_data.id}}_ischeck_{{$index}}"
+                                                    ng-model="table_data[$index].is_check"
+                                                    ng-change="changeInTableData();checkDiscount($index,single_data);"
+                                                    value="{{single_data.id}}"> -->
+
+
+
+                                                <label for="{{single_data.id}}_ischeck_{{$index}}">
+                                                    <a class="text-azure" ng-click="editTableData($index,single_data)">
+                                                        <i class="fa fa-pencil"> </i> {{single_data.display_name}}{{single_data.is_single_row_total_paid}} </a>
+                                                    <span><em> ({{single_data.which_one}})</em></span><br>
+                                                    <span><em> {{single_data.single_row_comment | cut:true:15:' ...'}}
+
+                                                        </em></span>
+                                                </label>
+
+                                            </div>
+
+                                        </td>
+
+                                        <td class="col-md-1">
+                                            <!-- <input ng-disabled="single_data.is_single_row_total_paid"
+                                                ng-model="table_data[$index].quantity"
+                                                ng-disabled="single_data.which_one == 'gift' || single_data.which_one == 'coupon'"
+                                                type="Number" class="form-control" min="1"
+                                                ng-change="changeInTableData()"> -->
+
+
+                                                <input 
+                                                ng-model="table_data[$index].quantity"
+                                                ng-disabled="single_data.which_one == 'gift' || single_data.which_one == 'coupon' || single_data.discount_apply == 3"
+                                                type="Number" class="form-control" min="0"
+                                                ng-change="changeInTableData()">
+
+                                        </td>
+                                        <td class="col-md-1"    >
+                                            <!-- <input ng-disabled="single_data.is_single_row_total_paid"
+                                                ng-model="table_data[$index].calculation_sale_price" type="Number"
+                                                ng-disabled="single_data.which_one == 'gift' || single_data.which_one == 'coupon'"
+                                                min="0" class="form-control" ng-change="changeInTableData()"
+                                                ng-value="single_data.calculation_sale_price"> -->
+
+
+                                                <input 
+                                                ng-model="table_data[$index].calculation_sale_price" type="Number"
+                                                ng-disabled="single_data.which_one == 'gift' || single_data.which_one == 'coupon' || single_data.discount_apply == 3"
+                                                min="0" class="form-control" ng-change="changeInTableData()"
+                                                ng-value="single_data.calculation_sale_price">
+
+                                        </td>
+                                        <!-- <td>
+                                            <button ng-disabled="single_data.is_single_row_total_paid" type="button"
+                                                ng-if="single_data.which_one != 'gift'"
+                                                ng-click="clickOnDiscount($index,single_data)"
+                                                class="btn btn-success btn-xs"
+                                                ng-disabled="!table_data[$index].is_check">
+                                                <span ng-show="single_data.discount_apply == 0">Discount</span>
+                                                <span ng-show="single_data.discount_apply == 1"> <i
+                                                        class="fa fa-inr"></i>
+                                                    {{single_data.discount_amount}} <i class="fa fa-remove"></i></span>
+
+
+                                                <span ng-show="single_data.discount_apply == 2">
+                                                    {{single_data.discount_percentage}} % <i
+                                                        class="fa fa-remove"></i></span>
+
+
+                                            </button>
+
+
+
+
+
+
+                                            <button type="button"
+                                            ng-if="single_data.which_one != 'gift'"
+                                            ng-click="clickOnDiscount($index,single_data)"
+                                            class="btn btn-success btn-xs"
+                                            ng-disabled="!table_data[$index].is_check">
+                                            <span ng-show="single_data.discount_apply == 0">Discount</span>
+                                            <span ng-show="single_data.discount_apply == 1"> <i
+                                                    class="fa fa-inr"></i>
+                                                {{single_data.discount_amount}} <i class="fa fa-remove"></i></span>
+
+
+                                            <span ng-show="single_data.discount_apply == 2">
+                                                {{single_data.discount_percentage}} % <i
+                                                    class="fa fa-remove"></i></span>
+
+
+                                                    <span title="Coupon {{single_data.coupon.cc_number}}  {{single_data.coupon.hmt_used}} / {{single_data.coupon.no_of_services}}" ng-show="single_data.discount_apply == 3">
+                                                            {{single_data.coupon.cc_number}} <i
+                                                                class="fa fa-remove"></i></span>
+
+                                                </button>
+
+                                            <button type="button" ng-show="single_data.discount_apply" ng-click="removeDiscount($index,single_data)" class="btn btn-success btn-xs">
+                                                    Apply
+                                            </button>
+
+                                        </td> -->
+                                        <!--<td>
+                                            <select class="form-control"
+                                            ng-change="changeInTableData()"
+                                            ng-if="single_data.which_one != 'gift' && single_data.which_one != 'coupon'"
+                                            ng-model="table_data[$index].tax_id" class="input-sm col-sm-9">
+                                            <option ng-selected="single_data.tax_id == single_tax.id"
+                                                ng-repeat="single_tax in taxes" ng-value="single_tax.id">
+                                                {{single_tax.tax_value}} %</option>
+                                        </select>
+
+                                            <span
+                                                ng-if="single_data.which_one == 'gift' || single_data.which_one == 'coupon'">0%</span>
+                                        </td>-->
+
+                                        <!-- <td>
+                                            <select ng-model="table_data[$index].worker_id" class="form-control" ng-if="single_data.which_one != 'gift' && single_data.which_one != 'coupon'">
+                                                <option ng-repeat="worker in workers" ng-value="worker.id">
+                                                    {{worker.title}} </option>
+                                            </select>
+
+                                            <span ng-if="single_data.which_one == 'gift' || single_data.which_one == 'coupon'"></span>
+
+                                        </td> -->
+
+                                        <td>
+                                            <!-- <span class="padding-5">{{ ((single_data.calculation_sale_price - single_data.discount_amount) * single_data.quantity) }}</span> -->
+
+
+                                            <span class="padding-5">{{ single_data.single_row_total }}</span>
+
+                                        </td>
+                                        <td>
+                                            <!-- <button class="btn btn-dark-azure" >
+                                                
+                                                <i class="fa fa-edit"></i>
+                                            
+                                            </button>
+                                            
+                                             -->
+                                            <!-- <button ng-disabled="single_data.is_single_row_total_paid" class="btn btn-danger"
+                                                ng-click="removeTableData($index,single_data)"><i
+                                                    class="fa fa-trash"></i></button> -->
+
+
+                                                    <button ng-if="invoice_id == 0" class="btn btn-danger"
+                                                    ng-click="removeTableData($index,single_data)"><i
+                                                        class="fa fa-trash"></i></button>
+
+                                                   <!--  <button title="click to replace service" ng-if="invoice_id == 0 && single_data.appointment_id != 0 && single_data.which_one == 'service'"  class="btn btn-warning"
+                                                    ng-click="replaceService($index,single_data)"><i
+                                                        class="fa fa-exchange"></i></button> -->
+
+                                        </td>
+                                        <!-- <td class="col-md-2"><select ng-model="table_data[$index].worker" class="input-sm col-sm-9">
+                                            <option value="1">Atif1</option>
+                                            <option value="1">Atif2</option>
+                                            <option value="1">Atif3</option>
+                                            <option value="1">Atif4</option>
+                                        </select></td> -->
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row margin-top-10" ng-if="table_data.length > 0">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="row">
+                                <table class="table-borderless">
+                                    <!-- <tbody>
+                                        <tr ng-repeat="single_tax in group_by_taxs">
+                                            <td class="col-md-6">Included({{single_tax.tax_value}} %)</td>
+                                            <td class="col-md-6"><i class="fa fa-inr"></i>
+                                                {{single_tax.total_amount_of_this_tax}}</td>
+                                        </tr>
+                                    </tbody> -->
+                                </table>
+                            </div>
+                        </div> 
+
+                        <div class="col-md-6 col-sm-6">
+                            <div class="row">
+                                <table class="table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td><strong class="text-large"><i
+                                                        title="Amount is total of selected services or products etc."
+                                                        class="fa  fa-question-circle text-extra-small pointer text-azure customIcon"></i>Total</strong>
+                                            </td>
+                                            <td ><strong class="text-large"><i
+                                                        class="fa fa-inr"></i>
+                                                    {{total_price}}</strong></td>
+                                        </tr>
+                                        
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row margin-top-10">
+                        <div class="col-md-12">
+                            <h5 class="text-bold margin-top-25 margin-bottom-10">Comments</h5>
+
+                            <textarea ng-model="invoice.comments" class="form-control"></textarea>
+                            <p><strong class="text-red">Note :</strong> This comment will be display in invoice after items list.</p>
+                        </div>
+                    </div>
+                    <div class="row margin-top-10 margin-bottom-10">
+                        <div class="col-md-12 col-sm-12">
+
+                            <button type="button" ng-click="toPay()" class="col-md-12 col-sm-12 padding-20 btn btn-success btn-squared btn-lg">
+                                <span class="text-large"> <i class="fa fa-calculator"> </i> to pay </span>
+                            </button>
+
+
+                            <!-- <button type="button" ng-click="saveInvoice('to_pay')"
+                                class="col-md-12 padding-10 btn btn-success btn-squared btn-lg">
+                                <span class="text-large"> <i class="fa fa-calculator"> </i> To Pay </span>
+                            </button> -->
+
+                        </div>
+
+                        <!-- <div class="col-md-6">
+                            <button type="button" ng-click="saveInvoice('save_invoice')"
+                                class="col-md-12 padding-20 btn btn-success btn-squared btn-lg">
+                                <span class="text-large"> <i class="fa fa-save"> </i> save </span>
+                            </button>
+                        </div> -->
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .coupon->tbody>tr>td{
+        padding-bottom:4px !important; 
+        padding: 0px !important;
+    }
+    td{
+        padding: 3px !important;
+    }
+    .customIcon{
+        font-size: 17px !important;
+        margin:1px !important;
+    }
+</style>

@@ -1,0 +1,110 @@
+<!-- start: FEATURED BOX LINKS -->
+<style>
+    .panel-transparent {
+        border: 1px solid #ccc !important;
+        min-height: 500px !important;
+    }
+
+    .invoice tbody>tr>td {
+        padding: 0px !important;
+    }
+
+    .invoice tfoot>tr>td {
+        padding: 0px !important;
+    }
+
+    .cashdeskHeading {
+
+        padding: 5px !important;
+        min-height: 10px !important;
+
+    }
+
+    .badge {
+        font-size: 10px !important;
+    }
+
+    .cashdeskbody {
+
+        padding: 5px !important;
+
+    }
+</style>
+<div class="container-fluid bg-white" ng-controller="cashInOutCtrl">
+    <div class="row">
+        <div class="{{sideClass}}" id='leftside'>
+            <div class="list-group">
+
+                <a class="list-group-item text-center" href="#!/app/pages/cashdesk_main"> <i
+                        class="fa fa-arrow-left"></i> <span class="text-large">Close </span> </a>
+
+            </div>
+
+        </div>
+        <div class='{{mailClass}}'>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- <div class="panel panel-white no-radius"> -->
+                        <h3>Cash Counter</h3>
+
+                         <div class="panel-body no-padding">
+
+                            <div class="clearfix padding-5 space5">
+                               
+                                <div class="col-xs-4  no-padding margin-right-15">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                            ng-model="dt" is-open="opened" datepicker-options="datepickerOptions"
+                                            ng-required="true" close-text="Close" ng-click="open()"
+                                            ng-change="dateChange()" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary" ng-click="open()">
+                                                <i class="fa fa-calendar"></i>
+                                            </button> </span>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xs-4  no-padding">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                            ng-model="end_dt" is-open="end_opened" datepicker-options="endDateOptions"
+                                            ng-required="true" close-text="Close" ng-click="end_open()"
+                                            ng-change="enddateChange()" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary" ng-click="end_open()">
+                                                <i class="fa fa-calendar"></i>
+                                            </button> </span>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xs-3 no-padding margin-left-15">
+                                   
+                                    <button type="button" class="btn btn-sm btn-primary" ng-disabled="(dt == '') && (end_dt =='')" ng-click="clearDate()">Clear</button>
+
+                                    
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    <!-- </div> -->
+
+                </div>
+
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <table class="table table-bordered" datatable="" dt-options="dtOptionInvoiceRequest_main"
+                            dt-columns="dtColumnInvoiceRequest_main" dt-instance="dtIntanceInvoiceRequestCallback_main"
+                            dt-column-defs="dtColumnInvoiceRequestDefs_main" cellspacing="0" width="100%"></table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

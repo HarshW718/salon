@@ -1,0 +1,146 @@
+<!-- start: FEATURED BOX LINKS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" integrity="sha256-FPJJt8nA+xL4RU6/gsriA8p8xAeLGatoyTjldvQKGdE=" crossorigin="anonymous"></script>
+<style>
+.inner-filter-div-padding-left-right{
+
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+}
+</style>
+<div class="container-fluid bg-white" ng-controller="invoiceReportCtrl">
+    <div class="row">
+        <form id="invoiceFilter" name="invoiceFilter">
+            <div class="col-sm-2" style="background: #d4d4d4;height: 625px;">
+                <span class="serviceProviderTitle" style="font-size:19px">
+                    <i class="glyphicon glyphicon-filter" style="font-size:19px"></i>Filters
+                </span>
+                <span class="serviceProviderTitle pull-right"  style="font-size:19px">
+                    <a href="#!/app/pages/report" title="Close">
+                        <i class="glyphicon glyphicon-remove" style="font-size:19px"></i>
+                    </a>
+                </span>
+                <div class="pagesidebar">
+                    <div class="col-sm-12 topMargin inner-filter-div-padding-left-right">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        Start date:
+                        <input type="text" id="startDate" class="form-control datepicker" uib-datepicker-popup="{{format}}" ng-focus="startOpened = true" placeholder="Start Date" datepicker-options="startDateOptions" is-open="startOpened" name="startDate" ng-model="filterForm.startDate" required="" ng-change="changeStartDate()" />
+                    </div>
+                    <div class="col-sm-12 topMargin inner-filter-div-padding-left-right">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        End date:
+                        <input type="text" id="endDate" class="form-control datepicker" uib-datepicker-popup="{{format}}" ng-focus="endOpened = true" placeholder="End Date" datepicker-options="endDateOptions" is-open="endOpened" name="endDate" ng-model="filterForm.endDate" required="" />
+                    </div>
+                    
+                    <!--<div class="col-sm-12 topMargin " >
+                                <button type="button" ng-click="todayDay()" class="col-sm-12 btn btn-wide btn-primary">Today</button>
+                    </div>-->
+                   
+                    
+                    <div class="col-sm-12 topMargin inner-filter-div-padding-left-right" style="text-align:center;">
+                        
+                            <button type="button" ng-click="createReport('invoiceFilter','create_report')" class="btn btn-wide btn-success col-sm-12"><i class="fa  fa-refresh"></i>
+                                Create Report
+                            </button>
+                    </div>
+                    <div class="col-sm-12 topMargin inner-filter-div-padding-left-right"  style="text-align:center;">
+                         
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="col-sm-10" >
+            <div class="panel panel-transparent">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-bar-chart-o fa-2x"></i> <span class="reportTitle">All invoices</span>
+                    </div>
+                    <div>
+                        Period: {{psDate}} TO {{peDate}}
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 no-padding margin-bottom-5"><input type="text" class="form-control" ng-model="search" placeholder="Search" /></div>
+                       
+                        <!-- <div class="col-sm-3 no-padding margin-bottom-5 "></div> -->
+                        <div class="col-md-4 col-sm-4 no-padding margin-bottom-5 margin-left-5">
+                                
+                                <!--ng-click="printPdf('printPdf')" -->
+                                <!--<button type="button" ng-click="createReport('invoiceFilter','create_pdf')"  ng-disabled="!invoiceList.length" class="btn btn-wide btn-o btn-default"><i class="fa fa-file-pdf-o"></i>
+                                    Create Pdf
+                                </button>-->
+
+                                <button type="button" ng-disabled="!invoiceList.length" ng-click="downloadXls()" class="btn btn-wide btn-o btn-default"><i class="fa fa-file-pdf-o"></i>
+                                    Export
+                                </button>
+                        </div>
+                    </div>
+                    <div class="row" id="invoiceReportexportable">
+                        <div class="table-responsive" id="printPdf">
+                            <table id="allInvoiceReport" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>Number</td>
+                                        <td>Customer</td>
+                                        <td>Total </td>
+                                        <td>In cash</td>
+                                        <td>Credit</td>
+                                        <!--<td>Pin</td>
+                                       
+                                        <td>Invoice</td>
+                                        <td>Gift certificate</td>-->
+                                        <td>Note</td>
+                                        <td>Staff Name</td>
+                                        <!--<td>Received date</td>-->
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr ng-repeat="i in invoiceList | filter : search">
+                                        <td class="text-nowrap">{{i.invoiceDate}}</td>
+                                        <td class="text-nowrap">{{i.number}}</td>
+                                        <td>{{i.customerName}}</td>
+                                        <td class="text-nowrap"><i class="fa fa-inr"></i>{{i.total_invoice_amount | number:2}}</td>
+                                        <td class="text-nowrap"><span ng-if="i.incash>0"><i class="fa fa-inr"></i>{{i.incash | number:2}}</span><span ng-if="i.incash==0"></span></span></td>
+                                        <td class="text-nowrap"><span ng-if="i.credit>0"><i class="fa fa-inr"></i>{{i.credit | number:2}}</span><span ng-if="i.credit==0"></span></span></td>
+                                        <!--<td class="text-nowrap"><span ng-if="i.pin>0"><i class="fa fa-inr"></i>{{i.pin | number:2}}</span><span ng-if="i.pin==0"></span></span></td>
+                                       
+                                        <td class="text-nowrap">
+                                            <span ng-if="i.invoice>0 && i.is_received==1"><i class="fa fa-inr"></i>{{i.invoice | number:2}} <span class="label label-sm label-success">Received</span></span>
+                                            <span ng-if="i.invoice>0 && i.is_received==0"><i class="fa fa-inr"></i>{{i.invoice | number:2}} <span class="label label-sm label-warning">Not received</span></span>
+                                            <span ng-if="i.invoice==0"></span></span></td>
+                                        <td class="text-nowrap"><span ng-if="i.gift>0"><i class="fa fa-inr"></i>{{i.gift | number:2}}</span><span ng-if="i.gift==0"></span></span></td>-->
+                                        <td>{{i.comment}}</td>
+                                        <td>{{i.associate}}</td>
+                                        <!--<td ng-if="i.is_received_date">{{i.is_received_date}}</td>
+                                        <td ng-if="!i.is_received_date">-</td>-->
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr ng-if="!invoiceList.length" style="text-align: center;">
+                                        <td colspan="11">Data not available</td>
+                                    </tr>
+                                    <tr ng-if="invoiceList.length>0">
+                                        <td>Total</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-nowrap"><i class="fa fa-inr"></i>{{ invoiceList | sumByColumn: 'total_invoice_amount' | number:2}}</td class="text-nowrap">
+                                        <td class="text-nowrap"><i class="fa fa-inr"></i>{{ invoiceList | sumByColumn: 'incash' | number:2}} </td>
+                                        <td class="text-nowrap"><i class="fa fa-inr"></i>{{ invoiceList | sumByColumn: 'credit' | number:2}} </td>
+                                        <!--<td class="text-nowrap"><i class="fa fa-inr"></i>{{ invoiceList | sumByColumn: 'pin' | number:2}} </td>
+                                       
+                                        <td class="text-nowrap"><i class="fa fa-inr"></i>{{ invoiceList | sumByColumn: 'invoice' | number:2}} </td>
+                                        <td class="text-nowrap"><i class="fa fa-inr"></i>{{ invoiceList | sumByColumn: 'gift' | number:2}} </td>-->
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

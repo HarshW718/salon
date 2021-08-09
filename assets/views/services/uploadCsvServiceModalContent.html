@@ -1,0 +1,54 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title"> <i class="fa fa-upload"></i> Import Services </h3>
+</div>
+<form name="uploadForm" id="id_uploadForm">
+    <div class="modal-body">
+        <div class="container-fluid  bg-white">
+            <div class="row">
+            <div class="col-md-12">
+                   
+                    <div class="form-group margin-bottom-10">
+                       <p>select a .CSV file (<i class="fa fa-file-pdf-o"></i> <a href="assets/images/upload/demo_add_services.csv" class="text-azure" download> Sample File </a>)</p>
+                    </div>
+                    <div class="form-group"> 
+                    <!-- <input type="file" file-reader="filedata" ng-model="file_data" id="csv_file" name="csv_file"  onchange="angular.element(this).scope().csvFileCheck()" required /> -->
+                    <input type="file" file-reader upload="uploadFile(file)" ng-model="file">           
+                </div>
+            </div>
+            <div class="col-md-12">
+                <fieldset>
+                    <legend class="text-red">
+                        Instructions before upload file
+                    </legend>
+                    <div class="row">
+                       
+                        <div class="col-md-12">
+                                <p>Here is six column in sample file </p>
+                                <ol>
+                                        
+                                        <li><strong>Service category ::</strong> Be sure that category is available before type.  </li>
+                                        <li><strong>Service name ::</strong> Type service name here.  </li>
+                                        <li><strong>Duration ::</strong> Type duration in minutes(only digit). (Example - <strong>0hour 40minute = 40minute</strong>,<strong>1hour 15minute = 75minute</strong> ,<strong>2hour 15minute = 135minute</strong>)  </li>
+                                        <li><strong>Buffer Time ::</strong>Type buffer time in minutes(only digit). (Example - <strong>0hour 40minute = 40minute</strong>,<strong>1hour 15minute = 75minute</strong> ,<strong>2hour 15minute = 135minute</strong>)  </li>
+                                        <li><strong>Sale price ::</strong> Type sale price here (In digit)  </li>
+                                        <li><strong>BTW ::</strong> Be sure that BTW is available before type.  </li>
+
+                               </ol> 
+                        </div>
+                    </div>
+                </fieldset>
+            </div>     
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-wide btn-success" ng-click="submitCsvData()">Save</button>
+        <button type="button" class="btn btn-wide btn-danger" ng-click="cancel($event)">Close</button>
+
+        <!-- <button type="button" class="btn btn-wide btn-success">Next One</button> -->
+       
+    </div>
+</form>

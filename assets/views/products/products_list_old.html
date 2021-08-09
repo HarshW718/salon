@@ -1,0 +1,83 @@
+<!-- start: TABLE WITH FILTERS -->
+<!-- <div class="margin-bottom-10 margin-top-10 "> -->
+<div ng-controller="productCtrl">
+        <div class="container-fluid bg-white" >
+
+                <a href="#!/app/pages/products" class="btn btn-wide btn-yellow"><i class="fa fa-th-large"></i> Products</a>
+                <a href="#!/app/pages/product_categories" class="btn btn-wide btn-default"><i class="fa fa-folder"></i>
+                                   Categories</a>
+                 <a href="#!/app/pages/product_company" class="btn btn-wide btn-default"><i class="fa fa-vcard"></i>
+                  Company</a>
+                           
+                </div>
+               
+               <div class="container-fluid container-fullw bg-white" >
+                   <button type="button" class="btn btn-o btn-default margin-right-10"><i class="fa fa-refresh"></i></button>
+               
+                   <button type="button" class="btn btn-wide btn-success" ng-click="add_editProduct(0)"><i class="fa  fa-plus-square"></i>
+                       New</button>
+                   <button type="button" class="btn btn-o btn-default margin-right-10"><strong><i
+                               class="fa fa-trash-o" ng-click="moveToTrash()"></i></strong></button>
+                   <button type="button" class="btn btn-o btn-default margin-right-10"><strong><i
+                               class="fa fa-upload"></i></strong></button>
+                   <button type="button" class="btn btn-o btn-default margin-right-10"><strong><i
+                               class="fa fa-mobile-phone"></i></strong></button>
+               </div>
+               <!-- </div> -->
+               
+                   <div class="row">
+                       <div class="col-md-12">
+                           <div >
+                               <table ng-table="tableParams" show-filter="true" class="table table-striped">
+                                   <tr ng-repeat="product in products">
+                                       <td header="'ng-table/headers/checkbox.html'">
+                                           <div class="checkbox clip-check check-primary">
+                                               <input type="checkbox" id="{{product.id}}_checkbox" ng-change="singleCheck(product.id)" ng-model="selected[product.id]" value="{{product.id}}">
+                                               <label for="{{product.id}}_checkbox">
+                                               </label>
+                                           </div>
+                                       </td>
+               
+                                       <td data-title="'Category'" > <a ng-if="product.product_category.length != 0" class="text-azure" ng-click="showProducts(product.id)">
+                                               {{product.product_category.name}} </a> 
+                                            </td>
+                                       <td ng-if="product.type == 1" data-title="'Type'"> Salon </td>
+                                       <td ng-if="product.type == 2" data-title="'Type'"> Sell </td>
+                                       <td ng-if="product.type == NULL || product.type == 0" data-title="'Type'"> --- </td>
+                                       <td data-title="'EAN'">  {{product.ean}}</td>
+                                       <td data-title="'SKU'">  {{product.sku}}</td>
+                                       <td data-title="'Product'">  {{product.name}}</td>
+                                       <td data-title="'Purchase'">  {{product.purchase_price}}</td>
+                                       <td data-title="'Sale'">  {{product.sale_price}}</td>
+                                       <td data-title="'BTW'"> {{product.tax_id}} </td>
+                                       <td ng-if="product.product_company.length != 0" data-title="'Supplier'">  {{product.product_company.name}}</td>
+                                     
+                                       <td data-title="'Stock'">  {{product.stocke}}</td>
+                                       <td data-title="'Minimal'">  {{product.min_stocke}}</td>
+                                       <td data-title="'Shortage'">  {{product.min_stocke}}</td>
+                                       <td data-title="'Action'"> <a ng-click="add_editProduct(product)"><i
+                                                   class="fa fa-edit text-large"></i></a><a class="margin-left-10"><i
+                                                   ng-click="deleteProduct(product.id)" class="fa fa-remove text-large"></i></a></td>
+                                   </tr>
+                            
+                                   <tr class="text-center text-extra-large" ng-show="!products.length"><td colspan="14"><strong class="text-red">No data found !!</strong></td></tr>
+                               </table>
+                           </div>
+                       </div>
+                   </div>
+</div>
+               <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+                           <div class="checkbox clip-check check-primary">
+                           <input type="checkbox" ng-model="checkbox_top" ng-change="checkAll()" id="checkbox_top" name="filter-checkbox" value="1000" />
+                           <label for="checkbox_top"> 
+                           </label>
+                           </div> 
+                    </script>
+               <!-- end: TABLE WITH FILTERS -->
+               
+               
+               
+             
+               
+               
+           

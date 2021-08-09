@@ -1,0 +1,44 @@
+<div class="modal-header">
+        <button type="button" class="close" title="Close" ng-click="cancel($event)">&times;</button>
+        <h3 class="modal-title"> <i class="fa fa-exchange"></i> Compare</h3>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="panel panel-white">
+                                                       
+                                <div class="panel-body">
+                                   
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6" ng-repeat="single_image in images" id="tmp_{{single_image.id}}">
+                                           <!-- <a target="_blank" href="uploads/{{single_image.image_name}}" class="thumbnail"> -->
+                                            
+                                            <div class="margin-bottom-10 ">
+                                             <div  class="thumbnail" id="inverted_contain_{{single_image.id}}">
+                                            <img  id="panzoom_{{single_image.id}}" src="uploads/{{single_image.image_name}}" alt=""  >
+                                            </div>
+                                            </div>
+                                            <button class="btn btn-o btn-info" ng-click="zoom_in_out(single_image.id)" id="zoom-in_{{single_image.id}}"> <i class="fa fa-search-plus"></i></button>
+                                            <button class="btn btn-o btn-info dummyClass" ng-click="zoom_in_out(single_image.id)" id="zoom-out_{{single_image.id}}">
+                                                    <i class="fa fa-search-minus"></i>
+                                                </button>
+                                            <!-- <input id="zoom-range_{{single_image.id}}" type="range" class="zoom-range"> -->
+                                            <button class="btn btn-o btn-info" id="reset_{{single_image.id}}" class="reset">Reset</button>
+                                               <button class="btn btn-o btn-info" ng-click="rotate(single_image.id)" id="rotate_{{single_image.id}}">
+                                                    <i class="fa fa-repeat"></i>
+                                                </button>  
+
+                                               
+                                            <!-- </a> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                </div>
+               
+            </div>
+        </div>
+    </div>
+  

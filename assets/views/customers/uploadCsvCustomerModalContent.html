@@ -1,0 +1,33 @@
+<div class="modal-header">
+        <button type="button" class="close" ng-click="cancel($event)">&times;</button>
+        <h3 class="modal-title"> <i class="fa fa-upload"></i> Import Customers </h3>
+    </div>
+    <form name="uploadForm" id="id_uploadForm">
+        <div class="modal-body">
+            <div class="container-fluid bg-white">
+                <div class="row">
+                    <div class="col-md-12">
+                       
+                        <div class="form-group margin-bottom-10">
+                           <p>select a .CSV file (<i class="fa fa-file-pdf-o"></i> <a href="assets/images/upload/demo_customers.csv" class="text-azure" download> Sample File </a>)</p>
+                        </div>
+                        <div class="form-group"> 
+                        <!-- <input type="file" file-reader="filedata" ng-model="file_data" id="csv_file" name="csv_file"  onchange="angular.element(this).scope().csvFileCheck()" required /> -->
+                        <input type="file" file-reader upload="uploadFile(file)" ng-model="file">           
+                    </div>
+                        </div>
+                       
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="modal-footer">
+            <button type="button" class="btn btn-wide btn-success" ng-click="submitCsvData()">Save</button>
+            <button type="button" class="btn btn-wide btn-danger" ng-click="cancel($event)">Close</button>
+    
+            <!-- <button type="button" class="btn btn-wide btn-success">Next One</button> -->
+           
+        </div>
+    </form>
+    

@@ -1,0 +1,73 @@
+<div class="modal-header">
+    <button type="button" class="close" title="Close" ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title"> <i class="fa fa-tags"></i> {{items.button[0]}} Service</h3>
+</div>
+<form name="serviceForm" id="id_serviceForm" >
+<div class="modal-body">
+    <div class="container-fluid bg-white">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <select class="form-control" name="category_id" ng-model="service.category_id" required>
+                                <option selected ng-disabled="true" value="" >Service Category</option>    
+                                <option ng-selected="service.category_id == services_category.id" ng-repeat="services_category in items.service_categories" ng-value="services_category.id">{{services_category.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control input-sm" id="name" name="name"
+                                placeholder="Service Name" ng-model="service.name" required/>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class='row'>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control input-sm" id="display_name" name="display_name"
+                                placeholder="Display Name" ng-model="service.display_name" required/>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend>
+                                <i class="fa  fa-inr"></i> Price
+                            </legend>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="block">
+                                            Membership Price
+                                        </label>
+                                        <input type="number" min="0" class="form-control input-sm" id="membership_price" name="membership_price" placeholder="Membership Price" ng-model="service.membership_price" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" pattern="\d*" required/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="block">
+                                            Sales Price
+                                        </label>
+                                        <input type="number" min="0" class="form-control input-sm" id="sales_price" name="sales_price" placeholder="Sales Price" ng-model="service.sales_price" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" pattern="\d*" required/>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-wide btn-success" ng-click="submitServiceForm()">{{items.button[1]}}</button>
+    <button type="button" class="btn btn-wide btn-danger" ng-click="cancel($event)">Close</button>        
+</div>
+</form>

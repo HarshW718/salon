@@ -1,0 +1,85 @@
+<!-- <script type="text/ng-template" id="addCategoryModalContent.html"> -->
+<!-- <div class="modal-header">
+        <button type="button" title="Close" class="close" ng-click="cancel($event)">&times;</button>
+        <h3 class="modal-title">  Extra Time</h3>
+    </div> -->
+
+    <div class="modal-body">
+        <div class="container-fluid bg-white">
+            <button type="button" title="Close" class="close" ng-click="cancel($event)">&times;</button>
+            <div class="row">
+                <h4 class="margin-bottom-15">Message  </h4>
+                <div class="col-md-1">
+                    <span>
+                        <h2><i class="fa {{fa_icon}}"></i></h2>
+                    </span>
+                </div>
+                <div class="col-md-11 padding-top-5">
+                    <span class="text-beige">{{message1}}</span><br>
+                    <span>{{message2}}</span>
+                </div>
+    
+    
+    
+            </div>
+    
+            <div class="row" ng-if="status == 'cancel'">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-7 padding-top-5">
+                    <span> <strong> Reason </strong>
+    
+                        <select class="form-control" ng-model="appointment_log.cancel_reason">
+                            <option  ng-value="1">&nbsp;&nbsp;Cancellation</option>
+                            <option ng-value="2">&nbsp;&nbsp;Cancellation not on time</option>
+                            <option ng-value="3">&nbsp;&nbsp;No-show Cancellation</option>
+                        </select>
+    
+                    </span>
+                </div>
+            </div>
+    
+            <div class="row">
+                   
+                    <div class="col-md-12">
+    
+                            <div class="checkbox clip-check check-primary check-sm float-right" >
+                                    <input type="checkbox" id="email" ng-model="appointment_log.is_email">
+                                    <label for="email">
+                                        Email
+                                    </label>
+                                    <input type="checkbox" id="sms" ng-model="appointment_log.is_sms">
+                                    <label for="sms">
+                                        Sms
+                                    </label>
+                            </div>
+                            
+                       
+                    </div>
+            </div>
+            <div class="row">
+    
+    
+            
+            </div>
+        
+    
+        </div>
+    </div>
+     <div class="modal-footer">
+               
+            <button class="btn btn-wide btn-default" ng-click="cancel()">&nbsp;{{button1}}</button>
+           
+            
+            <button class="btn btn-wide btn-success" ng-click="submitButtonCancelConfirmCheckin(status)">&nbsp;{{button2}}</button>
+    
+           
+           
+           
+            <!-- <button class="btn btn-wide btn-warning" ng-click="appointmentCancelConfirmCheckin('confirm')"><i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;Confirm</button>
+            <button class="btn btn-wide btn-success" ng-click="appointmentCancelConfirmCheckin('check_in')"><i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Checking in</button>
+            <button class="btn btn-wide btn-success" ng-click="toPay($event)"><i class="fa fa-inr"></i>&nbsp;&nbsp;To pay</button> -->
+    
+    
+            
+            </div> 

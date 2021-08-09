@@ -1,0 +1,73 @@
+
+<style>
+    .dataTables_filter,
+    .dataTables_paginate {
+        float: right;
+    }
+    .pagination_width{
+        width: 50% !important;
+    }
+</style>
+<div ng-controller="couponUsedCtrl">
+<div class="container-fluid bg-white" >
+    <!-- href="#!/app/pages/product_categories" -->
+    <!-- <a href="#!/app/pages/coupons" class="btn btn-wide btn-default"><i class="fa fa-exchange"></i> Put Together</a> -->
+    <a href="#!/app/pages/used_coupons" class="btn btn-wide btn-yellow"><i class="fa fa-lock"></i> In Use</a>
+    <!-- <a class="list-group-item text-center" ng-click="openCustomerModal()"> <i class="fa fa-cart-plus text-large"></i> <span class="text-large">Add <br></span> <small>By customer name</small> </a> -->
+
+    <div class="row">
+        <div class="col-md-12 coupon-table-width">
+            <div class="row">
+                <div class="col-md-7 col-sm-7">
+                   <p>All sold customer coupons</p>
+                </div>
+                <div class="col-md-2 col-sm-2"> <span style="float: right;">Filter on :</span></div>
+                <div class="col-md-3 col-sm-3">
+                        
+                            <div class="form-group">
+                                        <select class="form-control input-sm" ng-model="valid_or_invalid" ng-change="validInvalid()">
+                                            <option value="valid">Valid</option>
+                                            <option value="invalid">Invalid</option>
+                                        </select>
+                               
+                                </div>
+                           
+                        <!-- <input type="text" placeholder="Search" id="form-field-17" class="form-control"> -->
+                        
+                </div>
+            </div>
+            <div class="table-class">
+            <table id="usedCouponDatatable" class="table table-bordered" datatable="" dt-options="dtOptionInvoiceRequest_main"
+            dt-columns="dtColumnInvoiceRequest_main" dt-instance="dtIntanceInvoiceRequestCallback_main"
+            dt-column-defs="dtColumnInvoiceRequestDefs_main" cellspacing="0" width="100%"></table>
+            </div>
+
+
+            <!-- <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Sell Date</th>
+                        <th scope="col">number</th>
+                        <th scope="col">Ride card</th>
+                        <th scope="col">Customers</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Use % $admin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="7">No ride cards found</td>
+                       
+                    </tr>
+                   
+                </tbody>
+            </table> -->
+
+        </div>
+
+    </div>
+  
+   
+</div>
+</div>

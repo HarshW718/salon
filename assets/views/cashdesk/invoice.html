@@ -1,0 +1,98 @@
+<!-- start: FEATURED BOX LINKS -->
+<style type="text/css">
+    #invoiceMdlTbl tr:last-child {
+        border-bottom: 2px solid #000;
+    }
+    #invoiceMdlTbl tr:first-child {
+        border-bottom: 2px solid #000;
+    }
+    #tblTax tr:last-child {
+        border-bottom: 2px solid #000;
+    } 
+    #tblTax1 tr:last-child {
+        border-bottom: 2px solid #000;
+    }
+</style>
+<div class="container-fluid bg-white" ng-controller="invoiceCtrl">
+    <div class="row">
+       
+        <div class="col-md-2 cashdesk-left-sidebar" id="leftSideBar">
+                   
+            <div class="list-group" ng-if="userdata.role_id === 1">
+                    <a class="list-group-item text-center" href="#!/app/pages/cashdesk_main"> <i class="fa fa-arrow-left"></i> <span class="text-large">Back</span>  </a>
+                
+                    <!--<a ng-if="loginUserData.role_id==1" class="list-group-item text-center" ng-click="toAdjust();"> <i class="fa fa-unlock"></i> <span class="text-large">To Adjust</span>  </a>-->
+                
+                
+                    <a class="list-group-item text-center" href="#!/app/pages/cashdesk"> <i class="fa fa-plus text-large"></i> <span class="text-large">Add <br></span> <small>Walk-in-customer</small> </a>
+
+                <a class="list-group-item text-center" href="javascript:void(0)" ng-click="printDiv('printData')"> <i class="fa fa-print"></i> <span class="text-large">Invoice print</span>  </a>
+                <a class="list-group-item text-center" href="javascript:void(0)" ng-click="convertIntoPdf()"> <i class="fa fa-download"></i> <span class="text-large">Download</span>  </a>
+                
+                <!--<a class="list-group-item text-center" href="javascript:void(0)" ng-click="openModal()"> <i class="fa fa-envelope"></i> <span class="text-large">Send Email</span> </a>-->
+
+                <a class="list-group-item text-center" href="#!/app/pages/cashdesk/settings"> <i class="fa fa-cog"></i> <span class="text-large">Settings </span>  </a>
+            </div>
+            <div class="list-group" ng-if="userdata.role_id === 3">
+                <a class="list-group-item text-center" href="#!/app/pages/cashdesk_main"> <i class="fa fa-arrow-left"></i> <span class="text-large">Back</span>  </a>
+            
+                <!--<a ng-if="loginUserData.role_id==1" class="list-group-item text-center" ng-click="toAdjust();"> <i class="fa fa-unlock"></i> <span class="text-large">To Adjust</span>  </a>-->
+            
+            
+                <a class="list-group-item text-center" href="#!/app/pages/cashdesk"> <i class="fa fa-plus text-large"></i> <span class="text-large">Add <br></span> <small>Walk-in-customer</small> </a>
+
+            <a class="list-group-item text-center" href="javascript:void(0)" ng-click="printDiv('printData')"> <i class="fa fa-print"></i> <span class="text-large">Invoice print</span>  </a>
+            <a class="list-group-item text-center" href="javascript:void(0)" ng-click="convertIntoPdf()"> <i class="fa fa-download"></i> <span class="text-large">Download</span>  </a>
+            
+            <!--<a class="list-group-item text-center" href="javascript:void(0)" ng-click="openModal()"> <i class="fa fa-envelope"></i> <span class="text-large">Send Email</span> </a>-->
+
+            <a class="list-group-item text-center" href="#!/app/pages/cashdesk/settings"> <i class="fa fa-cog"></i> <span class="text-large">Settings </span>  </a>
+        </div>
+        <div class="list-group" ng-if="userdata.role_id === 4">
+            <a class="list-group-item text-center" href="#!/app/pages/cashdesk_main"> <i class="fa fa-arrow-left"></i> <span class="text-large">Back</span>  </a>
+        
+            <a class="list-group-item text-center" href="#!/app/pages/cashdesk"> <i class="fa fa-plus text-large"></i> <span class="text-large">Add <br></span> <small>Walk-in-customer</small> </a>
+
+        <a class="list-group-item text-center" href="javascript:void(0)" ng-click="printDiv('printData')"> <i class="fa fa-print"></i> <span class="text-large">Invoice print</span>  </a>
+        <a class="list-group-item text-center" href="javascript:void(0)" ng-click="convertIntoPdf()"> <i class="fa fa-download"></i> <span class="text-large">Download</span>  </a>
+        
+        <!--<a class="list-group-item text-center" href="javascript:void(0)" ng-click="openModal()"> <i class="fa fa-envelope"></i> <span class="text-large">Send Email</span> </a>-->
+
+    </div>
+    <div class="list-group" ng-if="userdata.role_id === 2">
+        <a class="list-group-item text-center" href="#!/app/pages/cashdesk_main"> <i class="fa fa-arrow-left"></i> <span class="text-large">Back</span>  </a>
+        <!--<a  class="list-group-item text-center" ng-click="toAdjust();"> <i class="fa fa-unlock"></i> <span class="text-large">To Adjust</span>  </a>-->
+        <a class="list-group-item text-center" href="#!/app/pages/cashdesk"> <i class="fa fa-plus text-large"></i> <span class="text-large">Add <br></span> <small>Walk-in-customer</small> </a>
+
+    <a class="list-group-item text-center" href="javascript:void(0)" ng-click="printDiv('printData')"> <i class="fa fa-print"></i> <span class="text-large">Invoice print</span>  </a>
+    <a class="list-group-item text-center" href="javascript:void(0)" ng-click="convertIntoPdf()"> <i class="fa fa-download"></i> <span class="text-large">Download</span>  </a>
+    
+    <!--<a class="list-group-item text-center" href="javascript:void(0)" ng-click="openModal()"> <i class="fa fa-envelope"></i> <span class="text-large">Send Email</span> </a>-->
+
+</div>
+        </div>
+        <div class="col-md-10" style="color:#000;" >
+               
+        <div class="hide" id="barIcon">
+                <a class="" href="javascript:void(0)"> <button type="button" class="btn btn-sm btn-primary margin-bottom-5" ng-click="hideSidebar()"><i class="fa fa-bars"></i></button> </a>
+            </div>
+               <div ng-if="display_button"> 
+               <button ng-if="display_is_received" ng-click="clickIsReceived('is_received')" type="button" class="btn btn-warning btn-xs">
+                        Is received ?
+                </button>
+                <button ng-if="!display_is_received" ng-click="clickIsReceived('is_not_received')" type="button" class="btn btn-danger btn-xs">
+                    Is not received ?
+                </button>
+               </div>
+            
+                <div id="printData" ng-bind-html="template.html | trusted">
+            </div>
+           
+        </div>
+       
+    </div>
+</div>
+
+
+
+

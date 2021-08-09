@@ -1,0 +1,146 @@
+<!-- <script type="text/ng-template" id="myModalSettings.html"> -->
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">&times;</button>
+    <h3 class="modal-title">Settings </h3>
+</div>
+<div class="modal-body padding-3 settings-panel">
+    <div class="panel panel-transparent">
+        <div class="padding-3">
+            <h5 class="panel-title">Agenda scale</h5>
+        </div>
+        <div class="panel-body padding-3">
+            <div class="form-group"> 
+                <select class="form-control" ng-model="calendar_setting.time_slot_duration"
+                    ng-change="timeslotChange(timeSlot)">
+                    <option ng-selected="calendar_setting.time_slot_duration == '00:05:00'" value="00:05:00">5min</option>
+                    <option ng-selected="calendar_setting.time_slot_duration == '00:10:00'"  value="00:10:00">10min</option>
+                    <option ng-selected="calendar_setting.time_slot_duration == '00:15:00'" value="00:15:00">15min</option>
+                    <option ng-selected="calendar_setting.time_slot_duration == '00:20:00'" value="00:20:00">20min</option>
+                    <option ng-selected="calendar_setting.time_slot_duration == '00:30:00'" value="00:30:00">30min</option>
+                    <option ng-selected="calendar_setting.time_slot_duration == '01:00:00'" value="01:00:00">1hour</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="padding-3">
+            <h5 class="panel-title">Agenda Start-End Time</h5>
+        </div>
+        <div class="panel-body padding-3">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                           <label class="control-label" for="inputEmail3"> Start </label>
+                           <select  class="form-control" ng-model="calendar_setting.start_time"
+                            ng-change="onChangeStartTime()">
+                            <option ng-selected="calendar_setting.start_time == x"  ng-repeat="x in start_time_duration" ng-value="x">{{x}}</option>
+                        </select>
+                        </div>                         
+                    </div> 
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                         <label class="control-label" for="inputPassword3">End</label>  
+                         <select class="form-control" ng-model="calendar_setting.end_time">
+                            <option ng-selected="calendar_setting.end_time == x" ng-repeat="x in end_time_duration" ng-value="x">{{x}}</option>
+                        </select>
+                        </div> 
+                    </div> 
+                </div>   
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <!-- <input type="email" placeholder="07:00" id="inputEmail3" class="form-control underline"> -->
+                        
+                    </div>
+                    
+                </div>
+        </div>
+
+        <div class="padding-3">
+            <h5 class="panel-title">Agenda first day(Weekly overview)</h5>
+        </div>
+        <div class="panel-body padding-3">
+            <div class="form-group">
+                <select class="form-group" ng-model="calendar_setting.first_day">
+                    <option ng-selected="calendar_setting.first_day == 0" value="0">Sunday</option>
+                    <option ng-selected="calendar_setting.first_day == 1" value="1">Monday</option>
+                    <option ng-selected="calendar_setting.first_day == 2" value="2">Tuesday</option>
+                    <option ng-selected="calendar_setting.first_day == 3" value="3">Wednesday</option>
+                    <option ng-selected="calendar_setting.first_day == 4" value="4">Thursday</option>
+                    <option ng-selected="calendar_setting.first_day == 5" value="5">Frieday</option>
+                    <option ng-selected="calendar_setting.first_day == 6" value="6">Saturday</option>
+                </select>
+            </div>
+        </div>
+        <div class="padding-3">
+            <h5 class="panel-title">Timeline</h5>
+        </div>
+        <div class="panel-body padding-3">
+            <div class="checkbox clip-check check-primary">
+                <input type="checkbox" id="time_line"  ng-model="calendar_setting.time_line">
+                <label for="time_line">
+                    Show timeline
+                </label>
+            </div>
+        </div>
+        <!-- <div class="panel-body padding-3">
+            <div class="checkbox clip-check check-primary">
+                <input type="checkbox" id="cancel_appointment"  ng-model="calendar_setting.display_cancel_appointment">
+                <label for="cancel_appointment">
+                    Show cancel appointment
+                </label>
+            </div>
+        </div> -->
+
+        <div class="padding-3">
+            <h5 class="panel-title">Show on appointment</h5>
+        </div>
+        <div class="panel-body padding-3">
+            <div class="checkbox clip-check check-primary check-sm checkbox-inline">
+
+                <input type="checkbox" id="address" ng-model="calendar_setting.display.address">
+                <label for="address">
+                    Show Address
+                </label>
+                <input type="checkbox" id="postcode" ng-model="calendar_setting.display.postcode">
+                <label for="postcode">
+                    Show Postcode
+                </label>
+
+                <input type="checkbox" id="location" ng-model="calendar_setting.display.location">
+                <label for="location">
+                    Show Location
+                </label>
+
+                <input type="checkbox" id="price" ng-model="calendar_setting.display.price">
+                <label for="price">
+                    Show Price
+                </label>
+
+                <input type="checkbox" id="booked_by" ng-model="calendar_setting.display.booked_by">
+                <label for="booked_by">
+                    Show booked by
+                </label>
+
+                <input type="checkbox" id="phone" ng-model="calendar_setting.display.phone">
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input type="checkbox" id="comments" ng-model="calendar_setting.display.comments">
+                <label for="comments">
+                   Appointment Comments
+                </label>
+
+                <input type="checkbox" id="customer_comments" ng-model="calendar_setting.display.customer_comments">
+                <label for="customer_comments">
+                   Customer Comments
+                </label>
+           
+            </div>
+        </div>
+        <div class="panel-body padding-3">
+                <button type="button" class="btn btn-wide btn-default" ng-click="openColorSidebar()">Set colors</button>
+                    <button type="button" class="btn btn-wide btn-success" ng-click="saveCalendarSetting()">Save</button>
+            </div>
+
+    </div>
+   

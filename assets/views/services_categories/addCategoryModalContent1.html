@@ -1,0 +1,66 @@
+<!-- <script type="text/ng-template" id="addCategoryModalContent.html"> -->
+    <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel($event)">&times;</button>
+            <h3 class="modal-title"> <i class="fa fa-folder"></i> {{items.button[0]}} Category</h3>
+        </div>
+        <form name="serviceCategoryForm" id="id_serviceCategoryForm" >
+        <div class="modal-body">
+            <div class="container-fluid bg-white">
+           
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                        <div class="form-group" >
+                                    
+                            <input type="text" name="name" class="form-control input-sm" ng-model="service_category.name" placeholder="Category Name" required />
+                        </div>
+                       
+                       
+                        <div class="form-group">
+                            <select class="cs-select cs-skin-elastic" name="type" ng-model="service_category.type" required>
+                                <option selected ng-disabled="true" value="" >Type</option>    
+                                <option ng-selected="type == cat_type.id" ng-repeat="cat_type in cat_types" ng-value="cat_type.id">{{cat_type.label}}</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="block padding-top-10">
+                                        Choose Color
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                               
+                                <div class="panel-body text-center" ng-init="service_category.color = (service_category.color == '') ? '#73a189':service_category.color">
+                                    <spectrum-colorpicker ng-model="service_category.color" options="{showPaletteOnly: true, togglePaletteOnly: true, togglePaletteMoreText: 'more', togglePaletteLessText: 'less', palette: [['#000','#444','#666','#999','#ccc','#eee','#f3f3f3','#fff'], ['#f00','#f90','#ff0','#0f0','#0ff','#00f','#90f','#f0f'], ['#f4cccc','#fce5cd','#fff2cc','#d9ead3','#d0e0e3','#cfe2f3','#d9d2e9','#ead1dc'], ['#ea9999','#f9cb9c','#ffe599','#b6d7a8','#a2c4c9','#9fc5e8','#b4a7d6','#d5a6bd'], ['#e06666','#f6b26b','#ffd966','#93c47d','#76a5af','#6fa8dc','#8e7cc3','#c27ba0'], ['#c00','#e69138','#f1c232','#6aa84f','#45818e','#3d85c6','#674ea7','#a64d79'], ['#900','#b45f06','#bf9000','#38761d','#134f5c','#0b5394','#351c75','#741b47'], ['#600','#783f04','#7f6000','#274e13','#0c343d','#073763','#20124d','#4c1130']]}"></spectrum-colorpicker>
+                                </div>
+                            </div>
+                           </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- string-to-number directive coming from directive/compare-to.js -->
+                            
+                        </div>
+                    </div>
+                </div>
+           
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm" ng-click="submitServiceCategoryForm()" >{{items.button[1]}}</button>
+            <!-- <input type="submit" value={{items.button[1]}} class="btn btn-success btn-sm" > -->
+           
+            <button type="button" class="btn btn-danger btn-sm" ng-click="cancel($event)">Close</button>
+          
+        </div>
+    </form>
+    <style>
+    .sp-container.sp-light.sp-input-disabled.sp-palette-only.sp-initial-disabled {
+      z-index: 99999 !important;
+      }
+      .sp-container.sp-light.sp-input-disabled.sp-initial-disabled {
+      z-index: 99999 !important;
+      }
+    </style>

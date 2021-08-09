@@ -1,0 +1,82 @@
+<!-- start: TABLE WITH FILTERS -->
+<!-- <div class="margin-bottom-10 margin-top-10 "> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" integrity="sha256-FPJJt8nA+xL4RU6/gsriA8p8xAeLGatoyTjldvQKGdE=" crossorigin="anonymous"></script>
+<style>
+    .dataTables_filter,
+    .dataTables_paginate {
+        float: right;
+    }
+    .pagination_width{
+        width: 50% !important;
+    }
+    #productDatatable{
+    display: table;
+    width: 1254px !important;
+    }
+</style>
+<div ng-controller="productCtrl">
+    <div class="container-fluid bg-white">
+        <div class="row">
+            <div class="col-lg-6 col-md-6  col-sm-6">
+            <a href="#!/app/pages/products" class="btn btn-wide btn-yellow"><i class="fa fa-th-large"></i> Products</a>
+            <a href="#!/app/pages/product_categories" class="btn btn-wide btn-default"><i class="fa fa-folder"></i>
+                Categories</a>
+            <a href="#!/app/pages/product_supplier" class="btn btn-wide btn-default"><i class="fa fa-vcard"></i>
+                Supplier</a>
+            </div>
+            <div class="col-lg-6 col-md-6  col-sm-6 text-right">
+                    <button type="button" class="btn btn-o btn-default margin-right-10" ng-click="refresh()"><i
+                        class="fa fa-refresh"></i></button>
+        
+                <button type="button" class="btn btn-wide btn-success" ng-click="add_editProduct(0)"><i
+                        class="fa  fa-plus-square"></i>
+                    New</button>
+                <button type="button" title='Delete selected products' class="btn btn-o btn-default margin-right-10"><strong><i class="fa fa-trash-o"
+                            ng-click="moveToTrash()"></i></strong></button>
+                
+                 <button type="button" class="btn btn-wide btn-o btn-default" ng-click="downloadXls()"><strong><i class="fa fa-download"></i></strong> Export</button>                
+        
+                <button type="button" title='Import csv product list' class="btn btn-o btn-default margin-right-10" ng-click="fileUpload()"><strong><i
+                            class="fa fa-upload"></i></strong></button>
+                <button type="button" title='Mobile view' class="btn btn-default margin-right-10" ng-class="mobile_products_table ? 'btn-yellow':''"  ng-click="mobileDisplay()"><strong><i
+                            class="fa fa-mobile-phone"></i></strong></button>
+                            <div class="row margin-top-20 margin-left-5">
+                </div>
+                <!-- <button type="button" class="btn btn-default margin-right-10 "  ng-click="mobileDisplay()" ng-if="mobile_products_table"><strong><i
+                                class="fa fa-mobile-phone"></i></strong></button> -->
+            </div>
+         </div>
+ 
+    <!-- </div> -->
+   
+
+        <div class="row" ng-if="main_products_table">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="table-class">
+                    <table id="productDatatable" class="table table-hover" datatable="" dt-options="dtOptionInvoiceRequest_main"
+                        dt-columns="dtColumnInvoiceRequest_main" dt-instance="dtIntanceInvoiceRequestCallback_main"
+                        dt-column-defs="dtColumnInvoiceRequestDefs_main" cellspacing="0" width="100%"></table>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="mobile_products_table">
+            <div class="col-md-6">
+                <div>
+                    <table class="table table-hover" datatable="" dt-options="dtOptionInvoiceRequest_mobile"
+                        dt-columns="dtColumnInvoiceRequest_mobile" dt-instance="dtIntanceInvoiceRequestCallback_mobile"
+                        dt-column-defs="dtColumnInvoiceRequestDefs_mobile" cellspacing="0" width="100%"></table>
+                </div>
+            </div>
+        </div>
+       
+
+ 
+</div>
+<script type="text/ng-template" id="ng-table/headers/checkbox.html">
+                           <div class="checkbox clip-check check-primary">
+                           <input type="checkbox" ng-model="checkbox_top" ng-change="checkAll()" id="checkbox_top" name="filter-checkbox" value="1000" />
+                           <label for="checkbox_top"> 
+                           </label>
+                           </div> 
+                    </script>
+<!-- end: TABLE WITH FILTERS -->

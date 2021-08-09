@@ -1,0 +1,98 @@
+<!-- start: TABLE WITH FILTERS -->
+<!-- <div class="margin-bottom-10 margin-top-10 "> -->
+<div ng-controller="servicesCtrl">
+<div class="container-fluid  bg-white" >
+
+    <a href="#!/app/pages/services" class="btn btn-wide btn-yellow"><i class="fa fa-tags"></i> Services</a>
+    <a href="#!/app/pages/services_categories" class="btn btn-wide btn-default"><i class="fa fa-folder"></i>
+        Categories</a>
+
+
+    
+
+        <div class="row margin-bottom-10"> 
+                                    <div class="col-md-5"><button type="button" class="btn btn-wide btn-success" ng-click="add_editService(0)"><i class="fa  fa-plus-square"></i>
+        Add</button></div>
+                                    <div class="col-md-3"><div class="form-group">
+                                        <ui-select ng-model="service_categories_array.selected" theme="bootstrap" on-select="onSelected($item)">
+                                            <ui-select-match placeholder="Select in the list...">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices  group-by="'group'" repeat="item in service_categories_array | filter: $select.search">
+
+                                                <span ng-bind-html="item.name | highlight: $select.search"></span>
+
+                                              
+
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div></div>
+                                    <div class="col-md-1"><button type="button" class="btn btn-info"
+                                    ng-click="list_service_category(0);list_service(0);">Clear</button></div>
+
+</div>
+<div class="container-fluid bg-white">
+
+
+
+    <div class="row">
+        <div class="col-md-10">
+                            
+
+                    
+
+            <div class="table-responsive">
+                <table class="table table-pointer">
+                    <thead>
+                        <tr>
+                            <th class="col-md-3"><span class="text-large"><i class="fa fa-folder-open-o padding-right-10"></i>
+                                    Description</span></th>
+                            <th class="col-md-1"><span class="text-large">Duration</span></th>
+                            <th class="col-md-1"><span class="text-large">Sale</span></th>
+                            <th class="col-md-1"><span class="text-large">BTW</span></th>
+                            <th class="col-md-2"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat-start="service_category in service_categories">
+                            <th colspan="3" ng-click="category1($index)" ><span class="text-size-14 text-blue "><i
+                                        class="fa fa-folder-open-o padding-right-10"></i> {{service_category.name}}</span></th>
+                            <td colspan="1"></td>
+                            <td colspan="1"><button type="button" ng-click="add_editService(service_category.id)" class="btn btn-success">New
+                                    Service</button></td>
+
+                        </tr>
+                        
+                        <tr id="row_{{$index}}" ng-hide="hide_show_{{$index}}" ng-repeat-end>
+                            <td colspan="5">
+
+                                <table class="table table-borderless">
+                                    <tr ng-repeat="service in services | filter : {category_id: service_category.id}">
+                                        <td class="col-md-3"><span class="text-azure">{{service.name}}</span></td>
+                                        <td class="col-md-1">{{service.duration}}</td>
+                                        <td class="col-md-1"><i class="fa fa-inr"></i>{{service.sales_price}}</td>
+                                        <td class="col-md-1">{{service.tax_id}}%</td>
+                                       
+                                        <td class="col-md-2"><a ng-click="add_editService(service)"><i
+                                                    class="fa fa-edit text-large text-azure"></i></a>
+                                            <a ng-click="deleteService(service.id)" class="margin-left-10"><i
+                                                    class="fa fa-trash-o text-large text-azure"></i></a>
+                                        </td>
+                                    </tr>
+                                    
+                                </table>
+                            </td>
+                        </tr>
+                           
+                      <tr class="text-center text-extra-large" ng-show="!service_categories.length"><td colspan="5"><strong class="text-red">No data found !!</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+

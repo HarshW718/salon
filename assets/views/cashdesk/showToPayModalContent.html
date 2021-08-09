@@ -1,0 +1,113 @@
+<script type="text/javascript">
+    $( document ).ready(function() {
+        $('.total-pay').parent().parent().parent().addClass('total-popup-custom')
+    });
+</script>
+<style type="text/css">
+    .total-pay .input-sm {
+        width: 130px !important;;
+        text-align: right !important;;
+    }
+    .totalLblClassN {
+        background-color: #54ca54 !important;
+    }
+    .YelloColor {
+        color: #eea236 !important;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" title="Close" class="close" ng-click="cancel()">&times;</button>
+    <h3 class="modal-title">Total to pay <strong><i class="fa fa-inr"></i> {{paid_amount}}</strong></h3>
+</div>
+<div class="modal-body total-pay">
+    <div class="container-fluid bg-white" style="padding: 30px !important;">
+        
+        <div class="row">
+            <div class="col-sm-12">
+            <!-- <span class="fa-stack fa-1x">
+                                             <i class="fa fa-square fa-stack-1x text-primary"></i>
+                                              <i class="fa fa-cogs fa-stack-1x fa-inverse"></i>
+                                        </span> -->
+            <table class="table table-border" ng-if="paid_amount > 0">
+                <tr ng-repeat="method in table_data">
+                    <td>
+                        <h4 class="text-black"><strong>{{method.display_name}}</strong></h4>
+                    </td>
+                    <td width="70">
+                        <span class="icon-border">
+                         <h3 class="pointer" ng-click="payMethod($index,method)" ng-if="table_data[$index].display_icon == true">
+                            <!-- <i ng-class="[{'text-black': method.status == false , 'text-green': method.status == true,'fa':true},method.class_name] " ></i> -->
+
+                            <i ng-class="[{'text-black': method.status == false , 'text-green': method.status == true},method.class_name] " ></i>
+
+                        </h3>
+                    </span>
+                    </td>
+                    <td width="250" align="right"><input type="number" ng-disabled="table_data[$index].method == 'gift_certificate'" ng-change="amountBoxBlur()" min="0" ng-model="table_data[$index].amount" placeholder="0,00" class="form-control input-sm"></td>
+                </tr>
+               
+            </table>
+
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-sm-12">
+            <button class="btn btn-success margin-left-5 margin-bottom-10" ng-repeat="single_gift in gift_received"> {{single_gift.data_id}}&nbsp;&nbsp;&nbsp;<i ng-click="removeGift(single_gift)" class="fa fa-close"></i></button>
+        </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+            <table class="table table-borderless bg-lite-grey" style="border-radius: 5px;">
+                <tr>
+                    <td>
+                        <h4><strong>Total received</strong> 
+                        </h4>
+                    </td>
+                    <td align="right">
+                        <h4><strong><i class="fa fa-inr"></i> {{received_amount}}</strong></h4>
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-borderless bg-lite-grey" style="border-radius: 5px;" ng-class="{totalLblClassN: totalLblClass==true}">
+                <tr>
+                    <td>
+                        <h4><strong ng-class="{whiteColor: totalLblClass==true,YelloColor: totalLblClass==false}">Total amount</strong> 
+                        </h4>
+                    </td>
+                    <td align="right">
+                        <h4><strong ng-class="{whiteColor: totalLblClass==true,YelloColor: totalLblClass==false}"><i class="fa fa-inr"></i> {{paid_amount}}</strong></h4>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- <table class="table table-borderless col-md-12">
+                <tr>
+                    <td>
+                        <h2>Total to pay</h2>
+                    </td>
+                    <td>
+                        <h2><i class="fa fa-inr"></i> 50</h2>
+                    </td>
+                </tr>
+            </table> -->
+        </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer" style="padding: 15px;">
+    <button ng-disabled="!totalLblClass"  ng-class="[{'btn-success': totalLblClass==true,'btn-warning': totalLblClass==false}]"  class="newBtnSizeClass form-control btn  btn-squared btn-lg" ng-click="completePayment()"><strong class="text-large" >Complete Payment</strong></button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

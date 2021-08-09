@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <button type="button" class="close" title="Close" ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title">would you like to create appointment for new services ?</h3>
+</div>
+
+<div class="modal-body">
+    <div class="container-fluid calendar-modal  bg-white">
+        <div class="row">
+            <table class="table table-borderless" >
+                <tbody>
+                        <tr>
+                                <th style="width:25%" scope="row">Date and time</th>
+                                <td style="width:50%">
+                                    <input type="text" ng-model="appointment_date" class="input-sm" uib-datepicker-popup="{{format}}"
+                                    is-open="opened"
+                                   datepicker-options="datepickerOptions" ng-required="true"
+                                   close-text="Close" ng-change="changeDate()" ng-click="open()" />
+                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                    <input type="checkbox" id="is_email"  ng-model="appointment.is_email">
+                                    <label for="is_email">
+                                        Email
+                                    </label>
+                                </div>
+                                </td>
+                                <td>
+                                        <button  class="btn btn-success" ng-click="saveAppointment();">Yes</button>
+                                        <button  class="btn btn-danger margin-left-5" ng-click="cancel();">No</button>
+                                </td>
+
+                            </tr>
+                </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer create_client_model_footer">
+
+    <!-- <button class="btn btn-danger" ng-click="cancel($event)">Close</button> -->
+</div>

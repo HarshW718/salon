@@ -1,0 +1,111 @@
+<div class="modal-header">
+    <button type="button" title="Close" class="close" ng-click="cancel()">&times;</button>
+    <h3 class="modal-title"> <i class="fa fa-tags"></i> Sales Services</h3>
+</div>
+
+<div class="modal-body" style="padding:0px !important">
+    <div class="container-fluid bg-white modal-vh-100">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+
+                    <span class="input-icon input-icon-right" style="margin-top: 6px;">
+                        <input kendo-auto-complete k-data-source="servicesList" style="width: 100%;"
+                            ng-model="search.search_service" ng-change="onKeyUp()" k-on-select="onKeyUp()" /> <i
+                            class="ti-search"></i>
+                        <!-- <input type="text" class="form-control" id="name" name="search" placeholder="Search"
+                                ng-model="search.search_service" ng-keyup="onKeyUp()" required />
+                            <i class="ti-search"></i> --> </span>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 4%;">
+            <div class="col-md-12">
+                <div class="table-responsive" ng-hide="main_table">
+                    <table class="table table-pointer  services_cat">
+
+                        <tbody>
+                            <tr class="backgroundColor" ng-repeat-start="service_category in all_service_cat">
+                                <th colspan="2" ng-click="category1($index)"><span class="text-size-14"
+                                        ng-style="{color:service_category.color}"><i
+                                            class="fa fa-folder-open-o padding-right-10"></i>
+                                        {{service_category.name}}</span></th>
+
+                            </tr>
+                            <tr id="row_{{$index}}" ng-hide="hide_show_{{$index}}" ng-repeat-end>
+                                <td colspan="2">
+
+                                    <table class="table table-borderless all_services">
+                                        <tr
+                                            ng-repeat="service in all_services | filter : {category_id: service_category.id}:true">
+                                            <td class="col-md-2 padding-bottom-0 padding-top-0"
+                                                style="padding-left: 3%;">
+
+
+
+                                                <div class="checkbox clip-check check-primary check-sm checkbox-inline">
+                                                    <input type="checkbox" id="{{service.id}}_ischeck_0"
+                                                        class="checkBoxClass" name="check_service"
+                                                        ng-model="ids[service.id]" ng-change="serviceCheck(service)"
+                                                        value="{{service.id}}" /> <label
+                                                        for="{{service.id}}_ischeck_0">{{service.name}}</label>
+                                                </div>
+
+
+                                            </td>
+
+                                            <td class="col-md-1 text-right p-r-1"><i
+                                                    class="fa fa-inr"></i>{{service.sales_price}}</td>
+
+                                        </tr>
+
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr class="text-center text-extra-large" ng-show="service_categories.length==0">
+                                <td colspan="5"><strong class="text-red">No data found !!</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive" ng-hide="search_table">
+                    <table class="table table-pointer services">
+
+                        <tbody>
+                            <tr ng-repeat="service in searched_services | filter : {category_id: service_category.id}">
+                                <td class="col-md-2">
+
+
+                                    <div class="checkbox clip-check check-primary check-sm checkbox-inline">
+                                        <input type="checkbox" id="{{service.id}}_ischeck_0" class="checkBoxClass"
+                                            name="check_service" ng-model="ids[service.id]"
+                                            ng-change="serviceCheck(service)" value="{{service.id}}" /> <label
+                                            for="{{service.id}}_ischeck_0">{{service.name}}</label>
+                                    </div>
+
+
+                                </td>
+
+                                <td class="col-md-1 text-right p-r-1"><i class="fa fa-inr"></i>{{service.sales_price}}
+                                </td>
+
+                            </tr>
+                            <tr class="text-center text-extra-large" ng-show="!searched_services.length">
+                                <td colspan="5"><strong class="text-red">No data found !!</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+
+    <button type="button" class="btn btn-wide btn-default" ng-click="cancel()">Close</button>
+    <button type="button" class="btn btn-wide btn-success" ng-click="AddServiceProduct('services')">Add</button>
+
+</div>

@@ -1,0 +1,83 @@
+<!-- <script type="text/ng-template" id="addCategoryModalContent.html"> -->
+    <div class="modal-header">
+        <button type="button" title="Close" class="close" ng-click="cancel($event)">&times;</button>
+        <h3 class="modal-title"> <i class="fa fa-folder"></i> {{items.button[0]}} Category</h3>
+    </div>
+<form name="serviceCategoryForm" id="id_serviceCategoryForm">
+    <div class="modal-body">
+        <div class="container-fluid bg-white">
+       
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    <div class="form-group" >
+                                
+                        <input type="text" name="name" class="form-control input-sm" ng-model="service_category.name" placeholder="Category Name" required />
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="block padding-top-10">
+                                    Choose Color
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                                <div class="form-group">
+                           
+                            <div ng-init="service_category.color =(service_category.color != '' && service_category.color != undefined) ? service_category.color :'#73a189'">
+
+                                    <!-- <div class="panel-body text-center" ng-init="service_category.color = '#73a189'"> -->
+                               
+                                <spectrum-colorpicker ng-model="service_category.color" options="{showInitial: true, showInput: true}"></spectrum-colorpicker>
+                            </div>
+                        </div>
+                       </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="radio clip-radio radio-primary">
+                            <input type="radio" id="male" name="gender" value="1" ng-model="service_category.gender"
+                                required />
+                            <label for="male">
+                                Male
+                            </label>
+                            <input type="radio" id="female" name="gender" value="2" ng-model="service_category.gender"
+                                required />
+                            <label for="female">
+                                Female
+                            </label>
+                           
+                        </div>
+                        <span class="error" ng-show = "gender_validation">{{gender_validation_message}}</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+       
+
+        <button type="submit" class="btn btn-success btn-sm" ng-click="submitServiceCategoryForm()"  >{{items.button[1]}}</button>
+     
+       <button type="button" class="btn btn-danger btn-sm" ng-click="cancel($event)">Close</button>
+      
+    </div>
+</form>
+<style>
+  
+.sp-container.sp-light.sp-palette-buttons-disabled.sp-palette-disabled {
+  z-index: 99999 !important;
+  }
+  /* .sp-container.sp-light.sp-input-disabled.sp-initial-disabled {
+  z-index: 99999 !important;
+  } */
+  .sp-cf .sp-palette-row-initial{
+      display: none;
+  }
+
+  .sp-initial .sp-thumb .sp-cf{
+    display: none;
+  }
+
+</style>

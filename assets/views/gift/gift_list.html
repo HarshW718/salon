@@ -1,0 +1,62 @@
+<div class="container-fluid bg-white">
+     <button type="button" title="Close" class="close" ng-click="cancel($event)">&times;</button>
+    <h3 class="mainTitle ng-scope">Sold gift cards</h3>
+
+
+<div class="container-fluid"  data-ng-init="init()" >
+    <div class="row">
+
+
+        <div class="panel panel-transparent">
+            <div class="panel-heading ">
+                <div class="panel-title">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" ng-model="search"/>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <span class="text-green"> <a href="javascript:void(0)" ng-click="applyFilter(0)">Show all </a>| <a href="javascript:void(0)" ng-click="applyFilter(1)" >Only uses</a></span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="sample-table-1">
+                        <thead>
+                            <tr>
+                                <th>Gift certificate no.	</th>
+                                <th>Sold to	</th>
+                                <th>Amount</th>
+                                <th>Balance</th>
+                                <th>Invoice</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr ng-repeat="a in allGifts  | filter : search" ng-if="a.gift_used == is_use ||  a.gift_used == is_not_use">
+                                <td> <i class="fa fa-file"></i>  {{a.description}}</td>
+                                <td>{{a.soldOn}}</td>
+                                <td class="text-right">
+                                    <i class="fa fa-inr"></i>{{a.calculation_sale_price}}
+                                </td>
+                                <td class="text-right">
+                                    <i class="fa fa-inr"></i>{{a.calculation_sale_price}}
+                                </td>
+                                <td class="text-right">
+                                    {{a.invoice_date}}
+                                </td>
+                              
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

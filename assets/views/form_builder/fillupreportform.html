@@ -1,0 +1,166 @@
+<style>
+    .signature{
+        border: 1px solid;
+    }
+    .signature canvas{
+        width: 100% !important;
+        /* width: 100% !important; */
+    }
+    .constan_form{
+        width: 66.66666667% !important;
+    }
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+    var canvas = document.querySelector("canvas");
+    var ctx = canvas.getContext("2d");
+    var signaturePad = new SignaturePad(canvas);
+    $("#pencil").css('color','black');
+    // Rebinds all event handlers
+    signaturePad.on();
+    $("#resetCanvas").click(function(){
+        // Clears the canvas
+        signaturePad.clear();
+        signaturePad.on();
+        
+         
+        ctx.lineWidth = 2;
+        ctx.globalCompositeOperation = 'source-over';
+    });
+
+  
+   
+
+   
+   
+})
+</script>
+<toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+<div class="container-fluid bg-white ng-scope" ng-controller="reportformCtrl">
+    <div class="row">
+        <div class="col-lg-8 col-md-12 col-sm-12 ">
+           
+            <div class="panel panel-white">
+                <div class="panel-heading">
+                    <h3>{{fromData.title}}</h3>
+                    <div ng-if="!disable">
+                        
+
+                        <!-- <button  type="button" ng-click="updateFormAns('id_form_title')" ng-if="fromData.id" class="btn btn-success">Update</button>
+                       
+                        <button  type="button" ng-click="saveFormAns('id_form_title')" ng-if="!fromData.id" class="btn btn-success">Save</button>
+                        <a ng-click="closeWindow()" class="btn btn-primary">Close</a> -->
+
+                        <a ng-click="changeSign()"  class="btn btn-info">
+                            <span ng-if="!display_signature_box">Change Sign</span>
+                            <span ng-if="display_signature_box">Exist Sign</span>
+                        
+                        </a>
+                       
+                            
+                        
+                    </div>
+                </div>
+                <div class="panel-body">
+                    
+                    <div id="displayDesc"></div>
+                    <form class="form" id="id_form_title" >
+                        <div class="margin-bottom-5">
+                        <input type="text" placeholder="Select Date" ng-model="update_form.date" class="form-control"
+                            uib-datepicker-popup="{{format}}" is-open="medical_opened"
+                            datepicker-options="datepickerOptions" ng-required="true"
+                            close-text="Close" ng-click="open('medical')" />
+                        </div>
+                        
+                        <div ng-repeat="field in fromData.fileds | orderBy:'order'">
+                            <ng-switch on="field.type">
+                                <h3 ng-switch-when="header" class="animated fadeInRight">
+                                    {{field.order}} {{field.name}}
+
+                                </h3>
+                                <div ng-switch-default class="input {{field.type}}"
+                                     ng-class="field.required && 'required'">
+                                    <div class="form-group">
+                                        <label>
+                                            {{field.order}} . {{field.name}} 
+
+                                        </label>
+
+                                        <ng-switch on="field.type"> 
+                                            <input class="form-control " ng-switch-default
+                                                   type="{{field.type}}" ng-model="field.value"
+                                                   ng-bind-attr="{required:'{{field.required}}'}"
+                                                   value="{{field.value}}" placeholder="{{field.placeholder}}" ng-disabled="disable">
+                                            <input ng-switch-when="checkbox" type="checkbox" class="animated fadeInRight"
+                                                   ng-model="field.value" value="{{field.value}}" id="field"
+                                                   placeholder="{{field.instructions}}" ng-disabled="disable"> 
+                                            <textarea class="form-control animated fadeInRight"
+                                                      ng-switch-when="textarea" ng-model="field.value"
+                                                      placeholder="{{field.instructions}}" ng-disabled="disable">{{field.value}}
+                                            </textarea> 
+                                            <select class="form-control animated fadeInRight"
+                                                    ng-switch-when="select" ng-model="field.value" ng-disabled="disable">
+                                                <option ng-repeat="option in field.options"
+                                                        value="{{option.value}}">{{option.name}}
+                                                </option>
+                                            </select> 
+                                            <select class="form-control animated fadeInRight" 
+                                                    ng-switch-when="multiple" ng-model="field.value" multiple ng-disabled="disable">
+                                                <option ng-repeat="option in field.options"
+                                                        value="{{option.value}}">{{option.name}}
+                                                </option>
+                                            </select>
+                                            <fieldset ng-switch-when="radio">
+                                                <label class="margin-left-10" ng-repeat="option in field.options"> 
+                                                    <input class="animated fadeInRight"
+                                                           type="radio" ng-model="field.value" value="{{option.value}}" ng-disabled="disable">
+                                                    {{option.name}}
+                                                </label>
+                                            </fieldset>
+                                            <fieldset ng-switch-when="checkboxes">
+                                                <label ng-repeat="option in field.options"> 
+                                                    <input class="animated fadeInRight"
+                                                           id="optChk{{$index}}"
+                                                           ng-checked="{{option.selected == true}}"
+                                                           type="checkbox" ng-model="field.value[option.name]"
+                                                           value="{{option.value}}"
+                                                           ng-click="checkboxChange($index)"
+                                                            ng-disabled="disable"> {{option.name}}
+                                                </label>
+                                            </fieldset>
+                                        </ng-switch>
+                                    </div>
+                                </div>
+                            </ng-switch>
+                        </div>
+
+                        <div id="sign" ng-show="display_signature_box">    
+                                <canvas id="canvas" width="700" height="350" style="border: 1px solid;"  ></canvas>
+                                <br>
+                                    <div>
+                                      
+                                        <div>
+                                            <button id="resetCanvas"  >Clear signature</button>
+                                            <span ng-if="!disable">
+                                                <button  type="button" ng-click="updateFormAns('id_form_title')" ng-if="fromData.id" class="btn btn-success">Update</button>
+                                            
+                                                <button  type="button" ng-click="saveFormAns('id_form_title')" ng-if="!fromData.id" class="btn btn-success">Save</button>
+                                                <a ng-click="closeWindow()" class="btn btn-primary">Close</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                        <div class="result" ng-show="!display_signature_box">
+                                <img src="{{fromData.sign}}">
+                           </div>
+                    </form>
+                
+            </div>
+                </div>
+           
+        </div>		
+    </div>
+
+
+</div>
+

@@ -1,0 +1,481 @@
+<style>
+    .table>tbody>tr>td {
+        border-top: none !important;
+        border-bottom: none !important;
+    }
+
+    .inner-panel-heading {
+        position: relative;
+        padding-bottom: 5px;
+        min-height: 10px;
+    }
+
+    .main-panel-heading {
+        position: relative;
+        min-height: 30px;
+    }
+
+    .main-panel-white {
+        background-color: #ffffff;
+        position: relative;
+        color: #5b5b60;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.07)
+    }
+
+    .main-panel-tools {
+        position: absolute;
+        right: 10px;
+        top: 0px;
+        font-size: 12px;
+    }
+
+    .working-hour-margin {
+        margin-left: 0px !important;
+    }
+</style>
+<div class="container-fluid bg-white ng-scope" ng-controller="workersDetailviewCtrl">
+    <div class="row">
+        <div class="col-sm-10">
+            <img src="assets/images/default-user.png" class="workers-img-icon">
+            <span class="workers-img-label">{{users.name}}</span>
+        </div>
+        <div class="col-sm-2 padding-right-30">
+            <a href="#!/app/pages/management/service_provider" title="Close" class="btn btn-sm btn-danger pull-right"><i
+                    class="fa fa-close"></i></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <uib-tabset class="tabbable" active="active">
+                <uib-tab index="0" heading="ACCOUNT">
+                    <div class="panel panel-transparent">
+                        <div class="panel-body">
+                            <form role="form" class="ng-pristine ng-valid" id="editUser">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-success"
+                                                ng-click="editUser('editUser')">Update</button>
+                                            <a href="#!/app/pages/management/service_provider"
+                                                class="btn btn-primary border-radius-0">Close</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <input type="hidden" name="id" id="id" class="form-control"
+                                                        ng-model="users.id">
+                                                    <label for="first_name">
+                                                        First name
+                                                    </label>
+                                                    <input type="text" name="first_name" placeholder="First Name"
+                                                        id="first_name" class="form-control" ng-model="users.first_name"
+                                                        required="" maxlength="19">
+                                                    <span class="error"
+                                                        ng-show="firstname_validation_message_display">{{firstname_validation_message}}</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="last_name">
+                                                        Last name
+                                                    </label>
+                                                    <input type="text" placeholder="Last Name" id="last_name"
+                                                        class="form-control" ng-model="users.last_name" name="last_name"
+                                                        required="" maxlength="19">
+                                                    <span class="error"
+                                                        ng-show="lastname_validation_message_display">{{lastname_validation_message}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="name">
+                                                        Display name
+                                                    </label>
+                                                    <input type="text" placeholder="Display Name" id="name"
+                                                        class="form-control" ng-model="users.name" required=""
+                                                        name="name" maxlength="19">
+                                                    <span class="error"
+                                                        ng-show="displayname_validation_message_display">{{displayname_validation_message}}</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="email">
+                                                        Email
+                                                    </label>
+                                                    <input type="email" placeholder="Email" id="email"
+                                                        class="form-control" ng-model="users.email" required=""
+                                                        name="email">
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="mobile">
+                                                        Mobile
+                                                    </label>
+                                                    <input type="text" placeholder="Mobile" id="mobile"
+                                                        class="form-control" ng-model="users.mobile" required=""
+                                                        name="mobile">
+                                                </div>
+                                                <!-- <div class="col-md-6"> -->
+                                                    <!--  <div class="checkbox clip-check check-primary checkbox-inline">
+                                                    <input type="checkbox" id="checkbox10" value="1"   ng-checked="users.is_sync_google" ng-model="users.is_sync_google">
+                                                        
+                                                    <label for="checkbox10">
+                                                        Sync with google calendar
+                                                    </label>
+                                                </div> -->
+                                                    
+                                                <div class="col-md-6">
+                                                    <div class="checkbox">
+                                                        <switch ng-model="users.is_active" ng-init="is_active = true"
+                                                            class="green"></switch>
+                                                        <label for="is_active">
+                                                            Status
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <!-- <div class="form-group">
+                                        <label for="certificate_number">
+                                                 Certificate Number
+                                         </label>
+                                        <input type="text" placeholder="Certificate number" id="certificate_number" class="form-control" ng-model="users.certificate_number" required="" name="certificate_number">
+
+                                        <textarea id="certificate_number" class="form-control" ng-model="users.certificate_number" required="" name="certificate_number">Certificate number</textarea>
+                                    
+                                    
+                                    
+                                    </div> -->
+
+                                        <div class="form-group">
+                                            <label for="description">
+                                                Description
+                                            </label>
+                                            <textarea
+                                                class="form-control autosize area-animated msd-elastic: \n; ng-pristine ng-untouched ng-valid ng-empty"
+                                                style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 55px;"
+                                                ng-model="users.discription" name="description"
+                                                placeholder="Description"></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </uib-tab>
+                <!-- <uib-tab index="1" heading="SERVICES">
+                    <div class="panel panel-transparent userservices">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-success"
+                                                    ng-click="submit_checkedService()">Update</button>
+                                                <a href="#!/app/pages/management/service_provider"
+                                                    class="btn btn-primary border-radius-0">Close</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1"><button type="button" ng-click="onSearch();">search</button></div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+
+                                                <span class="input-icon input-icon-right">
+                                                    <input type="text" class="form-control" name="search"
+                                                        placeholder="Search" ng-model="search.search_service"
+                                                        ng-keyup="onSearch()" required />
+                                                    <i class=" ti-search"></i> </span>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-pointer">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-3"><span class="text-large"><i
+                                                                class="fa fa-folder-open-o padding-right-10"></i>
+                                                            Description</span></th>
+
+                                                    <th class="col-md-1"><span class="text-large">Used Service</span>
+                                                    </th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat-start="service_category in service_categories"
+                                                    class="user_service_cat">
+                                                    <th ng-click="category1($index)"><span class="text-size-14"
+                                                            ng-style="{color:service_category.color}"><i
+                                                                class="fa fa-folder-open-o padding-right-10"></i>
+                                                            {{service_category.name}}</span></th>
+                                                    <th>
+                                                        <div
+                                                            class="checkbox clip-check check-primary margin-bottom-0 margin-top-0">
+                                                            <input type="checkbox" id="{{$index}}_checkbox_cat"
+                                                                ng-change="checkByCategory(service_category.id)"
+                                                                ng-model="selected_cat[service_category.id]"
+                                                                value="{{service_category.id}}">
+                                                            <label for="{{$index}}_checkbox_cat">
+                                                            </label>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                                <tr id="row_{{$index}}" ng-hide="hide_show_{{$index}}" ng-repeat-end
+                                                    class="user_service">
+                                                    <td colspan="2">
+
+                                                        <table class="table table-borderless">
+                                                            <tr
+                                                                ng-repeat="service in services | filter : {category_id: service_category.id}:true">
+                                                                <td class="col-md-3"><span>{{service.name}}</span></td>
+                                                                <td class="col-md-1">{{service.duration}}</td>
+                                                                <td class="col-md-1">
+                                                                    <div
+                                                                        class="checkbox clip-check check-primary margin-bottom-0 margin-top-0">
+                                                                        <input type="checkbox"
+                                                                            id="{{service.id}}_checkbox"
+                                                                            ng-change="singleCheck(service,services,selected_service)"
+                                                                            ng-model="selected_service[service.id]"
+                                                                            value="{{service.id}}">
+                                                                        <label for="{{service.id}}_checkbox">
+
+                                                                        </label>
+                                                                    </div>
+
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="text-center text-extra-large"
+                                                    ng-show="service_categories.length == 0">
+                                                    <td colspan="2"><strong class="text-red">No data found !!</strong>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="2" heading="WORKING HOURS">
+                    <div class="panel panel-transparent">
+                        <div class="panel-body">
+                            <form role="form"
+                                class="ng-pristine ng-valid worker-detail-authorization mngmnt-workers-workinghours">
+                                <div class="form-group">
+                                    <button class="btn btn-success" ng-click="addWorkingTime()">Update</button>
+                                    <a href="#!/app/pages/management/service_provider"
+                                        class="btn btn-primary border-radius-0">Close</a>
+                                </div>
+                                <div class="form-group">
+                                    <h4>Availability per week</h4>
+                                </div>
+                                <div class="form-group">
+                                    <span><i>“Set the working hours of this service provider by clicking on net plusje.
+                                            you can list the working hours , for example, a lunch break"
+                                        </i></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+
+                                        <div class="col-md-12" ng-repeat="(key,value) in columns">
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12">
+                                                    <span class="help-inline"><strong>{{value.dayname}}</strong></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-repeat="(innerkey,innervalue) in value.timeSlot">
+                                                <div class="col-md-12">
+
+                                                    <div class="col-md-1 col-sm-2 working-hour-margin">
+                                                        <div class="checkbox clip-check check-primary"
+                                                            ng-if="innerkey==0">
+                                                            <input type="checkbox" id="{{innerkey}}_ischeck_{{key}}"
+                                                                ng-model="columns[key].timeSlot[innerkey].is_check"
+                                                                ng-click="toggleButtonState(columns[key].timeSlot[innerkey].is_check,key,innerkey)">
+                                                            <label for="{{innerkey}}_ischeck_{{key}}">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="demo-section">
+                                                        <div class="col-md-2 col-sm-4 working-hour-margin">
+
+                                                            <input type='text' kendo-time-picker
+                                                                k-ng-model="columns[key].timeSlot[innerkey].from_obj"
+                                                                ng-model='columns[key].timeSlot[innerkey].from_time'
+                                                                ng-disabled="columns[key].timeSlot[innerkey].from_disable" />
+                                                        </div>
+                                                        <div class="col-md-2 col-sm-4 working-hour-margin">
+
+                                                            <div ng-if="!columns[key].timeSlot[innerkey].from_obj">
+                                                                <input
+                                                                    ng-disabled="columns[key].timeSlot[innerkey].to_disable"
+                                                                    type='text' kendo-time-picker
+                                                                    ng-model='columns[key].timeSlot[innerkey].to_time' />
+                                                            </div>
+                                                            <div ng-if="columns[key].timeSlot[innerkey].from_obj"><input
+                                                                    type='text'
+                                                                    ng-disabled="columns[key].timeSlot[innerkey].to_disable"
+                                                                    kendo-time-picker
+                                                                    ng-model='columns[key].timeSlot[innerkey].to_time'
+                                                                    k-min="columns[key].timeSlot[innerkey].from_obj"
+                                                                    ng-disabled="columns[key].timeSlot[innerkey].to_disable"
+                                                                    k-rebind="columns[key].timeSlot[innerkey].from_obj" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-1 col-sm-2 working-hour-margin">
+                                                        <button type="button" class="btn btn-success btn-sm"
+                                                            ng-click="addSlot(key,innerkey)"
+                                                            ng-if="innerkey==0 && columns[key].timeSlot[innerkey].is_check==false">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-default btn-sm"
+                                                            ng-if="innerkey!=0" ng-click="removeSlot(key,innerkey)">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </uib-tab> -->
+                <uib-tab index="3" heading="AUTHORIZATION">
+                    <div class="panel panel-transparent">
+                        <div class="panel-body">
+                            <form role="form" class="ng-pristine ng-valid worker-detail-authorization"
+                                id="editAuthUser">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-success"
+                                        ng-click="editAuthUser('editAuthUser')">Update</button>
+                                    <a href="#!/app/pages/management/service_provider"
+                                        class="btn btn-primary border-radius-0">Close</a>
+                                </div>
+                                <div class="form-group">
+                                    <h4>Rights</h4>
+                                </div>
+                                <div class="form-group">
+                                    <span><i>“Set the working hours of this service provider by clicking on net plusje
+                                            you can list the working hours , for example, a lunch break"
+                                        </i></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3"><span class="help-inline"> User role</span></div>
+                                        <div class="col-md-1 col-sm-2"><i class="fa fa-info-circle text-primary"></i>
+                                        </div>
+                                        <div class="col-md-2 col-sm-4">
+
+                                            <div class="form-group">
+
+                                                <select class="cs-select cs-skin-elastic" name="role"
+                                                    ng-model="users.role" required ng-disabled="auth">
+                                                    <option selected ng-disabled="true" value="">Select Role</option>
+                                                    <option ng-selected="users.role == role.value"
+                                                        ng-repeat="role in roleList" ng-value="role.value">{{role.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" ng-repeat="user_role in user_role">
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3"><span class="help-inline">
+                                                {{user_role.menu_name}}</span></div>
+                                        <div class="col-md-2 col-sm-2"><i class="fa fa-info-circle text-primary"></i>
+                                        </div>
+                                        <div class="col-md-2 col-sm-3">
+                                            <div class="checkbox">
+                                                <switch ng-model="user_role.ng_name" class="green"></switch>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="4" heading="RESET PASSWORD">
+                    <div class="panel panel-transparent">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form role="form" class="ng-pristine ng-valid worker-detail-authorization"
+                                        id="resetPassword">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-success"
+                                                ng-click="resetPassword('resetPassword')">Update</button>
+                                            <a href="#!/app/pages/management/service_provider"
+                                                class="btn btn-primary border-radius-0">Close</a>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="password">
+                                                New password
+                                            </label>
+                                            <input type="password" class="form-control" id="password"
+                                                placeholder="Enter New Password" required=""
+                                                ng-model="users.new_password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="conf_password">
+                                                Confirm password
+                                            </label>
+                                            <input type="password" class="form-control" id="conf_password"
+                                                placeholder="Enter confirm Password" required=""
+                                                ng-model="users.conf_password">
+                                        </div>
+
+                                        <label id="reset-error"
+                                            ng-if=' users.conf_password && users.conf_password!=users.new_password'
+                                            class="error" for="password">Password doesn't match!</label>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+
+        </div>
+    </div>
+</div>
+<style>
+    .clip-check label:after {
+        left: -3px !important;
+    }
+</style>

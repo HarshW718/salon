@@ -1,0 +1,89 @@
+<div class="modal-header">
+    <button type="button" class="close" title="Close" ng-click="cancel($event)">&times;</button>
+    <h3 class="modal-title"> <i class="fa fa-upload"></i> Import Products </h3>
+</div>
+<form name="uploadForm" id="id_uploadForm">
+    <div class="modal-body">
+        <div class="container-fluid bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                   
+                    <div class="form-group margin-bottom-10">
+                       <p>select a .CSV file (<i class="fa fa-file-pdf-o"></i> <a href="assets/images/upload/demo.csv" class="text-azure" download> Sample File </a>)</p>
+                    </div>
+                    <div class="form-group"> 
+                    <!-- <input type="file" file-reader="filedata" ng-model="file_data" id="csv_file" name="csv_file"  onchange="angular.element(this).scope().csvFileCheck()" required /> -->
+                    <input type="file" file-reader upload="uploadFile(file)" ng-model="file">           
+                </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend class="text-red">
+                                Instructions before upload file
+                            </legend>
+                            <div class="row">
+                               
+                                <div class="col-md-12">
+                                        <p>Here is twelve column in sample file </p>
+                                        <ol>
+                                                
+                                                <li><strong>Category ::</strong> Be sure that category is available before type.  </li>
+
+                                                <li><strong>Type ::</strong> (a) Salon (b) Sell  </li>
+
+                                                <li><strong>EAN ::</strong> Type EAN here.  </li>
+
+                                                <li><strong>SKU ::</strong>Type SKU here.  </li>
+
+
+                                                <li><strong>Product Name ::</strong> Type product name here  </li>
+
+
+                                                <li><strong>Purchase ::</strong> Type purchased price here  </li>
+
+
+                                                <li><strong>Sale ::</strong> Type sale price here.  </li>
+
+                                                <li><strong>BTW ::</strong> Be sure that BTW is available before type.  </li>
+
+
+                                                <li><strong>Supplier ::</strong> Be sure that Supplier is available before type.  </li>
+
+                                                <li><strong>Stock ::</strong> Type stocke here.  </li>
+
+                                                <li><strong>Minimal ::</strong> Type minimal stocke here.  </li>
+
+                                                <li><strong>Shortage ::</strong> Type shortage stocke here.  </li>
+                                               
+                                               
+                                               
+                                               
+                                               
+                                               
+                                       </ol> 
+                                      
+                                   
+                                </div>
+                            </div>
+                            
+                        </fieldset>
+                       
+                    </div>
+
+
+
+                   
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-wide btn-success" ng-click="submitCsvData()">Save</button>
+        <button type="button" class="btn btn-wide btn-danger" ng-click="cancel($event)">Close</button>
+
+        <!-- <button type="button" class="btn btn-wide btn-success">Next One</button> -->
+       
+    </div>
+</form>

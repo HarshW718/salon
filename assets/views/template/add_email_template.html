@@ -1,0 +1,110 @@
+<style>
+    .placeholder {
+        height: 460px;
+        display: inline-block;
+        width: 100%;
+        overflow: auto;
+    }
+    .placeholder td{
+        cursor: pointer;
+    }
+</style>
+<div class="container-fluid bg-white ng-scope" ng-controller="add_email_templateCtrl">
+
+    <div class="row">
+        <div class="col-md-9">
+
+            <div class="panel panel-white">
+                <div class="panel-heading">
+                    <h5 class="panel-title" ng-if="template.id">Update Template</h5>
+                    <h5 class="panel-title" ng-if="!template.id">Save Template</h5>
+                </div>
+                <div class="panel-body">
+                    
+                    <div class="col-md-9">
+                        <button ng-if="template.id" type="button" ng-click="saveTemplate('email-template')" class="btn btn-success">Update</button>
+                        <button ng-if="!template.id" type="button" ng-click="saveTemplate('email-template')" class="btn btn-success">Save</button>
+                        <button ng-if="template.id" type="button" ng-click="previewEmailTemplate('email-template')" class="btn btn-primary">Preview</button>
+                        <a href="#!/app/pages/email_template" class="btn btn-primary">Close</a>
+
+                    </div>
+                    <br/>
+                    <form role="form" id="email-template" class="ng-pristine ng-valid">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="name">
+                                    Topic
+                                </label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" ng-model="template.name" required="">
+                            </div>
+                        </div>  
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="type">
+                                    Type
+                                </label>
+                                <select class="form-control" ng-model="template.type" name='type'  required="">
+                                    <option selected ng-disabled="true" value="">Template Type</option>
+                                    <option
+                                        ng-repeat="t in type"  ng-value="t.value"
+                                        >{{t.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" ng-if="template.type == 1">
+                            <div class="form-group">
+                                <label for="type">
+                                    Days
+                                </label>
+                                <select class="form-control" ng-model="template.send_time" name='type'  required="">
+                                    <option selected ng-disabled="true" value="">Choose day</option>
+                                    <option 
+                                        ng-repeat="day in days" ng-value="day.value"
+                                        >{{day.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="checkbox">
+                                <switch ng-model="template.is_active" ng-init="is_active = true" class="green"></switch>
+                                <label for="checkbox10">
+                                    Status
+                                </label>
+                            </div>
+                        </div>
+                        
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="type">
+                                    Mail Content
+                                </label>
+                                <div>
+                                    <div ckeditor="options" id="ck_mail_content" ng-model="template.mail_content" ready="onReady()"></div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <table class="table table-hover" id="sample-table-1">
+            <thead>
+                <tr>
+                    <th class="center">Add Placeholder</th>
+                </tr>
+            </thead>
+            <tbody class="placeholder">
+                <tr  ng-repeat='p in placeHolders'>
+                    <td ng-click="addPlaceHolder(p.name)">{{p.name}}<br> <code>{{p.description}}</code></td>
+                </tr>
+
+
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+</div>

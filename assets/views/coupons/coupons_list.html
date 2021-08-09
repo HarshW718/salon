@@ -1,0 +1,176 @@
+<style>
+    .dataTables_filter,
+    .dataTables_paginate {
+        float: right;
+    }
+    .pagination_width{
+        width: 50% !important;
+    }
+</style>
+<div ng-controller="couponCtrl">
+<div class="container-fluid bg-white" >
+    <!-- href="#!/app/pages/product_categories" -->
+    <a href="#!/app/pages/coupons" class="btn btn-wide btn-yellow"><i class="fa fa-exchange"></i> Put Together</a>
+    <a href="#!/app/pages/used_coupons"  class="btn btn-wide btn-default"><i class="fa fa-lock"></i> In Use</a>
+    <button style="top: 5px;" type="button" class="btn btn-wide btn-success margin-bottom-10" ng-click="showCouponForm(0)"><i
+            class="fa  fa-plus-square"></i> Add</button>
+    <div class="row" ng-hide="coupon_list">
+        <div class="col-md-12 coupon-table-width">
+            <div class="table-class">
+                <table id="couponDatatable" class="table table-bordered" datatable="" dt-options="dtOptionInvoiceRequest_main"
+                        dt-columns="dtColumnInvoiceRequest_main" dt-instance="dtIntanceInvoiceRequestCallback_main"
+                        dt-column-defs="dtColumnInvoiceRequestDefs_main" cellspacing="0" width="100%"></table>
+            </div>
+        </div>
+
+    </div>
+    <div class="row" ng-hide="coupon_list">
+        <div class="col-md-8">
+            <fieldset>
+                <legend>
+                    Instructions
+                </legend>
+                <div class="row">
+                   
+                    <div class="col-md-12">
+                            <ol>
+                                    <li>Put together a journey card and save it </li>
+                                    <li>Go to the Cashier and create a new voucher for a customer and press the [+ Trip card] button. </li>
+                                    <li>Select the relevant trip card and determine the starting date, press Save </li>
+                                    <li>Press checkout to checkout the receipt with the trip card. </li>
+                           </ol> 
+                           <p>Ready! the trip card is ready for use. When settling agreements, the trip card for the relevant customer will be updated automatically. </p>
+                       
+                    </div>
+                </div>
+                
+            </fieldset>
+           
+        </div>
+    </div>
+    <form name="customerForm" id="id_couponForm">
+    <div class="row" ng-hide="coupon_form">
+        <div class="col-sm-6 col-lg-4">
+            <div class="panel panel-white">
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <span class="input-icon input-icon-right">
+                            <input type="text"  ng-model="coupon.description" placeholder="Description" id="description" class="form-control" required>
+                            <!-- <i class="fa fa-search"></i>--> </span>
+                    </div>
+                    <div class="form-group">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Services on card</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col">No of services</th>
+                                    <th scope="col"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="(key,value) in service_for_form">
+
+                                    <td>{{service_for_form[key].name}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <span class="input-icon input-icon-right">
+                                            <!-- <input type="number" ng-model="coupon.service_for_form[key].id.no_of_services" class="form-control"> -->
+                                        
+                                          <input type="number" min="1" name="service_{{value.id}}" id="service_{{value.id}}" ng-model="coupon['services'][value.id].no_of_services" class="form-control" pattern="\d*" required>
+                                        </span>
+                                    </td>
+                                    <td><button type="btn" ng-click="removeServiceFrom_Form(service_for_form[key].id)" class="btn btn-danger"><i class="fa fa-remove"></button></td>
+
+                                </tr>
+                                <tr>
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+
+                                    </td>
+                                    <td><button type="button" class="btn btn-success" title="Add Service"
+                                            ng-click="showServiceModal()"><i class="fa  fa-plus-square"></i></button></td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    
+                    <div class="form-group" ng-show="service_below_form">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Sale Price</strong></td>
+                                    <td>
+                                        <span class="input-icon input-icon-left">
+                                            <input type="text" ng-model="coupon.sale_price" placeholder="Sale Price" id="sale_price"
+                                                class="form-control" required.>
+                                            <i class="fa fa-inr"></i>
+                                        </span>
+                                        <span class="error" style="display: block;clear: both;"
+                                        ng-if="sale_price_validation_message_display">{{sale_price_validation_message}}</span>
+                                    </td>
+                                    <td>including price</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>BTW</strong></td>
+                                    <td>
+                                        <span>
+                                                <!-- <select class="cs-select cs-skin-elastic" name="tax_id" ng-model="service.tax_id" required>
+                                                        <option selected ng-disabled="true" value="" >Tax</option>    
+                                                        <option ng-selected="service.tax_id == tax.id" ng-repeat="tax in items.taxes" ng-value="tax.id"> {{tax.tax_value}} % {{tax.name}}</option>
+                                                </select> -->
+                                            <!-- <select class="cs-select cs-skin-elastic" id="tax_id" name="tax_id" ng-model="coupon.tax_id" >
+                                                        <option ng-selected="true" selected value="{{current_tax_id.id}}" >{{current_tax_id.tax_value}}</option>    
+                                                        
+                                                    </select> -->
+                                             <input type="number" pattern="\d*" ng-model="current_tax_id.tax_value" ng-disabled="true"  class="form-control">
+                                           
+                                           
+                                                    <!-- <i class="fa fa-inr"></i> -->
+                                        </span>
+                                    </td>
+                                    <td>%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Validity</strong></td>
+
+                                    <td>
+                                        <span>
+                                            <input type="number" min="1" ng-model="coupon.validity" class="form-control">
+
+                                        </span>
+                                        <span class="error" style="display: block;clear: both;"
+                                        ng-if="validity_validation_message_display">{{validity_validation_message}}</span>
+                                    </td>
+                                    <td>months</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" ng-click="hideCouponForm()" class="btn btn-wide btn-danger"><i
+                                class="fa fa-remove"></i> Close</button>
+                        <button type="button" class="btn btn-wide btn-success" ng-click="saveCouponForm()" ><i class="fa fa-check"></i> Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+
+        </div>
+    </div>
+    </form>
+</div>
+</div>
