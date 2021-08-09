@@ -1272,15 +1272,24 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
                              angular.forEach(service.coupon.coupon_detail.services,function(service_no){
                                  total_no_of_serv += service_no.no_of_services;
                              })
+                             let display_name;
+                             if(service.display_name == '-')
+                             {
+                                 display_name = service.name;
+                                 
+                                }else{
+                                 display_name = service.display_name;
+
+                             }
                              $scope.total_no_of_services = total_no_of_serv;
-                             $scope.display_cashdesk_data.push({
+                                $scope.display_cashdesk_data.push({
                                  which_one: 'service',
                                  id: service.id,
                                  is_check: true,
                                  worker_id: $scope.first_worker_id,
                                  appointment_id: 0,
                                  name: service.name,
-                                 display_name: service.display_name,
+                                 display_name: display_name,
                                  display_sale_price: service.sales_price,
                                  calculation_sale_price: parseFloat((service.coupon.coupon_detail.sale_price/$scope.total_no_of_services).toFixed(2)) ,
                                  tax_id: service.tax_id,
@@ -1298,11 +1307,31 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
                                  prestatie_code: service.prestatie_code
                              });
                          }else{
-                            $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name: service.display_name, display_sale_price: service.sales_price, calculation_sale_price: service.sales_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,
+                             let display_name;
+                             if(service.display_name == '-')
+                             {
+                                 display_name = service.name;
+                                 
+                                }else{
+                                 display_name = service.display_name;
+
+                             }
+                            $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name: display_name, display_sale_price: service.sales_price, calculation_sale_price: service.sales_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,
                             service_treatment_date: new Date(),prestatie_code: service.prestatie_code});
                          }
                     }else{
-                        $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name: service.display_name, display_sale_price: service.sales_price, calculation_sale_price: service.sales_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,service_treatment_date: new Date(),prestatie_code: service.prestatie_code});
+                        let display_name;
+                             if(service.display_name == '-')
+                             {
+                                 display_name = service.name;
+                                 
+                                }else{
+                                 display_name = service.display_name;
+
+                             }
+                            
+
+                        $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name:display_name, display_sale_price: service.sales_price, calculation_sale_price: service.sales_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,service_treatment_date: new Date(),prestatie_code: service.prestatie_code});
                     }
                 }
             })
@@ -1330,6 +1359,15 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
                              angular.forEach(service.coupon.coupon_detail.services,function(service_no){
                                  total_no_of_serv += service_no.no_of_services;
                              })
+                             let display_name;
+                             if(service.display_name == '-')
+                             {
+                                 display_name = service.name;
+                                 
+                                }else{
+                                 display_name = service.display_name;
+
+                             }
                              $scope.total_no_of_services = total_no_of_serv;
                              $scope.display_cashdesk_data.push({
                                  which_one: 'service',
@@ -1338,7 +1376,7 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
                                  worker_id: $scope.first_worker_id,
                                  appointment_id: 0,
                                  name: service.name,
-                                 display_name: service.display_name,
+                                 display_name:display_name,
                                  display_sale_price: service.membership_price,
                                  calculation_sale_price: parseFloat((service.coupon.coupon_detail.membership_price/$scope.total_no_of_services).toFixed(2)) ,
                                  tax_id: service.tax_id,
@@ -1356,11 +1394,29 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
                                  prestatie_code: service.prestatie_code
                              });
                          }else{
-                            $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name: service.display_name, display_sale_price: service.membership_price, calculation_sale_price: service.membership_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,
+                            let display_name;
+                            if(service.display_name == '-')
+                            {
+                                display_name = service.name;
+                                
+                               }else{
+                                display_name = service.display_name;
+
+                            }
+                            $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name:display_name, display_sale_price: service.membership_price, calculation_sale_price: service.membership_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,
                             service_treatment_date: new Date(),prestatie_code: service.prestatie_code});
                          }
                     }else{
-                        $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name: service.display_name, display_sale_price: service.membership_price, calculation_sale_price: service.membership_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,service_treatment_date: new Date(),prestatie_code: service.prestatie_code});
+                        let display_name;
+                             if(service.display_name == '-')
+                             {
+                                 display_name = service.name;
+                                 
+                                }else{
+                                 display_name = service.display_name;
+
+                             }
+                        $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name: display_name, display_sale_price: service.membership_price, calculation_sale_price: service.membership_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,service_treatment_date: new Date(),prestatie_code: service.prestatie_code});
                     }
                 }
             })
@@ -1385,6 +1441,15 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
                              angular.forEach(service.coupon.coupon_detail.services,function(service_no){
                                  total_no_of_serv += service_no.no_of_services;
                              })
+                             let display_name;
+                             if(service.display_name == '-')
+                             {
+                                 display_name = service.name;
+                                 
+                                }else{
+                                 display_name = service.display_name;
+
+                             }
                              $scope.total_no_of_services = total_no_of_serv;
                              $scope.display_cashdesk_data.push({
                                  which_one: 'service',
@@ -1393,7 +1458,7 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
                                  worker_id: $scope.first_worker_id,
                                  appointment_id: 0,
                                  name: service.name,
-                                 display_name: service.display_name,                                 
+                                 display_name:display_name,                                 
                                  display_sale_price: service.membership_price,
                                  calculation_sale_price: parseFloat((service.coupon.coupon_detail.sale_price/$scope.total_no_of_services).toFixed(2)) ,
                                  tax_id: service.tax_id,
@@ -1412,12 +1477,29 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
                              });
                          }
                         {
-                                                                  
-                            $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name: service.display_name, display_sale_price: service.membership_price, calculation_sale_price: service.sales_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,
+                            let display_name;
+                            if(service.display_name == '-')
+                            {
+                                display_name = service.name;
+                                
+                               }else{
+                                display_name = service.display_name;
+
+                            }                                     
+                            $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name: display_name, display_sale_price: service.membership_price, calculation_sale_price: service.sales_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,
                             service_treatment_date: new Date(),prestatie_code: service.prestatie_code});
                          }
                     }else{
-                        $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name: service.display_name, display_sale_price: service.membership_price, calculation_sale_price: service.sales_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,service_treatment_date: new Date(),prestatie_code: service.prestatie_code});
+                        let display_name;
+                             if(service.display_name == '-')
+                             {
+                                 display_name = service.name;
+                                 
+                                }else{
+                                 display_name = service.display_name;
+
+                             }
+                        $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name,display_name:display_name, display_sale_price: service.membership_price, calculation_sale_price: service.sales_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,service_treatment_date: new Date(),prestatie_code: service.prestatie_code});
                     }
                 }
             })
@@ -1438,7 +1520,16 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
 
                 $scope.services.find(function (service) {
                     if (service.id == id) {
-                            $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name, display_name: service.display_name,display_sale_price: service.membership_price, calculation_sale_price: service.membership_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,service_treatment_date: new Date(),prestatie_code: service.prestatie_code});                            
+                        let display_name;
+                             if(service.display_name == '-')
+                             {
+                                 display_name = service.name;
+                                 
+                                }else{
+                                 display_name = service.display_name;
+
+                             }
+                            $scope.display_cashdesk_data.push({ which_one: 'service', id: service.id, is_check: true, appointment_id: 0, name: service.name, display_name:display_name,display_sale_price: service.membership_price, calculation_sale_price: service.membership_price, tax_id: service.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: service.sales_price, single_row_comment: '', worker_id: $scope.first_worker_id ,service_treatment_date: new Date(),prestatie_code: service.prestatie_code});                            
                     }
                 })
             });
