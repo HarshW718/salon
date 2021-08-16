@@ -1599,7 +1599,7 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
                 $scope.products.find(function (product) {
                     if (product.id == id) {
                         if (product.stocke > 0) {
-                            $scope.display_cashdesk_data.push({ which_one: 'product', id: product.id, is_check: true, appointment_id: 0, name: product.name, display_sale_price: product.sale_price, calculation_sale_price: product.sale_price, tax_id: product.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: product.sale_price, single_row_comment: '', worker_id: $scope.first_worker_id,stock:product.stocke });
+                            $scope.display_cashdesk_data.push({ which_one: 'product', id: product.id, is_check: true, appointment_id: 0, name: product.name,display_name:product.display_name, display_sale_price: product.sale_price, calculation_sale_price: product.sale_price, tax_id: product.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: product.sale_price, single_row_comment: '', worker_id: $scope.first_worker_id,stock:product.stocke });
                         } else {
                             notifications.Message('warning', 'Not available', 'Not in stock !!')
                         }
@@ -1632,7 +1632,7 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
                 $scope.products.find(function (product) {
                     if (product.id == id) {
                         if (product.stocke > 0) {
-                            $scope.display_cashdesk_data.push({ which_one: 'product', id: product.id, is_check: true, appointment_id: 0, name: product.name, display_sale_price: product.sale_price, calculation_sale_price: product.sale_price, tax_id: product.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: product.sale_price, single_row_comment: '', worker_id: $scope.first_worker_id,stock:product.stocke });
+                            $scope.display_cashdesk_data.push({ which_one: 'product', id: product.id, is_check: true, appointment_id: 0, name: product.name,display_name:product.display_name, display_sale_price: product.sale_price, calculation_sale_price: product.sale_price, tax_id: product.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: product.sale_price, single_row_comment: '', worker_id: $scope.first_worker_id,stock:product.stocke });
                         } else {
                             notifications.Message('warning', 'Not available', 'Not in stock !!')
                         }
@@ -2119,7 +2119,7 @@ app.controller('showServicesInCashDeskCtrl', ["$scope", "$uibModalInstance", "$h
                 });
                 angular.forEach(checked_product, function (product) {
                     $scope.cashdesk_full_data.push(
-                        { which_one: 'product', id: product.id, is_check: true, appointment_id: 0, name: product.name, display_sale_price: product.sale_price, calculation_sale_price: product.sale_price, tax_id: product.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: product.sale_price, single_row_comment: '', worker_id: items.first_worker_id }
+                        { which_one: 'product', id: product.id, is_check: true, appointment_id: 0, name: product.name,display_name:product.display_name, display_sale_price: product.sale_price, calculation_sale_price: product.sale_price, tax_id: product.tax_id, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: product.sale_price, single_row_comment: '', worker_id: items.first_worker_id }
                     );
                 })
                 cb.success('cashdesk_data', 'products', $scope.cashdesk_full_data);
@@ -2156,7 +2156,7 @@ app.controller('showServicesInCashDeskCtrl', ["$scope", "$uibModalInstance", "$h
                     notifications.Message('error', 'Error', 'Choose End date !!');
                     return false;
                 }
-                var coupon_card = { which_one: 'Membership', id: $scope.checked_coupon_data.id, is_check: true, appointment_id: 0, name:"Membership", display_sale_price: $scope.checked_coupon_data.sale_price, calculation_sale_price: $scope.checked_coupon_data.sale_price, tax_id: 0, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: $scope.checked_coupon_data.sale_price, single_row_comment: '', worker_id: items.first_worker_id,coupon_start_date:   moment($scope.entrance_date.date).format('YYYY-MM-DD'),coupon_end_date: moment($scope.end_date.date).format('YYYY-MM-DD')}
+                var coupon_card = { which_one: 'Membership', id: $scope.checked_coupon_data.id, is_check: true, appointment_id: 0, name:"Membership",display_name:'Membership', display_sale_price: $scope.checked_coupon_data.sale_price, calculation_sale_price: $scope.checked_coupon_data.sale_price, tax_id: 0, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: $scope.checked_coupon_data.sale_price, single_row_comment: '', worker_id: items.first_worker_id,coupon_start_date:   moment($scope.entrance_date.date).format('YYYY-MM-DD'),coupon_end_date: moment($scope.end_date.date).format('YYYY-MM-DD')}
                 
                 console.log($scope.checked_coupon_data.id);
                 cb.success('coupon_card_certificate', 'coupon', coupon_card);
@@ -3111,7 +3111,7 @@ app.controller('createCouponCtrl', ["$scope", "$uibModalInstance", "$http", "ite
         }
        
 
-        var coupon_card = { which_one: 'Membership', id: 0, is_check: true, appointment_id: 0, name: $scope.coupon.description, display_sale_price: parseFloat($scope.coupon.sale_price), calculation_sale_price: parseFloat($scope.coupon.sale_price), tax_id: 0, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: $scope.coupon.sale_price, single_row_comment: '', worker_id: items.first_worker_id,coupon_start_date: moment($scope.entrance_date.date).format('YYYY-MM-DD'),coupon_end_date: moment($scope.end_date.date).format('YYYY-MM-DD'),new_coupon_data:$scope.coupon}
+        var coupon_card = { which_one: 'Membership', id: 0, is_check: true, appointment_id: 0, name: $scope.coupon.description, display_name : 'Membership',display_sale_price: parseFloat($scope.coupon.sale_price), calculation_sale_price: parseFloat($scope.coupon.sale_price), tax_id: 0, quantity: 1, discount_amount: 0, discount_percentage: 0, data_before_discount: {}, discount_apply: 0, single_row_total: $scope.coupon.sale_price, single_row_comment: '', worker_id: items.first_worker_id,coupon_start_date: moment($scope.entrance_date.date).format('YYYY-MM-DD'),coupon_end_date: moment($scope.end_date.date).format('YYYY-MM-DD'),new_coupon_data:$scope.coupon}
 
         
        // console.log('coupon_card',coupon_card);

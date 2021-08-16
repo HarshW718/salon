@@ -491,9 +491,9 @@ class InvoiceController extends Middleweb_Controller
                 $treatment_date_display = date("d-m-Y",strtotime($single_invoice['service_treatment_date']));
             }
             $display_name='';
-            if($single_invoice['display_name'] == '')
+            if($single_invoice['display_name'] == '-')
             {
-                    $display_name = $single_invoice['name'];
+                    $display_name = $single_invoice['description'];
             }
             else{
                 $display_name=$single_invoice['display_name'];
