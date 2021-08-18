@@ -11,13 +11,13 @@ use File;
 class ReportController extends Middleweb_Controller {
 
     public function invoiceReport(Request $request) {
-        
-        
+
+
         $startDate = "'$request->startDate_filter 00:00:00'";
         $endDate = "'$request->endDate_filter 23:59:59'";
         $whereData='user_company_id ='.$this->ExpToken["parent_id"].' AND invoice_date >='.$startDate.' AND invoice_date <='.$endDate;
 
-        
+
         $whereData .= " AND (incash !='' || pin !='' || credit !='' || invoice !='' || gift !='')";
 
 
@@ -35,10 +35,10 @@ class ReportController extends Middleweb_Controller {
                 $whereData.=' AND invoice !=""';
             }else if($request->peymentMethod == 5){
                 $whereData.=' AND gift !=""';
-            }    
+            }
         }
-        
-          
+
+
         $incash = "IFNULL((SELECT sum(amount) FROM invoice_payment WHERE invoice_id=invoice.id AND payment_method=1),0.00) as incash,";
 
         $pin = "IFNULL((SELECT sum(amount) FROM invoice_payment WHERE invoice_id=invoice.id AND payment_method=2),0.00) as pin,";
@@ -51,12 +51,12 @@ class ReportController extends Middleweb_Controller {
 
         $invoiceData = DB::select( DB::raw("select a.* from (select invoice.user_company_id,invoice.invoice_date,invoice.id,invoice.total_invoice_amount,invoice.is_received,invoice.is_received_date,IFNULL(invoice.comment,'') as comment,invoice.to_pay_id,DATE_FORMAT(invoice.invoice_date,'%d-%m-%Y') as invoiceDate,IFNULL((SELECT CONCAT(firstname,lastname) from customers WHERE id=invoice.customer_id),'') as customerName,IFNULL((SELECT name from users WHERE id=invoice.to_pay_id),'') as associate,CONCAT(DATE_FORMAT(invoice.invoice_date,'%Y'),' ',invoice.id) as number,
         ".$incash."
-        ".$pin." 
-        ".$credit." 
+        ".$pin."
+        ".$credit."
         ".$invoice_pay."
-        ".$gift." 
+        ".$gift."
         from invoice ) as a where ".$whereData."  order by a.invoice_date desc"));
-       
+
         if($request->which_one == 'create_report'){
             $response = array(
                 "invoiceList" => $invoiceData,
@@ -67,7 +67,7 @@ class ReportController extends Middleweb_Controller {
             $response = $this->invoiceReportPDF($invoiceData);
             return response()->json($response);
         }
-                
+
     }
 
     public function invoiceReportPDF($data) {
@@ -87,7 +87,7 @@ class ReportController extends Middleweb_Controller {
             }else{
                 $invoice_received = ' (Not Received)';
             }
-             
+
         }else{
             $invoice_received = '';
         }
@@ -96,7 +96,7 @@ class ReportController extends Middleweb_Controller {
         if($single_data->is_received_date){
           $recivedDate = $single_data->is_received_date;
         }
-        
+
         $dynamic_tr .= "<tr>
             <td>".date("d-m-Y", strtotime($single_data->invoice_date))."</td>
             <td>".$single_data->number."</td>
@@ -141,13 +141,13 @@ class ReportController extends Middleweb_Controller {
         border-collapse: collapse;
         width: 100%;
       }
-      
+
       td, th {
         border: 1px solid #dddddd;
         text-align: left;
         padding: 8px;
       }
-      
+
       tr:nth-child(even) {
         background-color: #dddddd;
       }";
@@ -178,7 +178,7 @@ class ReportController extends Middleweb_Controller {
           </tr>
           ".$dynamic_tr.$total_tr."
         </table>
-        
+
         </body>
         </html>
         ";
@@ -192,11 +192,11 @@ class ReportController extends Middleweb_Controller {
                 "href" => "http://" . $_SERVER['SERVER_NAME'] . "/salon/"."uploads/pdf/".$pdf_name
             );
             return $response;
-        
+
             }
 
-        public function invoiceReportPDFDelete($pdf_name) {  
-            
+        public function invoiceReportPDFDelete($pdf_name) {
+
             $file_path = str_replace("api", "uploads/pdf/", base_path());
             if(File::exists($file_path.$pdf_name)) {
                 File::delete($file_path.$pdf_name);
@@ -205,7 +205,7 @@ class ReportController extends Middleweb_Controller {
                 );
                 return response()->json($response);
             }
-            
+
         }
 
 
@@ -213,9 +213,9 @@ class ReportController extends Middleweb_Controller {
 
 
     public function totalReport(Request $request) {
-        
 
-       
+
+
         $whereData='';
         $startDate = "'$request->startDate_filter 00:00:00'";
         $endDate = "'$request->endDate_filter 23:59:59'";
@@ -227,7 +227,7 @@ class ReportController extends Middleweb_Controller {
         $invoiceData = DB::select( DB::raw("SELECT invoice_payment.payment_method,sum(invoice_payment.amount) as totalAmount,count(invoice_payment.invoice_id) as totalItem,(CASE
         WHEN invoice_payment.payment_method = 1 THEN 'In Cash'
         WHEN invoice_payment.payment_method = 2 THEN 'Pin'
-        WHEN invoice_payment.payment_method = 3 THEN 'Credit card' 
+        WHEN invoice_payment.payment_method = 3 THEN 'Credit card'
         WHEN invoice_payment.payment_method = 4 THEN 'Invoice'
         WHEN invoice_payment.payment_method = 6 THEN 'Coupon Card'
         END) as paymentType  FROM `invoice` left join invoice_payment ON invoice_payment.invoice_id=invoice.id where ".$whereData." GROUP BY invoice_payment.payment_method"));
@@ -245,10 +245,10 @@ class ReportController extends Middleweb_Controller {
         WHEN invoice_data.which_one='gift' THEN invoice_data.description
         END) as nameofType
         ,(select tax_value from taxs WHERE id=invoice_data.tax_id) as tax
-        FROM invoice LEFT JOIN invoice_data ON invoice_data.invoice_id=invoice.id  
+        FROM invoice LEFT JOIN invoice_data ON invoice_data.invoice_id=invoice.id
         ".$whereRevenuData."
         GROUP BY invoice_data.which_one,invoice_data.data_id) as a"));
-       
+
 
         $whereGroupByTaxProduct='';
         $whereGroupByTaxProduct .=' WHERE invoice.user_company_id ='.$this->ExpToken["parent_id"];
@@ -257,7 +257,7 @@ class ReportController extends Middleweb_Controller {
             $whereGroupByTaxProduct.=' AND invoice.to_pay_id ='.$request->employee;
         }
 
-        
+
 
         $groupByTaxProduct = DB::select( DB::raw("SELECT taxs.*,IFNULL(abc.tax_no, 0) as tax_no  , IFNULL(abc.tax_amount, 0) as tax_amount FROM taxs LEFT JOIN
         (SELECT invoice_data.tax_id,count(invoice_data.id) as tax_no,sum(invoice_data.single_row_total) as tax_amount FROM invoice_data WHERE invoice_id in (SELECT id FROM invoice ".$whereGroupByTaxProduct." ) AND which_one = 'product' GROUP BY invoice_data.tax_id) abc
@@ -276,7 +276,7 @@ class ReportController extends Middleweb_Controller {
         ON taxs.id = abc.tax_id WHERE taxs.user_company_id = ".$this->ExpToken["parent_id"]));
 
 
-        
+
 
 
 
@@ -288,9 +288,9 @@ class ReportController extends Middleweb_Controller {
                 "servicceByTax" => $groupByTaxService,
                 "pdf" => 0
             );
-            
+
             return response()->json($response);
-           
+
         }else if($request->which_one == 'create_pdf'){
             $response = $this->totalReportPDF($invoiceData,$revenueData,$groupByTaxProduct,$groupByTaxService);
             return response()->json($response);
@@ -335,7 +335,7 @@ class ReportController extends Middleweb_Controller {
                 <td><strong>₹ ".number_format((float)$revenue_without_tax_total, 2, '.', '')."</strong></td>
             </tr>";
 
-  
+
 
           $receipt_dynamic_tr = "";
           $receipt_total = 0;
@@ -388,13 +388,13 @@ class ReportController extends Middleweb_Controller {
           border-collapse: collapse;
           width: 100%;
         }
-        
+
         td, th {
           border: 1px solid #dddddd;
           text-align: left;
           padding: 8px;
         }
-        
+
         tr:nth-child(even) {
           background-color: #dddddd;
         }";
@@ -453,7 +453,7 @@ class ReportController extends Middleweb_Controller {
             $upload_path = str_replace("api", "uploads/pdf/", base_path());
             $pdf_name = date('mdYHis') . uniqid() . 'totalReport.pdf';
             PDF::loadHTML($html)->setPaper('a4', 'landscape')->setWarnings(false)->save($upload_path . $pdf_name);
-        
+
             $response = array(
                 "invoiceList" => 0,
                 "pdf_name" => $pdf_name,
@@ -462,8 +462,8 @@ class ReportController extends Middleweb_Controller {
             return $response;
     }
 
-    public function totalReportPDFDelete($pdf_name) {  
-            
+    public function totalReportPDFDelete($pdf_name) {
+
         $file_path = str_replace("api", "uploads/pdf/", base_path());
         if(File::exists($file_path.$pdf_name)) {
             File::delete($file_path.$pdf_name);
@@ -472,7 +472,7 @@ class ReportController extends Middleweb_Controller {
             );
             return response()->json($response);
         }
-        
+
     }
 
     public function salesReport(Request $request) {
@@ -493,13 +493,13 @@ class ReportController extends Middleweb_Controller {
             $whereServiceData .= ' AND invoice.is_received ='.$request->status;
         }
         $product_categories=DB::select( DB::raw("SELECT products_categories.id,products_categories.name from products_categories WHERE ".$whereData));
-         
+
         $products=DB::select( DB::raw("SELECT c.*,f.*,ROUND((c.amount*100)/f.totalCatAmount,2) as totalPer,ROUND((c.withouttaxAmount*100)/f.totalCatAmountWithoutTax,2) as totalPerWithoutTax FROM (SELECT a.*,round((a.amount/a.totalItem),2) as singleAmount,ROUND(a.amount/(1+(a.tax_value/100)),2) as withouttaxAmount, ROUND(a.amount/(1+(a.tax_value/100))/a.totalitem,2) as withoutTaxSingleAmount FROM (SELECT products.id,taxs.tax_value,products.name,products.category_id,sum(invoice_data.single_row_total) as amount,count(invoice_data.data_id) as totalItem FROM products INNER JOIN taxs ON taxs.id=products.tax_id  INNER JOIN invoice_data ON invoice_data.data_id=products.id INNER JOIN invoice ON invoice.id=invoice_data.invoice_id WHERE $whereProductData group by invoice_data.data_id ) as a ) as c left join (SELECT category_id,SUM(b.amount) as totalCatAmount,sum(b.withouttaxAmount) as totalCatAmountWithoutTax FROM (SELECT a.*,round((a.amount/a.totalItem),2) as singleAmount,ROUND(a.amount/(1+(a.tax_value/100)),2) as withouttaxAmount, ROUND(a.amount/(1+(a.tax_value/100))/a.totalitem,2) as withoutTaxSingleAmount FROM (SELECT products.id,taxs.tax_value,products.name,products.category_id,sum(invoice_data.single_row_total) as amount,count(invoice_data.data_id) as totalItem FROM products INNER JOIN taxs ON taxs.id=products.tax_id INNER JOIN invoice_data ON invoice_data.data_id=products.id INNER JOIN invoice ON invoice.id=invoice_data.invoice_id WHERE $whereProductData group by invoice_data.data_id ) as a) as b GROUP BY category_id ) as f ON c.category_id=f.category_id"));
         $services_categories=DB::select( DB::raw("SELECT services_categories.id,services_categories.name from services_categories WHERE ".$whereScData));
         $services=DB::select( DB::raw("SELECT services.id,services.name,services.category_id,sum(invoice_data.single_row_total) as amount,count(invoice_data.data_id) as totalItem, invoice_data.single_row_total as singleAmount FROM services INNER JOIN invoice_data ON invoice_data.data_id=services.id INNER JOIN invoice ON invoice.id=invoice_data.invoice_id WHERE ".$whereServiceData." group by invoice_data.data_id "));
-        
-        
-        
+
+
+
         if($request->which_one == 'create_report'){
             $response = array(
                 "success" => true,
@@ -509,9 +509,9 @@ class ReportController extends Middleweb_Controller {
                 "services" => $services,
                 "pdf" => 0
             );
-            
+
             return response()->json($response);
-           
+
         }else if($request->which_one == 'create_pdf'){
             $response = $this->salesReportPDF($product_categories,$products,$services_categories,$services,$request->displayIncludeVat);
             return response()->json($response);
@@ -521,11 +521,11 @@ class ReportController extends Middleweb_Controller {
     }
 
     public function salesReportPDF($product_categories,$products,$services_categories,$services,$include_vat) {
-    
+
         $product_dynamic_tr = "";
         $total_sale_by_cat = 0;
         foreach($product_categories as $single_category){
-        
+
           $category_id = $single_category->id;
           $product_dynamic_tr .= "<tr style='background-color: #dddddd;'>
               <th colspan='5'>".$single_category->name."</th>
@@ -543,7 +543,7 @@ class ReportController extends Middleweb_Controller {
                 $amount = $single_product_by_cat->withouttaxAmount;
                 $singleAmount = $single_product_by_cat->withoutTaxSingleAmount;
               }
-             
+
               $product_dynamic_tr .= "<tr>
               <td>".$single_product_by_cat->name."</td>
               <td>₹ ".number_format((float)$amount, 2, '.', '') ."</td>
@@ -551,7 +551,7 @@ class ReportController extends Middleweb_Controller {
               <td>₹ ".number_format((float)$singleAmount, 2, '.', '') ."</td>
               <td>".$single_product_by_cat->totalPer."%</td>
               </tr>";
-  
+
               $total_sale_by_cat += $amount;
             }
             $product_dynamic_tr .= "<tr>
@@ -562,13 +562,13 @@ class ReportController extends Middleweb_Controller {
               <td></td>
               </tr>";
           }
-         
+
         }
-          
+
         $service_dynamic_tr = "";
         $total_sale_by_cat = 0;
         foreach($services_categories as $single_category){
-        
+
           $category_id = $single_category->id;
           $service_dynamic_tr .= "<tr style='background-color: #dddddd;'>
               <th colspan='5'>".$single_category->name."</th>
@@ -585,7 +585,7 @@ class ReportController extends Middleweb_Controller {
               <td>".$single_service_by_cat->totalItem."</td>
               <td>₹ ".number_format((float)$single_service_by_cat->singleAmount, 2, '.', '') ."</td>
               </tr>";
-  
+
               $total_sale_by_cat += $single_service_by_cat->amount;
             }
             $service_dynamic_tr .= "<tr>
@@ -593,10 +593,10 @@ class ReportController extends Middleweb_Controller {
               <td><strong>₹ ".number_format((float)$total_sale_by_cat, 2, '.', '')."</strong></td>
               <td></td>
               <td></td>
-             
+
               </tr>";
           }
-         
+
         }
 
         $style = "table {
@@ -604,13 +604,13 @@ class ReportController extends Middleweb_Controller {
           border-collapse: collapse;
           width: 100%;
         }
-        
+
         td, th {
           border: 1px solid #dddddd;
           text-align: left;
           padding: 8px;
         }
-        
+
        ";
 
 
@@ -627,14 +627,14 @@ class ReportController extends Middleweb_Controller {
               <th>Number</th>
               <th>Gem.</th>
               <th>% of Total</th>
-              
+
             </tr>
             ".$product_dynamic_tr."
           </table>";
         }else{
           $product_table = '';
         }
-        
+
         if(count($services) > 0){
         $service_table = "<h2>".$title." For Services (".$subtitle.")</h2>
         <table>
@@ -658,15 +658,15 @@ class ReportController extends Middleweb_Controller {
           </style>
           </head>
           <body>".$product_table.$service_table."
-          
+
           </body>
           </html>
           ";
-  
+
               $upload_path = str_replace("api", "uploads/pdf/", base_path());
               $pdf_name = date('mdYHis') . uniqid() . 'salesReport.pdf';
               PDF::loadHTML($html)->setPaper('a4', 'landscape')->setWarnings(false)->save($upload_path . $pdf_name);
-          
+
               $response = array(
                   "invoiceList" => 0,
                   "pdf_name" => $pdf_name,
@@ -677,8 +677,8 @@ class ReportController extends Middleweb_Controller {
 
     }
 
-    public function salesReportPDFDelete($pdf_name) {  
-            
+    public function salesReportPDFDelete($pdf_name) {
+
         $file_path = str_replace("api", "uploads/pdf/", base_path());
         if(File::exists($file_path.$pdf_name)) {
             File::delete($file_path.$pdf_name);
@@ -687,7 +687,7 @@ class ReportController extends Middleweb_Controller {
             );
             return response()->json($response);
         }
-        
+
     }
-   
+
 }

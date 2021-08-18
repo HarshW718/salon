@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/ 
+*/
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -35,19 +35,19 @@ Route::get('/appointmentReminderMail', 'LoginController@appointmentReminderMail'
 Route::post('/sendConfirmationEmail', 'LoginController@sendConfirmationEmail');
 Route::get('/handleGoogleCallback','LoginController@handleGoogleCallback');
 Route::get('/googlelogin/{social}/callback','AppointmentsController@handleGoogleCallback');
-/*---- Appointment Start -----*/ 
+/*---- Appointment Start -----*/
 Route::post('/add_appointment','AppointmentsController@store');
 Route::post('/drag_appointment','AppointmentsController@drag_appointment');
-Route::post('/drag_blocktime','AppointmentsController@drag_blocktime'); 
+Route::post('/drag_blocktime','AppointmentsController@drag_blocktime');
 Route::post('/adjust_appointment_duration','AppointmentsController@adjust_appointment');
 Route::post('/list_appointment','AppointmentsController@index');
 Route::post('/list_appointment_by_worker','AppointmentsController@appointments_by_worker');
 Route::post('/dt_appointment_list','AppointmentsController@datatable_appointment_list');
 Route::post('/update_appointment','AppointmentsController@update');
-Route::post('/delete_appointment','AppointmentsController@destroy'); 
-Route::post('/check_same_appointment_for_machine','AppointmentsController@check_for_same_appointment'); 
-Route::post('/add_block_time','AppointmentsController@store_block_time'); 
-Route::post('/update_block_time','AppointmentsController@update_block_time'); 
+Route::post('/delete_appointment','AppointmentsController@destroy');
+Route::post('/check_same_appointment_for_machine','AppointmentsController@check_for_same_appointment');
+Route::post('/add_block_time','AppointmentsController@store_block_time');
+Route::post('/update_block_time','AppointmentsController@update_block_time');
 Route::post('/save_change_service','AppointmentsController@save_change_service');
 Route::post('/save_change_customer','AppointmentsController@save_change_customer');
 Route::post('/save_appointment_comment','AppointmentsController@save_appointment_comment');
@@ -65,22 +65,22 @@ Route::post('/update_service_from_topay','AppointmentsController@update_service_
 
 /*---- Appointment End -----*/
 
-/*---- AppointmentStatusColorController Start -----*/ 
+/*---- AppointmentStatusColorController Start -----*/
 Route::get('/list_appointment_status','AppointmentStatusColorController@index');
 Route::post('/dt_appointment_status_list','AppointmentStatusColorController@datatable_appointment_status_list');
 Route::post('/update_appointment_status','AppointmentStatusColorController@update');
-Route::post('/delete_appointment_status','AppointmentStatusColorController@destroy'); 
+Route::post('/delete_appointment_status','AppointmentStatusColorController@destroy');
 
 /*---- AppointmentStatusColorController End -----*/
 
 
 
-/*---- Appointment Log Start -----*/ 
+/*---- Appointment Log Start -----*/
 
 Route::get('/list_appointment_log/{appointment_id}','AppointmentLogController@index');
 Route::post('/dt_appointment_log_list','AppointmentLogController@datatable_appointment_log_list');
 Route::post('/update_appointment_log','AppointmentLogController@update');
-Route::post('/delete_appointment_log','AppointmentLogController@destroy'); 
+Route::post('/delete_appointment_log','AppointmentLogController@destroy');
 Route::post('/add_appointment_log','AppointmentLogController@store');
 Route::get('/get_appointment_by_id/{appointment_id}','AppointmentsController@getAppointmentById');
 
@@ -91,7 +91,7 @@ Route::post('/add_appointment_setting','AppointmentSettingController@store');
 Route::get('/user_appointment_setting','AppointmentSettingController@index');
 Route::post('/dt_appointment_setting_list','AppointmentSettingController@datatable_appointment_setting_list');
 Route::post('/update_appointment_setting','AppointmentSettingController@update');
-Route::post('/delete_appointment_setting','AppointmentSettingController@destroy'); 
+Route::post('/delete_appointment_setting','AppointmentSettingController@destroy');
 
 /*---- Appointment Setting End -----*/
 
@@ -102,14 +102,14 @@ Route::post('/dt_category_list','ServicesCategoriesController@newCategoryList');
 
 Route::get('/list_service_category','ServicesCategoriesController@index');
 Route::get('/single_service_category/{cat_id}','ServicesCategoriesController@single_service_category');
-Route::get('/list_service_category_forselect','ServicesCategoriesController@serviceCatforSelect'); 
+Route::get('/list_service_category_forselect','ServicesCategoriesController@serviceCatforSelect');
 Route::post('/add_service_category','ServicesCategoriesController@store');
 Route::post('/update_service_category','ServicesCategoriesController@update');
 Route::post('/delete_service_category','ServicesCategoriesController@destroy');
 /*---- Service Categories End -----*/
 
 /*---- Staff Start -----*/
- 
+
 Route::post('/add_staff','UsersController@addStaff');
 Route::post('/edit_staff','UsersController@editStaff');
 Route::post('/reset_password','UsersController@resetPassword');
@@ -159,10 +159,10 @@ Route::get('/list_tax','TaxsController@index');
 Route::post('/dt_tax_list','TaxsController@datatable_tax_list');
 Route::post('/add_tax','TaxsController@store');
 Route::post('/update_tax','TaxsController@update');
-Route::post('/delete_tax','TaxsController@destroy'); 
+Route::post('/delete_tax','TaxsController@destroy');
 /*---- Tax End -----*/
 
- 
+
 /*---- Product Start -----*/
 Route::get('/list_product','ProductsController@index');
 Route::post('/add_product','ProductsController@store');
@@ -181,7 +181,7 @@ Route::post('/dt_sync_list','ProductsController@syncList');
 
 /*---- Product End -----*/
 
- 
+
 /*---- ProductsCategories Start -----*/
 Route::get('/list_product_category','ProductsCategoriesController@index');
 Route::post('/dt_product_category_list','ProductsCategoriesController@newProductCategoryList');
@@ -220,7 +220,7 @@ Route::get('/get_sms_template','SmstemplateController@getSmsTemplate');
 Route::post('/delete_sms_template','SmstemplateController@destroy');
 /*---- SMS template End -----*/
 
- 
+
 /*---- Customer Start -----*/
 Route::get('/list_customer','CustomersController@index');
 Route::post('/dt_list_customers','CustomersController@dt_list_customers');
@@ -229,10 +229,10 @@ Route::post('/upload_csv_data_customer','CustomersController@upload_csv');
 Route::post('/update_customer','CustomersController@update');
 Route::post('/delete_customer','CustomersController@destroy');
 Route::post('/delete_customer_all','CustomersController@destroyAll');
-Route::post('/archive_customer_all','CustomersController@archiveAll'); 
+Route::post('/archive_customer_all','CustomersController@archiveAll');
 Route::post('/remove_from_archive_customer_all','CustomersController@removeFromArchiveAll');
 Route::get('/getNewCustomer','CustomersController@getNewCustomer');
-Route::post('/customer_images','CustomersController@customerImage'); 
+Route::post('/customer_images','CustomersController@customerImage');
 Route::post('/get_customer_address','CustomersController@checkPostalCode_Address');
 Route::post('/customer_for_appointment','CustomersController@appointment_list_customers');
 Route::get('/voucher_list/{customer_id}','CustomersController@voucherList');
@@ -282,12 +282,12 @@ Route::post('/current_customer_coupon','CustomerCouponsController@coupons_by_cus
 Route::get('/smpt_details','SmptdetailsController@index');
 //Route::post('/add_smpt_details','SmptdetailsController@store');
 Route::post('/update_smpt_details','SmptdetailsController@update');
-//Route::post('/delete_smpt_details','SmptdetailsController@destroy'); 
+//Route::post('/delete_smpt_details','SmptdetailsController@destroy');
 /*---- SMPT Details End -----*/
 
 /*---- Company Details Start -----*/
 Route::get('/company_details','CompanydetailsController@index');
-Route::post('/update_company_details','CompanydetailsController@update'); 
+Route::post('/update_company_details','CompanydetailsController@update');
 Route::post('/company_images','CompanydetailsController@companyImage');
 Route::post('/delete_company_images','CompanydetailsController@deleteCompanyImages');
 /*---- Company Details End -----*/
@@ -298,10 +298,10 @@ Route::post('/check_extra_working_hours','UsersExtraWorkingHoursController@check
 Route::post('/add_users_extra_working_hour','UsersExtraWorkingHoursController@store');
 Route::post('/drag_extra_time','UsersExtraWorkingHoursController@drag_extra_time');
 Route::post('/update_users_extra_working_hour','UsersExtraWorkingHoursController@update');
-Route::post('/delete_users_extra_working_hour','UsersExtraWorkingHoursController@destroy'); 
+Route::post('/delete_users_extra_working_hour','UsersExtraWorkingHoursController@destroy');
 /*---- UsersExtraWorkingsHour End -----*/
 
-/*---- Cash desk invoice -----*/ 
+/*---- Cash desk invoice -----*/
 
 Route::post('/save_invoice_template','CashdeskInvoiceController@store');
 Route::get('/invoice_template_master','CashdeskInvoiceController@index');
@@ -314,20 +314,22 @@ Route::post('/payment_method_check','CashdeskInvoiceController@update_payment_me
 /*---- Cash desk invoice End -----*/
 
 
-/*---- Invoice Start -----*/ 
+/*---- Invoice Start -----*/
 
 Route::post('/save_invoice','InvoiceController@store');
 Route::post('/update_invoice_is_received','InvoiceController@is_received_update');
 Route::get('/invoice_number','InvoiceController@invoice_number');
 Route::get('/invoice_by_id/{invoice_id}','InvoiceController@single_invoice');
-Route::get('/invoice_by_id_for_adjust/{invoice_id}','InvoiceController@single_invoice_adjust'); 
+Route::get('/invoice_by_id_for_adjust/{invoice_id}','InvoiceController@single_invoice_adjust');
 Route::get('/create_invoice/{invoice_id}/{data_id}','InvoiceController@create_invoice');
 Route::post('/save_invoice_email','InvoiceController@save_invoice_email');
+Route::post('/delete_invoice','InvoiceController@delete_invoice');
+
 
 /*---- invoice End -----*/
 
 
-/*---- InvoiceDataController Start -----*/ 
+/*---- InvoiceDataController Start -----*/
 
 Route::get('/gift_list','InvoiceDataController@gift_list');
 Route::get('/all_gifts','InvoiceDataController@all_gifts');
@@ -335,14 +337,14 @@ Route::get('/all_gifts','InvoiceDataController@all_gifts');
 /*---- InvoiceDataController End -----*/
 
 
-/*---- InvoicePaymentController Start -----*/ 
+/*---- InvoicePaymentController Start -----*/
 
 Route::post('/save_payment','InvoicePaymentController@store');
 Route::get('/get_payment_by_invoice_id/{invoice_id}','InvoicePaymentController@get_payment_by_invoice_id');
 
 /*---- InvoicePaymentController End -----*/
 
-/*---- InvoiceTemplateController Start -----*/ 
+/*---- InvoiceTemplateController Start -----*/
 
 Route::get('/invoice_template','InvoiceTemplateController@invoice_template');
 
@@ -359,7 +361,7 @@ Route::post('/update_form_sub','ReportformController@updateFormSub');
 Route::post('/delete_form_sub','ReportformController@deleteFormSub');
 /*---- Form builder End -----*/
 
-/*---- Cash desk dashboard -----*/ 
+/*---- Cash desk dashboard -----*/
 
 
 Route::get('/open_invoice','CasedeskController@index');
@@ -411,7 +413,7 @@ Route::post('/delete_membership','InvoiceController@delete_membership');
 Route::group(['middleware' => ['ApiAuthentication']], function() {
     Route::post('/update-profile','Api\ProfileController@updateProfile');
     Route::post('/update-password','Api\ProfileController@resetPassword');
-   
+
 });
 
 Route::post('/dt_form_ans_list','ReportformController@dtFormAnsList');

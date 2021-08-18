@@ -13,6 +13,7 @@ use App\Models\InvoiceTemplate;
 use App\Models\AppointmentLog;
 use App\Models\Common;
 use App\Models\Users;
+use App\Models\Products;
 use App\Member;
 use App\Models\Customers;
 use App\Models\CustomerCoupons;
@@ -23,8 +24,7 @@ use App\Models\Coupons;
 use Illuminate\Support\Facades\Config;
 use App\Http\Controllers\Middleweb_Controller;
 use PDF;
-use DB;
-
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Middleweb_Controller
 {
@@ -339,6 +339,31 @@ class InvoiceController extends Middleweb_Controller
         return response()->json($invoice->id);
         // return response()->json($responce);
 
+    }
+
+    public function delete_invoice(Request $request)
+    {
+        $invoice_id = $request->id;
+        $product_row = DB::table('invoice_data')->where('invoice_id', $invoice_id)->where('which_one','product')->get();
+        $service_row = DB::table('invoice_data')->where('invoice_id', $invoice_id)->where('which_one','service')->get();
+        foreach ($product_row as $value) {
+           $product_id = $value->data_id;
+           $product_quantity = $value->quantity;
+           $product = Products::find($product_id);
+           $product->stocke = $product->stocke + $product_quantity;
+           $product->save();
+          }
+          DB::table('invoice_payment')->where('invoice_id', $invoice_id)->delete();
+          DB::table('invoice_data')->where('invoice_id', $invoice_id)->delete();
+          DB::table('invoice')->where('id', $invoice_id)->delete();
+        //   Invoice::find($invoice_id)->delete();
+        // $invoice_payment_id->delete();
+
+        $response = array(
+            "success" => true,
+            "message" => "Invoice Is Deleted successfully.",
+        );
+        return response()->json($response);
     }
 
     public function delete_membership(Request $request)

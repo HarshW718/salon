@@ -1,4 +1,4 @@
-app.controller('cashdeskMainCtrl', ["$cookies","$scope", "$http", "modalProvider", "APP", "restSessionOut", "storeAppointmentData", "$state", "_storeUnpaidInvoiceData", "storeAppointmentData","notifications", function ($cookies,$scope, $http,modalProvider, APP, restSessionOut, storeAppointmentData, $state, _storeUnpaidInvoiceData, storeAppointmentData,notifications) {
+app.controller('cashdeskMainCtrl', ["$cookies","$scope", "$http", "modalProvider", "APP", "restSessionOut", "storeAppointmentData", "$state", "_storeUnpaidInvoiceData", "storeAppointmentData","SweetAlert","notifications", function ($cookies,$scope, $http,modalProvider, APP, restSessionOut, storeAppointmentData, $state, _storeUnpaidInvoiceData, storeAppointmentData,SweetAlert,notifications) {
 
     //$stateParams
     if ($cookies.get('userdata') !== undefined) {
@@ -200,6 +200,39 @@ $scope.openUnpaidInvoice = function (invoice_id) {
         (jQuery('#leftside.hide').length == 1) ? jQuery('#leftside').removeClass('hide') : jQuery('#leftside').addClass('hide');
         $scope.mailClass = 'col-md-10';
         $scope.sideClass = 'col-md-2 cashdesk-left-sidebar';
+    }
+    //Delete Invoice Function
+
+    $scope.delete_invoice = function (invoice_id) {
+        $scope.delete_invoice_id = { id: invoice_id };
+        SweetAlert.swal({
+            title: "Are you sure?",
+            text: "You want to delete This Invoice",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $http.post(APP.API + 'delete_invoice', $scope.delete_invoice_id
+                    ).then(function (response) {
+                       try{
+                        if(response.data.status == "401"){
+                         restSessionOut.getRstOut();
+                     }
+                    }catch(err){}
+                    notifications.Message('success', 'Success', response.data.message);
+                    $scope.openInvoice();
+
+             }).catch(function (request, status, errorThrown) {
+
+             });
+         } else {
+
+         }
+     });
     }
 }]);
 app.controller('giftListController', ["$scope", "$http", "APP", "$uibModalInstance", function ($scope, $http, APP, $uibModalInstance) {
@@ -541,6 +574,7 @@ app.controller('CashdeskInCtrl', ["$scope", "$http", "APP", "notifications", "re
 
 
 }]);
+
 
 
 app.controller('CashdeskOutCtrl', ["$scope", "$http", "APP", "notifications", "restSessionOut", "$state", "$uibModalInstance","storeAppointmentData","cb", function ($scope, $http, APP, notifications, restSessionOut, $state, $uibModalInstance,storeAppointmentData,cb) {

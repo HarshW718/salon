@@ -1195,7 +1195,6 @@ app.controller('cashdeskCtrl', ["$rootScope","$scope", "$http", "SweetAlert", "m
                     } catch (err) { }
                     $scope.invoice_id = response.data;
                     
-                    console.log(response.data);
                     if (which_button == 'to_pay') {
                         $scope.toPay();
                     } else if (which_button == 'save_invoice') {
