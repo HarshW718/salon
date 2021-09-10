@@ -47,8 +47,6 @@ class InvoiceController extends Middleweb_Controller
 
     public function store(Request $request)
     {
-
-
         $table_data = $request->table_data;
 
 
@@ -68,9 +66,7 @@ class InvoiceController extends Middleweb_Controller
         $invoice->created_by = $this->ExpToken["user_id"];
         $invoice->updated_by = $this->ExpToken["user_id"];
         $resultInvoice = $invoice->save();
-
-
-        if ($request->id != 0) {
+        if($request->id != 0) {
             $invoice_coupon = InvoiceCoupons::where('invoice_id',$request->id)->groupBy('customer_coupon_id')->get()->toArray();
             InvoiceData::where('invoice_id', $request->id)->delete();
             InvoiceTax::where('invoice_id', $request->id)->delete();
@@ -298,10 +294,7 @@ class InvoiceController extends Middleweb_Controller
             $customer->updated_at = date('Y-m-d H:i:s');
             $customer->save();
         }
-
-
         $customer1 = Customers::find($request->customer['id']);
-                                // $member = member::where('customer_id',$customer1->id);
         $member = DB::select("select * from member where customer_id = ".$customer1->id);
         if($customer1->membership_id == 1 && $request->total_invoice_amount==0)
         {

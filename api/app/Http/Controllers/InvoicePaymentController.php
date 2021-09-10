@@ -34,7 +34,6 @@ class InvoicePaymentController extends Middleweb_Controller
                     }else{
                         $current_cash = $cashcounter->current_cash;
                     }
-
                     $for_invoice_no = Invoice::where('id', $request->invoice_id)->get()->first();
                     $cash_counter = new CashCounter();
                     $cash_counter->user_company_id = $this->ExpToken["parent_id"];
