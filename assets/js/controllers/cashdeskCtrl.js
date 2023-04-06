@@ -949,6 +949,8 @@ app.controller("cashdeskCtrl", [
                     group_by_tax[i].calculation_sale_price *
                       group_by_tax[i].quantity -
                     group_by_tax[i].discount_amount;
+                  group_by_tax[i].single_row_total +=
+                    (group_by_tax[i].single_row_total * 18) / 100;
                   notifications.Message(
                     "warning",
                     "Quantity is heigher than stock",
@@ -959,6 +961,8 @@ app.controller("cashdeskCtrl", [
                     group_by_tax[i].calculation_sale_price *
                       group_by_tax[i].quantity -
                     group_by_tax[i].discount_amount;
+                  group_by_tax[i].single_row_total +=
+                    (group_by_tax[i].single_row_total * 18) / 100;
                 }
               } else {
                 if (group_by_tax[i].quantity == 0) {
@@ -968,6 +972,8 @@ app.controller("cashdeskCtrl", [
                   group_by_tax[i].calculation_sale_price *
                     group_by_tax[i].quantity -
                   group_by_tax[i].discount_amount;
+                group_by_tax[i].single_row_total +=
+                  (group_by_tax[i].single_row_total * 18) / 100;
               }
             }
           }
@@ -990,6 +996,8 @@ app.controller("cashdeskCtrl", [
                     group_by_tax[i].calculation_sale_price *
                       group_by_tax[i].quantity -
                     group_by_tax[i].discount_amount;
+                  group_by_tax[i].single_row_total +=
+                    (group_by_tax[i].single_row_total * 18) / 100;
                   notifications.Message(
                     "warning",
                     "Quantity is heigher than stock",
@@ -1000,6 +1008,8 @@ app.controller("cashdeskCtrl", [
                     group_by_tax[i].calculation_sale_price *
                       group_by_tax[i].quantity -
                     group_by_tax[i].discount_amount;
+                  group_by_tax[i].single_row_total +=
+                    (group_by_tax[i].single_row_total * 18) / 100;
                 }
               } else {
                 if (group_by_tax[i].quantity == 0) {
@@ -1009,6 +1019,8 @@ app.controller("cashdeskCtrl", [
                   group_by_tax[i].calculation_sale_price *
                     group_by_tax[i].quantity -
                   group_by_tax[i].discount_amount;
+                group_by_tax[i].single_row_total +=
+                  (group_by_tax[i].single_row_total * 18) / 100;
               }
               total_price += group_by_tax[i].single_row_total;
             }

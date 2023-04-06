@@ -234,7 +234,7 @@
                                         <th>Quantity</th>
                                         <th>Price</th>
                                         <!-- <th style="width:15px;">Discount</th> -->
-                                        <!--<th>VAT</th>-->
+                                        <th>GST</th>
                                         <!-- <th>Worker</th> -->
                                         <th>Total</th>
                                         <th></th>
@@ -274,11 +274,11 @@
                                                     </em></span>
                                             </label>
 
-                        </div>
+                       
 
-                        </td>
+                                        </td>
 
-                        <td class="col-md-1">
+                                        <td class="col-md-1">
                             <!-- <input ng-disabled="single_data.is_single_row_total_paid"
                                                 ng-model="table_data[$index].quantity"
                                                 ng-disabled="single_data.which_one == 'gift' || single_data.which_one == 'coupon'"
@@ -291,7 +291,7 @@
                                 type="Number" class="form-control" min="0" ng-change="changeInTableData()">
 
                         </td>
-                        <td class="col-md-1">
+                            <td class="col-md-1">
                             <!-- <input ng-disabled="single_data.is_single_row_total_paid"
                                                 ng-model="table_data[$index].calculation_sale_price" type="Number"
                                                 ng-disabled="single_data.which_one == 'gift' || single_data.which_one == 'coupon'"
@@ -304,7 +304,7 @@
                                 min="0" class="form-control" ng-change="changeInTableData()"
                                 ng-value="single_data.calculation_sale_price">
 
-                        </td>
+                            </td>
                         <!-- <td>
                                             <button ng-disabled="single_data.is_single_row_total_paid" type="button"
                                                 ng-if="single_data.which_one != 'gift'"
@@ -380,6 +380,7 @@
 
                                         </td> -->
 
+                        <td>18%</td>
                         <td>
                             <!-- <span class="padding-5">{{ ((single_data.calculation_sale_price - single_data.discount_amount) * single_data.quantity) }}</span> -->
 
@@ -418,6 +419,7 @@
                         </tr>
                         </tbody>
                         </table>
+                    </div>
                     </div>
                 </div>
                 <div class="row margin-top-10" ng-if="table_data.length > 0">
