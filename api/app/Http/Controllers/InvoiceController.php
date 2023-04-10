@@ -516,7 +516,7 @@ class InvoiceController extends Middleweb_Controller
                 <tr>
                     <td style='padding:5px;font-size:10px;font-weight:bold;'>" . $treatment_date_display . "</td>
                     <td style='padding:5px;font-size:10px;font-weight:bold;'>" . $single_invoice['quantity'] . " x " . $display_name . $single_row_comment . " " . $discount . "</td>
-                    <td style='text-align: center;font-size:10px;font-weight:bold;'>₹" . $item_total_price . "</td>
+                    <td style='text-align: right;font-size:10px;font-weight:bold;padding:5px;'>₹" . $item_total_price . "</td>
                 </tr>";
             if ($data_id != 0) {
 
@@ -556,13 +556,31 @@ class InvoiceController extends Middleweb_Controller
             $item_details_middle1 .=  "<tr><td ><span style='padding:2px;'>" . $single_tax_name . " " . $single_tax_value .   " %</span></td><td style='text-align: right;padding:2px;'>₹" . $single_tax_total  . "</td></tr>";
         }
         if ($data_id == 0) {
-            $item_details_top2 = '<br><table id="tblTax" border="0" cellpadding="1" cellspacing="1" style="width: 100%;float: right; clear: both; margin-bottom: 10px; border-color:#ccc;" >
+            $item_details_top2 = '<br><br><div><table id="tblTax1" border="0" cellpadding="1" cellspacing="1" style="width: 30%;float: right; clear: both;margin-bottom: 10px; border-color:#ccc;">
         <tbody>
             <tr>
                 <td><strong style="padding:5px;font-size:12px;">Pay Method</strong></td>
                 <td style="text-align:right;padding:5px;font-size: 12px;"><strong>Amount</strong></td>
             </tr>';
             $item_details_down2 = '</tbody></table>';
+
+            $item_details_top4 = '<table id="tblTax1" border="0" cellpadding="1" cellspacing="1" style="width: 30%;float: left;margin-bottom: 10px; border-color:#ccc;">
+            <tbody>
+                <tr>
+                    <td><strong style="padding:5px;font-size:12px;">BANK DETAILS</strong></td>
+                </tr>
+                <tr>
+                    <td><strong style="padding:5px;font-size:12px;">BANK-AXIS BANK LTD</strong></td>
+                </tr>
+                <tr>
+                    <td><strong style="padding:5px;font-size:12px;">IFSC-UTIB0003214</strong></td>
+                </tr>
+                <tr>
+                    <td><strong style="padding:5px;font-size:12px;">ACCOUNT NO-910010005008167 </strong></td>
+                </tr>
+
+                ';
+            $item_details_down4 = '</tbody></table></div>';
 
 
             if ($invoice->is_total_amount_paid == 1) {
@@ -599,31 +617,44 @@ class InvoiceController extends Middleweb_Controller
             $item_details_middle2 = '';
             $paymentList = array();
         }
-        $item_details_top3 = '<br><table  border="0" cellpadding="1" cellspacing="1" style="width: 100%;float:right; clear: both;margin-bottom: 10px; border-color:#ccc;" >
+        $cgst_amount = $total_amount * 9 / 100;
+        $cgst_amount = number_format($cgst_amount, 2);
+        $sgst_amount = $total_amount * 9 / 100;
+        $sgst_amount = number_format($sgst_amount, 2);
+        $total_amount = number_format(floatval($total_amount), 2);
+        $grand_total = round($total_amount + $cgst_amount + $sgst_amount, 2);
+
+        $item_details_top3 = '<br><table id="tblTax1" border="0" cellpadding="1" cellspacing="1" style="width: 30%;float: right; clear: both;margin-bottom: 10px; border-color:#ccc;">
         <tbody>
             <tr>
                 <td><strong style="padding:5px;font-size:12px;">Sub Total</strong></td>
                 <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' . $total_amount . '</strong></td>
             </tr>
             <tr>
-                <td><strong style="padding:5px;font-size:12px;">GST Amount</strong></td>
-                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' . $total_amount * 18 / 100 . '</strong></td>
+                <td><strong style="padding:5px;font-size:12px;">Add: CGST @9%</strong></td>
+                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' . $cgst_amount . '</strong></td>
             </tr>
             <tr>
-                <td><strong style="padding:5px;font-size:12px;">Total </strong></td>
-                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' . ((int)$total_amount + (int)$total_amount * 18 / 100)   . '</strong></td>
+                <td><strong style="padding:5px;font-size:12px;">Add: SGST @9%</strong></td>
+                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' . $sgst_amount . '</strong></td>
+            </tr>
+            <tr>
+                <td><strong style="padding:5px;font-size:12px;">Grand Total </strong></td>
+                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' .  number_format($grand_total, 2)   . '</strong></td>
             </tr>
 
             ';
         $item_details_down3 = '</tbody></table>';
 
-        $item_details = $item_details_top . $item_details_middle . $item_details_down . $item_details_top1 . $item_details_middle1 . $item_details_down1 . $item_details_top2 . $item_details_middle2 . $item_details_down2 . $item_details_top3 . $item_details_down3;
+
+
+        $item_details = $item_details_top . $item_details_middle . $item_details_down . $item_details_top1 . $item_details_middle1 . $item_details_down1 .  $item_details_top3 . $item_details_down3 . $item_details_top2 . $item_details_middle2 . $item_details_down2 . $item_details_top4 . $item_details_down4;
 
 
         $companyData     = Common::mailData('company_details', ['user_company_id' => $this->ExpToken["parent_id"]]);
         $company_data    = $companyData[0];
-        $imageUrl        = Config::get('constants.displayImageUrl');
-        $company_logo    =  empty($companyData) ? '' : $imageUrl . 'company_logo/' . $companyData[0]->company_logo;
+        $imageUrl        = Config::get('constants.imageUrl');
+        $company_logo    =  empty($companyData) ? '' : $imageUrl . 'assets/iamges/' . $companyData[0]->company_logo;
         $company_name    = empty($companyData) ? '' : $company_data->company_name;
         $company_number  = empty($companyData) ? '' : $company_data->mobile;
         $company_email   = empty($companyData) ? '' : $company_data->email;

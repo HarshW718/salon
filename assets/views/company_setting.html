@@ -1,82 +1,140 @@
 <div class="container-fluid bg-white" ng-controller="company_settingCtrl">
-	<div class="row">
-		<uib-tabset class="tabbable">
-			<uib-tab heading="Company Profile">
-				<!-- <div class="margin-bottom-15">
+  <div class="row">
+    <uib-tabset class="tabbable">
+      <uib-tab heading="Company Profile">
+        <!-- <div class="margin-bottom-15">
 					<button type="submit" ng-click="updateCompanyDetails('id_companyForm')" class="btn btn-wide btn-success">Update</button>
 					<a class="btn btn-primary btn-o btn-wide" href="#!/app/pages/management">Close </a>
 				</div> -->
-				<div class="col-lg-6 col-md-6 col-sm-12">
-
-					<form name="companyForm" id="id_companyForm">
-						<div class="margin-bottom-5">
-							<button type="submit" ng-click="updateCompanyDetails('id_companyForm')"
-								class="btn btn-wide btn-success">Update</button>
-							<a class="btn btn-primary btn-o btn-wide" href="#!/app/pages/management">Close </a>
-						</div>
-						<table class="table table-condensed">
-
-							<thead>
-								<tr>
-									<th colspan="3">Contact Information</th>
-								</tr>
-							</thead>
-							<tbody>
-								<!-- <tr>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <form name="companyForm" id="id_companyForm">
+            <div class="margin-bottom-5">
+              <button
+                type="submit"
+                ng-click="updateCompanyDetails('id_companyForm')"
+                class="btn btn-wide btn-success"
+              >
+                Update
+              </button>
+              <a
+                class="btn btn-primary btn-o btn-wide"
+                href="#!/app/pages/management"
+                >Close
+              </a>
+            </div>
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th colspan="3">Contact Information</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr>
 									<td>Website</td>
 									<td>
 										<input type="text" class="form-control" id="website" placeholder="Enter Website" ng-model="company.website">
 									</td>
 								</tr> -->
-								<tr>
-									<td>email:</td>
-									<td>
-										<input type="email" class="form-control input-sm" id="email" name="email"
-											placeholder="Email" ng-model="company.email" ng-keyup="emailValidation()"
-											required />
-										<span class="error"
-											ng-show="email_validation_message_display">{{email_validation_message}}</span>
-								</tr>
-								<tr>
-									<td>Mobile</td>
-									<td><input type="tel" class="form-control input-sm" id="mobile" name="mobile"
-											placeholder="Mobile" maxlength="20" ng-model="company.mobile" required />
-									</td>
-								</tr>
+                <tr>
+                  <td>email:</td>
+                  <td>
+                    <input
+                      type="email"
+                      class="form-control input-sm"
+                      id="email"
+                      name="email"
+                      placeholder="Email"
+                      ng-model="company.email"
+                      ng-keyup="emailValidation()"
+                      required
+                    />
+                    <span
+                      class="error"
+                      ng-show="email_validation_message_display"
+                      >{{email_validation_message}}</span
+                    >
+                  </td>
+                </tr>
 
-							</tbody>
-						</table>
-						<table class="table table-condensed">
-							<thead>
-								<tr>
-									<th colspan="3">General information</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Company name</td>
-									<td><input type="text" class="form-control" id="exampleInputEmail1"
-											placeholder="Company Name" ng-model="company.company_name" required=""></td>
-								</tr>
-								<tr>
-									<td>Address</td>
-									<td><input type="text" class="form-control" id="address" name="address"
-											placeholder="Address" ng-model="company.address" /></td>
-								</tr>
-								<tr>
-									<td>Postcode</td>
-									<td><input type="text" class="form-control input-sm" id="postal_code"
-											name="postal_code" placeholder="Postal Code(1234AB)" maxlength="6"
-											ng-model="company.postal_code" ng-keyup="postalCodeValidation($event)"></td>
-								</tr>
-								<tr>
-									<td>residence</td>
-									<td>
-										<input type="text" class="form-control input-sm" id="residence" name="residence"
-											placeholder="Residence" ng-model="company.residence">
-									</td>
-								</tr>
-								<!-- <tr>
+                <tr>
+                  <td>Mobile</td>
+                  <td>
+                    <input
+                      type="tel"
+                      class="form-control input-sm"
+                      id="mobile"
+                      name="mobile"
+                      placeholder="Mobile"
+                      maxlength="20"
+                      ng-model="company.mobile"
+                      required
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th colspan="3">General information</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Company name</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      placeholder="Company Name"
+                      ng-model="company.company_name"
+                      required=""
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Address</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="address"
+                      name="address"
+                      placeholder="Address"
+                      ng-model="company.address"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Postcode</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control input-sm"
+                      id="postal_code"
+                      name="postal_code"
+                      placeholder="Postal Code(1234AB)"
+                      maxlength="6"
+                      ng-model="company.postal_code"
+                      ng-keyup="postalCodeValidation($event)"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>residence</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control input-sm"
+                      id="residence"
+                      name="residence"
+                      placeholder="Residence"
+                      ng-model="company.residence"
+                    />
+                  </td>
+                </tr>
+                <!-- <tr>
 									<td>Chamber of Commerce</td>
 									<td>	<input type="text" class="form-control input-sm" id="chamber_of_commerce" name="chamber_of_commerce"   placeholder="Chamber of Commerce" ng-model="company.chamber_of_commerce"> </td>
 								</tr>
@@ -88,66 +146,82 @@
 									<td>BTW</td>
 									<td><input type="text" class="form-control input-sm" id="btw" name="btw"   placeholder="BTW" ng-model="company.btw"></td>
 								</tr> -->
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-12">
-					<div class=" space20">
-						<div nv-file-drop="" uploader="uploaderImages">
-							<h5>Upload company logo</h5>
-							<div class="row">
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="space20">
+            <div nv-file-drop="" uploader="uploaderImages">
+              <h5>Upload company logo</h5>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <div ng-show="uploaderImages.isHTML5">
+                    <div
+                      class="well my-drop-zone margin-bottom-5 padding-5"
+                      nv-file-over=""
+                      uploader="uploaderImages"
+                    >
+                      <h4 class="text-center text-extra-large">
+                        <i class="fa fa-picture-o"></i>
+                        Base drop zone
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+                <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <span class="btn btn-dark-blue btn-o btn-file">
+                    Select an image file
+                    <input
+                      type="file"
+                      nv-file-select=""
+                      uploader="uploaderImages"
+                      multiple
+                      ng-model="files_name"
+                      onchange="angular.element(this).scope().onImageUpload()"
+                    />
+                  </span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <span>
+                    <button
+                      type="button"
+                      ng-click="moveToTrash()"
+                      class="btn btn-wide btn-o btn-danger"
+                    >
+                      <i class="fa fa-trash-o"></i> Delete images
+                    </button>
+                  </span>
+                </div>
+              </div>
 
-								<div class="col-lg-4 col-md-4 col-sm-4">
-									<div ng-show="uploaderImages.isHTML5">
-										<div class="well my-drop-zone margin-bottom-5 padding-5" nv-file-over=""
-											uploader="uploaderImages">
-											<h4 class="text-center text-extra-large"> <i class="fa fa-picture-o"></i>
-												Base drop zone
-											</h4>
-										</div>
-									</div>
-								</div>
-								<!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
-								<div class="col-lg-4 col-md-4 col-sm-4">
-									<span class="btn btn-dark-blue btn-o btn-file"> Select an image file
-										<input type="file" nv-file-select="" uploader="uploaderImages" multiple
-											ng-model="files_name"
-											onchange="angular.element(this).scope().onImageUpload()" />
-									</span>
-								</div>
-								<div class=" col-lg-4 col-md-4 col-sm-4">
-									<span>
-										<button type="button" ng-click="moveToTrash()"
-											class="btn btn-wide btn-o btn-danger"><i class="fa fa-trash-o"></i> Delete
-											images</button>
-									</span>
-								</div>
-
-							</div>
-
-							<div class="row">
-								<div class="col-md-12">
-									<div class="row">
-										<div class="col-sm-12">
-											<div class="panel panel-white">
-												<div class="panel-body">
-
-													<img src="company_logo/{{company.company_logo}}" alt=""
-														ng-if="company.company_logo!=''">
-													<img src="assets/images/upload/company_logo.jpeg" alt=""
-														ng-if="company.company_logo==''">
-
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</uib-tab>
-		</uib-tabset>
-	</div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="panel panel-white">
+                        <div class="panel-body">
+                          <img
+                            src="assets/images/{{company.company_logo}}"
+                            alt=""
+                            ng-if="company.company_logo!=''"
+                          />
+                          <img
+                            src="assets/images/upload/company_logo.jpeg"
+                            alt=""
+                            ng-if="company.company_logo==''"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </uib-tab>
+    </uib-tabset>
+  </div>
 </div>
