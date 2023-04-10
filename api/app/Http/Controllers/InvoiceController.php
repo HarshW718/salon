@@ -654,7 +654,7 @@ class InvoiceController extends Middleweb_Controller
         $companyData     = Common::mailData('company_details', ['user_company_id' => $this->ExpToken["parent_id"]]);
         $company_data    = $companyData[0];
         $imageUrl        = Config::get('constants.imageUrl');
-        $company_logo    =  empty($companyData) ? '' : $imageUrl . 'assets/iamges/' . $companyData[0]->company_logo;
+        $company_logo    =  empty($companyData) ? '' : 'assets/images/' . $companyData[0]->company_logo;
         $company_name    = empty($companyData) ? '' : $company_data->company_name;
         $company_number  = empty($companyData) ? '' : $company_data->mobile;
         $company_email   = empty($companyData) ? '' : $company_data->email;

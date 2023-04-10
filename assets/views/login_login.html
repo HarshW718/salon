@@ -1,63 +1,83 @@
 <!-- start: LOGIN -->
-<toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+<toaster-container
+  toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"
+></toaster-container>
 <div ng-class="{'app-navbar-fixed': app.layout.isNavbarFixed == false}"></div>
 <div class="row" ng-controller="loginCtrl">
-    <div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-        <div class="logo">
-        </div>
-        <!-- start: LOGIN BOX -->
-        <div class="box-login">
-            <form class="form-login" id="loginUser">
-                <img src="Company_logo\logo.jpeg" alt="{{app.name}}"/>
-                <fieldset>
-                    <legend>
-                        Sign in to your account
-                    </legend>
-                    <p>
-                        Please enter your name and password to log in.
-                    </p>
-                    <div class="form-group">
-                        <span class="input-icon">
-                            <input type="email" name="email" placeholder="Email" id="email" class="form-control" ng-model="users.email" required="">
-                            <i class="fa fa-user"></i>
-                        </span>
-                    </div>
-                    <div class="form-group form-actions">
-                        <span class="input-icon">
-                            <input type="password" placeholder="Password" id="password" class="form-control" ng-model="users.password" required="" name="password">
-                            <i class="fa fa-lock"></i> <a class="forgot" ui-sref="login.forgot" href="#!/login/forgot">
-                                I forgot my password
-                            </a>
-                        </span>
-                    </div>
-                    
-                    
-                    <div class="form-actions">
-                        <button type="submit" ng-click="loginUser('loginUser')" class="btn btn-primary pull-right">
-                            Login <i class="fa fa-arrow-circle-right"></i>
-                        </button>
-                    </div>
-                    <!-- <>Google Login</a> -->
-                    <!-- <a href="http://localhost/salon/api/auth/redirect/google" class="loginBtn loginBtn--google">
+  <div
+    class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4"
+  >
+    <div class="logo"></div>
+    <!-- start: LOGIN BOX -->
+    <div class="box-login">
+      <form class="form-login" id="loginUser">
+        <img
+          width="400"
+          src="assets/images/salon-logo.jpeg"
+          alt="{{app.name}}"
+        />
+        <fieldset>
+          <legend>Sign in to your account</legend>
+          <p>Please enter your name and password to log in.</p>
+          <div class="form-group">
+            <span class="input-icon">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                id="email"
+                class="form-control"
+                ng-model="users.email"
+                required=""
+              />
+              <i class="fa fa-user"></i>
+            </span>
+          </div>
+          <div class="form-group form-actions">
+            <span class="input-icon">
+              <input
+                type="password"
+                placeholder="Password"
+                id="password"
+                class="form-control"
+                ng-model="users.password"
+                required=""
+                name="password"
+              />
+              <i class="fa fa-lock"></i>
+              <a class="forgot" ui-sref="login.forgot" href="#!/login/forgot">
+                I forgot my password
+              </a>
+            </span>
+          </div>
+
+          <div class="form-actions">
+            <button
+              type="submit"
+              ng-click="loginUser('loginUser')"
+              class="btn btn-primary pull-right"
+            >
+              Login <i class="fa fa-arrow-circle-right"></i>
+            </button>
+          </div>
+          <!-- <>Google Login</a> -->
+          <!-- <a href="http://localhost/salon/api/auth/redirect/google" class="loginBtn loginBtn--google">
                         Login with Google
                     </a> -->
-                      
-                    <!-- <div class="new-account">
+
+          <!-- <div class="new-account">
                         Don't have an account yet?
                         <a ui-sref="login.registration" href="#!/login/registration">
                             Create an account
                         </a>
                     </div> -->
-                    
-                </fieldset>
-            </form>
-            <!-- start: COPYRIGHT -->
-            <div class="copyright">
-                {{app.year}} &copy; Copyright by Salon.
-            </div>
-            <!-- end: COPYRIGHT -->
-        </div>
-        <!-- end: LOGIN BOX -->
+        </fieldset>
+      </form>
+      <!-- start: COPYRIGHT -->
+      <div class="copyright">{{app.year}} &copy; Copyright by Salon.</div>
+      <!-- end: COPYRIGHT -->
     </div>
+    <!-- end: LOGIN BOX -->
+  </div>
 </div>
 <!-- end: LOGIN -->
