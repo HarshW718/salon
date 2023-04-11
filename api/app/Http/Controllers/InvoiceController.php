@@ -570,13 +570,19 @@ class InvoiceController extends Middleweb_Controller
                     <td><strong style="padding:5px;font-size:12px;">BANK DETAILS</strong></td>
                 </tr>
                 <tr>
-                    <td><strong style="padding:5px;font-size:12px;">BANK-AXIS BANK LTD</strong></td>
+                    <td><strong style="padding:5px;font-size:12px;">BHAKTI PATEL MAKEUP STUDIO SALON</strong></td>
                 </tr>
                 <tr>
-                    <td><strong style="padding:5px;font-size:12px;">IFSC-UTIB0003214</strong></td>
+                    <td><strong style="padding:5px;font-size:12px;">HDFC0005198</strong></td>
                 </tr>
                 <tr>
-                    <td><strong style="padding:5px;font-size:12px;">ACCOUNT NO-910010005008167 </strong></td>
+                    <td><strong style="padding:5px;font-size:12px;">ACCOUNT NO-50200063879302 </strong></td>
+                </tr>
+                <tr>
+                    <td><strong style="padding:5px;font-size:12px;">Branch: NEW GOTA </strong></td>
+                </tr>
+                <tr>
+                    <td><strong style="padding:5px;font-size:12px;">Account Type: CURRENT </strong></td>
                 </tr>
 
                 ';
