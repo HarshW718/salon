@@ -628,6 +628,7 @@ class InvoiceController extends Middleweb_Controller
         $sgst_amount = $total_amount * 9 / 100;
         $sgst_amount = number_format($sgst_amount, 2);
         $total_amount = number_format(floatval($total_amount), 2);
+        // $grand_total = round($total_amount + $cgst_amount + $sgst_amount, 2);
         $grand_total = round($total_amount + $cgst_amount + $sgst_amount, 2);
 
         $item_details_top3 = '<br><table id="tblTax1" border="0" cellpadding="1" cellspacing="1" style="width: 30%;float: right; clear: both;margin-bottom: 10px; border-color:#ccc;">
