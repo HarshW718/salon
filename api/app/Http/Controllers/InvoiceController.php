@@ -623,31 +623,57 @@ class InvoiceController extends Middleweb_Controller
             $item_details_middle2 = '';
             $paymentList = array();
         }
-        $cgst_amount = $total_amount * 9 / 100;
-        $cgst_amount = number_format($cgst_amount, 2);
-        $sgst_amount = $total_amount * 9 / 100;
-        $sgst_amount = number_format($sgst_amount, 2);
-        $total_amount = number_format(floatval($total_amount), 2);
+        // $cgst_amount = $total_amount * 9 / 100;
+        // $cgst_amount = number_format($cgst_amount, 2);
+        // $sgst_amount = $total_amount * 9 / 100;
+        // $sgst_amount = number_format($sgst_amount, 2);
+        // $total_amount = number_format(floatval($total_amount), 2);
         // $grand_total = round($total_amount + $cgst_amount + $sgst_amount, 2);
-        $grand_total = round($total_amount + $cgst_amount + $sgst_amount, 2);
+
+        $roundedNumber = 0;
+        $roundedSymbol = "";
+
+        $total_amount_without_commas = str_replace(',', '', $total_amount);
+
+        $cgst_amount = $total_amount_without_commas * 9 / 100;
+        $sgst_amount = $total_amount_without_commas * 9 / 100;
+        $total_amount = number_format(floatval($total_amount), 2);
+        $grand_total = $total_amount_without_commas + $cgst_amount + $sgst_amount;
+
+        $cgst_amount_formatted = number_format($cgst_amount, 2);
+        $sgst_amount_formatted = number_format($sgst_amount, 2);
+        $total_amount_formatted = $total_amount;
+        $grand_total_formatted = round($grand_total);
+
+        if ($grand_total_formatted > $grand_total) {
+            $roundedNumber = $grand_total_formatted - $grand_total;
+            $roundedSymbol = "+";
+        } elseif ($grand_total_formatted < $grand_total) {
+            $roundedNumber = $grand_total - $grand_total_formatted;
+            $roundedSymbol = "-";
+        }
 
         $item_details_top3 = '<br><table id="tblTax1" border="0" cellpadding="1" cellspacing="1" style="width: 30%;float: right; clear: both;margin-bottom: 10px; border-color:#ccc;">
         <tbody>
             <tr>
                 <td><strong style="padding:5px;font-size:12px;">Sub Total</strong></td>
-                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' . $total_amount . '</strong></td>
+                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' . $total_amount_formatted . '</strong></td>
             </tr>
             <tr>
                 <td><strong style="padding:5px;font-size:12px;">Add: CGST @9%</strong></td>
-                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' . $cgst_amount . '</strong></td>
+                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' . $cgst_amount_formatted . '</strong></td>
             </tr>
             <tr>
                 <td><strong style="padding:5px;font-size:12px;">Add: SGST @9%</strong></td>
-                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' . $sgst_amount . '</strong></td>
+                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' . $sgst_amount_formatted . '</strong></td>
+            </tr>
+            <tr>
+                <td><strong style="padding:5px;font-size:12px;">Round Off</strong></td>
+                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>' . $roundedSymbol . '₹' . round($roundedNumber, 2)  . '</strong></td>
             </tr>
             <tr>
                 <td><strong style="padding:5px;font-size:12px;">Grand Total </strong></td>
-                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' .  number_format($grand_total, 2)   . '</strong></td>
+                <td style="text-align:right;padding:5px;font-size: 12px;"><strong>₹' .  $grand_total_formatted   . '</strong></td>
             </tr>
 
             ';

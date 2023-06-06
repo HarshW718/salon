@@ -920,6 +920,19 @@ app.controller("cashdeskCtrl", [
         }
       });
       $scope.total_price = total_price.toFixed(2);
+      let roundedValue = Math.round($scope.total_price);
+      let diffrence = ($scope.total_price - roundedValue).toFixed(2);
+      console.log("diffrence : ", Math.abs(diffrence));
+      if (diffrence > 0) {
+        $scope.round_off = "-" + Math.abs(diffrence);
+        $scope.grand_total = $scope.total_price - Math.abs(diffrence);
+      } else if (diffrence < 0) {
+        $scope.round_off = "+" + Math.abs(diffrence);
+        $scope.grand_total = $scope.total_price + Math.abs(diffrence);
+      }
+
+      console.log("total_price =========:", $scope.total_price);
+
       $scope.changeInTableData();
     };
     $scope.changeInTableData = function () {
@@ -928,6 +941,8 @@ app.controller("cashdeskCtrl", [
       var paid_amount = 0;
       $scope.group_by_taxs = [];
       $scope.total_price = 0;
+      $scope.round_off = 0;
+      $scope.grand_total = 0;
       const group_by_taxs = groupByTax($scope.table_data);
       var total_price = 0;
       angular.forEach(group_by_taxs, function (group_by_tax, key) {
@@ -1028,6 +1043,20 @@ app.controller("cashdeskCtrl", [
         }
       });
       $scope.total_price = parseFloat(total_price.toFixed(2));
+      let roundedValue = Math.round($scope.total_price);
+      let diffrence = ($scope.total_price - roundedValue).toFixed(2);
+      console.log("diffrence : ", Math.abs(diffrence));
+      if (diffrence > 0) {
+        $scope.round_off = "-" + Math.abs(diffrence);
+        $scope.grand_total = $scope.total_price - Math.abs(diffrence);
+      } else if (diffrence < 0) {
+        $scope.round_off = "+" + Math.abs(diffrence);
+        $scope.grand_total = $scope.total_price + Math.abs(diffrence);
+      }
+
+      // $scope.grand_total = $scope.total_price + $scope.round_off;
+      // console.log("total_price =========:", $scope.total_price);
+
       angular.forEach($scope.table_data, function (single_data, key) {
         total_invoice_amount += single_data.single_row_total;
       });
@@ -1091,7 +1120,7 @@ app.controller("cashdeskCtrl", [
       });
       $scope.paid_amount = paid_amount;
       $scope.remaining_amount = (
-        $scope.total_price -
+        $scope.grand_total -
         $scope.paid_amount -
         $scope.total_coupon_amount
       ).toFixed(2);
