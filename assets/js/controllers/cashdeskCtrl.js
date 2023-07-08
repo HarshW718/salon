@@ -929,6 +929,8 @@ app.controller("cashdeskCtrl", [
       } else if (diffrence < 0) {
         $scope.round_off = "+" + Math.abs(diffrence);
         $scope.grand_total = $scope.total_price + Math.abs(diffrence);
+      } else {
+        $scope.grand_total = $scope.total_price;
       }
 
       console.log("total_price =========:", $scope.total_price);
@@ -1052,6 +1054,8 @@ app.controller("cashdeskCtrl", [
       } else if (diffrence < 0) {
         $scope.round_off = "+" + Math.abs(diffrence);
         $scope.grand_total = $scope.total_price + Math.abs(diffrence);
+      } else {
+        $scope.grand_total = $scope.total_price;
       }
 
       // $scope.grand_total = $scope.total_price + $scope.round_off;
