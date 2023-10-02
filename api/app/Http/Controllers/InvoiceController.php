@@ -564,25 +564,25 @@ class InvoiceController extends Middleweb_Controller
             </tr>';
             $item_details_down2 = '</tbody></table>';
 
-            $item_details_top4 = '<table id="tblTax1" border="0" cellpadding="1" cellspacing="1" style="width: 30%;float: left;margin-bottom: 10px; border-color:#ccc;">
+            $item_details_top4 = '<table id="tblTax1" border="0" cellpadding="1" cellspacing="1" style="width: 100%;margin-bottom: 10px; border-color:#ccc;">
             <tbody>
                 <tr>
                     <td><strong style="padding:5px;font-size:12px;">BANK DETAILS</strong></td>
                 </tr>
                 <tr>
-                    <td><strong style="padding:5px;font-size:12px;">BHAKTI PATEL MAKEUP STUDIO SALON</strong></td>
+                    <td><strong style="padding:5px;font-size:11px;">BHAKTI PATEL MAKEUP STUDIO SALON</strong></td>
                 </tr>
                 <tr>
-                    <td><strong style="padding:5px;font-size:12px;">HDFC0005198</strong></td>
+                    <td><strong style="padding:5px;font-size:11px;">HDFC0005198</strong></td>
                 </tr>
                 <tr>
-                    <td><strong style="padding:5px;font-size:12px;">ACCOUNT NO-50200063879302 </strong></td>
+                    <td><strong style="padding:5px;font-size:11px;">ACCOUNT NO-50200063879302 </strong></td>
                 </tr>
                 <tr>
-                    <td><strong style="padding:5px;font-size:12px;">Branch: NEW GOTA </strong></td>
+                    <td><strong style="padding:5px;font-size:11px;">Branch: NEW GOTA </strong></td>
                 </tr>
                 <tr>
-                    <td><strong style="padding:5px;font-size:12px;">Account Type: CURRENT </strong></td>
+                    <td><strong style="padding:5px;font-size:11px;">Account Type: CURRENT </strong></td>
                 </tr>
 
                 ';
