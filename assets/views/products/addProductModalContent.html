@@ -1,32 +1,46 @@
 <div class="modal-header">
-    <button type="button" class="close" title="Close" ng-click="cancel($event)">&times;</button>
-    <h3 class="modal-title"> <i class="fa fa-th-large"></i> {{items.button[0]}} Product</h3>
+  <button type="button" class="close" title="Close" ng-click="cancel($event)">
+    &times;
+  </button>
+  <h3 class="modal-title">
+    <i class="fa fa-th-large"></i> {{items.button[0]}} Product
+  </h3>
 </div>
+{{console.log(product)}}
 <form name="productForm" id="id_productForm">
-    <div class="modal-body">
-        <div class="container-fluid bg-white">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <fieldset>
-                                <legend>
-                                    <!-- <i class="fa fa-clock-o"></i>  -->
-                                    Data
-                                </legend>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="block" for='Category'>
-                                                Category
-                                            </label>
-                                            <select class="form-control" ng-model="product.category_id" name='Category'  required="">
-                                                <option selected ng-disabled="true" value="">Product Category</option>
-                                                <option ng-selected="product.category_id == product_category.id"
-                                                    ng-repeat="product_category in items.product_categories"  ng-value="product_category.id"
-                                                    >{{product_category.name}}</option>
-                                              </select>
-<!--                                            <select class="cs-select" name="category_id"
+  <div class="modal-body">
+    <div class="container-fluid bg-white">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <fieldset>
+                <legend>
+                  <!-- <i class="fa fa-clock-o"></i>  -->
+                  Data
+                </legend>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="block" for="Category"> Category </label>
+                      <select
+                        class="form-control"
+                        ng-model="product.category_id"
+                        name="Category"
+                        required=""
+                      >
+                        <option selected ng-disabled="true" value="">
+                          Product Category
+                        </option>
+                        <option
+                          ng-selected="product.category_id == product_category.id"
+                          ng-repeat="product_category in items.product_categories"
+                          ng-value="product_category.id"
+                        >
+                          {{product_category.name}}
+                        </option>
+                      </select>
+                      <!--                                            <select class="cs-select" name="category_id"
                                                 ng-model="product.category_id" required="">
 
                                                 <option selected ng-disabled="true" value="">Product Category</option>
@@ -34,20 +48,25 @@
                                                     ng-repeat="product_category in items.product_categories"
                                                     ng-value="product_category.id">{{product_category.name}}</option>
                                             </select>-->
-                                        </div>
-                                    </div>
+                    </div>
+                  </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="block">
-                                                Product Name
-                                            </label>
-                                            <input type="text" class="form-control input-sm" id="product_name"
-                                                name="name" placeholder="Product Name" ng-model="product.name" required/>
-                                        </div>
-                                    </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="block"> Product Name </label>
+                      <input
+                        type="text"
+                        class="form-control input-sm"
+                        id="product_name"
+                        name="name"
+                        placeholder="Product Name"
+                        ng-model="product.name"
+                        required
+                      />
+                    </div>
+                  </div>
 
-                                    <!-- <div class="col-md-3">
+                  <!-- <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="block">
                                                 EAN
@@ -65,99 +84,147 @@
                                                 placeholder="SKU" ng-model="product.sku" />
                                         </div>
                                     </div> -->
-
-                                </div>
-                                <div class="row">
-                                    
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="block">
-                                                Supplier
-                                            </label>
-                                            <select class="form-control" name="company_id"
-                                                    ng-model="product.company_id">
-                                                <option selected ng-disabled="true" value="">Supplier</option>
-                                                <option ng-selected="product.company_id == product_company.id"
-                                                    ng-repeat="product_company in items.product_companies"
-                                                    ng-value="product_company.id">{{product_company.name}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </fieldset>
-                        </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="block"> Supplier </label>
+                      <select
+                        class="form-control"
+                        name="company_id"
+                        ng-model="product.company_id"
+                      >
+                        <option selected ng-disabled="true" value="">
+                          Supplier
+                        </option>
+                        <option
+                          ng-selected="product.company_id == product_company.id"
+                          ng-repeat="product_company in items.product_companies"
+                          ng-value="product_company.id"
+                        >
+                          {{product_company.name}}
+                        </option>
+                      </select>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <fieldset>
-                                <legend>
-                                    <!-- <i class="fa fa-clock-o"></i>  -->
-                                    Stocks
-                                </legend>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="block">
-                                                Stock
-                                            </label>
-                                            <input type="number" min="0" class="form-control input-sm" name="stocke"
-                                                   placeholder="Stock" ng-model="product.stocke" pattern="\d*" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="block">
-                                                Minimum Stock
-                                            </label>
-                                            <input type="number" min="0" class="form-control input-sm" name="min_stocke"
-                                                placeholder="Minimum Stock" ng-model="product.min_stocke" pattern="\d*"  />
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="col-md-8">
-                            <fieldset>
-                                <legend>
-                                    <i class="fa fa-inr"></i> Price
-                                </legend>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="block">
-                                                Product Type
-                                            </label>
-                                            <select class="form-control" name="type"
-                                                ng-model="product.type" ng-options="item.id as item.name for item in product_typeOptions" required>
-                                                <option selected ng-disabled="true" value="">Product Type</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="block">
-                                                Purchase Price <i class="fa  fa-inr"></i>
-                                            </label>
-                                            <input type="number" min="0" class="form-control input-sm"
-                                                name="purchase_price" placeholder="Purchase Rate"
-                                                ng-model="product.purchase_price"   ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" pattern="\d*"/>
-<!--                                              <input type="number" class="form-control" name="tax_value" placeholder="Tax Value" ng-model="tax.tax_value" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" pattern="\d*" required />-->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="block">
-                                                Sale Price <i class="fa  fa-inr"></i>
-                                            </label>
-                                            <input type="number" min="0" class="form-control input-sm" name="sale_price"
-                                                placeholder="Sale Price" ng-model="product.sale_price" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" pattern="\d*" required >
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-md-6">
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="block"> HSN Code </label>
+                      <input
+                        type="text"
+                        class="form-control input-sm"
+                        id="hsn_code"
+                        name="hsn_code"
+                        placeholder="HSN Code"
+                        ng-model="product.hsn_code"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <fieldset>
+                <legend>
+                  <!-- <i class="fa fa-clock-o"></i>  -->
+                  Stocks
+                </legend>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="block"> Stock </label>
+                      <input
+                        type="number"
+                        min="0"
+                        class="form-control input-sm"
+                        name="stocke"
+                        placeholder="Stock"
+                        ng-model="product.stocke"
+                        pattern="\d*"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="block"> Minimum Stock </label>
+                      <input
+                        type="number"
+                        min="0"
+                        class="form-control input-sm"
+                        name="min_stocke"
+                        placeholder="Minimum Stock"
+                        ng-model="product.min_stocke"
+                        pattern="\d*"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-8">
+              <fieldset>
+                <legend><i class="fa fa-inr"></i> Price</legend>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="block"> Product Type </label>
+                      <select
+                        class="form-control"
+                        name="type"
+                        ng-model="product.type"
+                        ng-options="item.id as item.name for item in product_typeOptions"
+                        required
+                      >
+                        <option selected ng-disabled="true" value="">
+                          Product Type
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="block">
+                        Purchase Price <i class="fa fa-inr"></i>
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        class="form-control input-sm"
+                        name="purchase_price"
+                        placeholder="Purchase Rate"
+                        ng-model="product.purchase_price"
+                        ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"
+                        step="0.01"
+                        pattern="\d*"
+                      />
+                      <!--                                              <input type="number" class="form-control" name="tax_value" placeholder="Tax Value" ng-model="tax.tax_value" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" pattern="\d*" required />-->
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="block">
+                        Sale Price <i class="fa fa-inr"></i>
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        class="form-control input-sm"
+                        name="sale_price"
+                        placeholder="Sale Price"
+                        ng-model="product.sale_price"
+                        ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"
+                        step="0.01"
+                        pattern="\d*"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="block">
                                                 Tax <i class="fa  fa-inr"></i>
@@ -171,25 +238,34 @@
                                             </select>
                                         </div>
                                     </div> -->
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
 
-
-                    <!-- <div class="row">
+          <!-- <div class="row">
                        
                     </div> -->
-                </div>
-            </div>
         </div>
+      </div>
     </div>
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-wide btn-success"
-            ng-click="submitProductForm()">{{items.button[1]}}</button>
-        <button type="button" class="btn btn-wide btn-danger" ng-click="cancel($event)">Close</button>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-wide btn-success"
+      ng-click="submitProductForm()"
+    >
+      {{items.button[1]}}
+    </button>
+    <button
+      type="button"
+      class="btn btn-wide btn-danger"
+      ng-click="cancel($event)"
+    >
+      Close
+    </button>
 
-        <!-- <button type="button" class="btn btn-wide btn-success">Next One</button> -->
-       
-    </div>
+    <!-- <button type="button" class="btn btn-wide btn-success">Next One</button> -->
+  </div>
 </form>

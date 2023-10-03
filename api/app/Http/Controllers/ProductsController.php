@@ -21,7 +21,7 @@ class ProductsController extends Middleweb_Controller
     public function index()
     {
 
-        $products = Products::with('product_category', 'product_company')->where('user_company_id',$this->ExpToken["parent_id"])->where('type',2)->orderBy('id', 'DESC')->get();
+        $products = Products::with('product_category', 'product_company')->where('user_company_id', $this->ExpToken["parent_id"])->where('type', 2)->orderBy('id', 'DESC')->get();
         $response = array(
             "success" => true,
             "data" => $products,
@@ -32,10 +32,9 @@ class ProductsController extends Middleweb_Controller
     public function search_products(Request $request)
     {
         if (count($request->search) > 0) {
-            $products =  Products::where('user_company_id',$this->ExpToken["parent_id"])->where('name', 'like', '%' . $request->search['search_product'] . '%')->get();
-
+            $products =  Products::where('user_company_id', $this->ExpToken["parent_id"])->where('name', 'like', '%' . $request->search['search_product'] . '%')->get();
         } else {
-            $products = Products::where('user_company_id',$this->ExpToken["parent_id"])->orderBy('id', 'DESC')->get();
+            $products = Products::where('user_company_id', $this->ExpToken["parent_id"])->orderBy('id', 'DESC')->get();
         }
         $response = array(
             "success" => true,
@@ -43,7 +42,6 @@ class ProductsController extends Middleweb_Controller
 
         );
         return response()->json($response);
-
     }
     public function store(Request $request)
     {
@@ -62,23 +60,22 @@ class ProductsController extends Middleweb_Controller
         $insert_data['user_company_id'] = $this->ExpToken["parent_id"];
         $insert_data['created_by'] = $this->ExpToken["user_id"];
         $insert_data['updated_by'] = $this->ExpToken["user_id"];
-        $product_id = Products::where('category_id',$request->category_id)->get();
+        $product_id = Products::where('category_id', $request->category_id)->get();
 
         Products::create($insert_data);
-        $sync_cron=Sync_cron::where('from_user_company_id',$this->ExpToken["parent_id"])->get()->toarray();
+        $sync_cron = Sync_cron::where('from_user_company_id', $this->ExpToken["parent_id"])->get()->toarray();
 
-        if(empty($sync_cron)){
+        if (empty($sync_cron)) {
 
-            $insertCron=[];
-            $insertCron['from_user_company_id']=$this->ExpToken["parent_id"];
-            $insertCron['is_run']=1;
-            $insertCron['created_at']=date('Y-m-d H:i:s');
-            $insertCron['updated_at']=date('Y-m-d H:i:s', strtotime('+1 minutes'));
-            $insertCron['created_by']=$this->ExpToken["user_id"];
-            $insertCron['updated_by']=$this->ExpToken["user_id"];
+            $insertCron = [];
+            $insertCron['from_user_company_id'] = $this->ExpToken["parent_id"];
+            $insertCron['is_run'] = 1;
+            $insertCron['created_at'] = date('Y-m-d H:i:s');
+            $insertCron['updated_at'] = date('Y-m-d H:i:s', strtotime('+1 minutes'));
+            $insertCron['created_by'] = $this->ExpToken["user_id"];
+            $insertCron['updated_by'] = $this->ExpToken["user_id"];
             Sync_cron::create($insertCron);
-
-        }else {
+        } else {
 
             $sync_cron = Sync_cron::find($sync_cron[0]['id']);
             $sync_cron->is_run = 1;
@@ -109,6 +106,7 @@ class ProductsController extends Middleweb_Controller
 
         $product = Products::find($request->id);
         $product->name = $request->name;
+        $product->hsn_code = $request->hsn_code;
         $product->category_id = $request->category_id;
         $product->tax_id = $request->tax_id;
         $product->company_id = $request->company_id;
@@ -160,7 +158,7 @@ class ProductsController extends Middleweb_Controller
         $sort_by = $t1 = $request->get('column_name');
         $sort_order = $request->get('order');
         $search = $request->get('search');
-        $params = array('limit' => $limit, 'start' => $start, 'sort_by' => $sort_by, 'sort_order' => $sort_order, 'search' => $search,'user_company_id'=>$this->ExpToken["parent_id"]);
+        $params = array('limit' => $limit, 'start' => $start, 'sort_by' => $sort_by, 'sort_order' => $sort_order, 'search' => $search, 'user_company_id' => $this->ExpToken["parent_id"]);
         $categories = Products::product_list($params);
         $categories_count = Products::product_listCount($params);
 
@@ -176,7 +174,8 @@ class ProductsController extends Middleweb_Controller
 
 
     public function updateCategory($request)
-    { }
+    {
+    }
     public function getNewProduct(Request $request)
     {
         $id = $request->get('id');
@@ -315,35 +314,36 @@ class ProductsController extends Middleweb_Controller
         return response()->json($response);
     }
 
-    public function sendSyncRequest(Request $request) {
-        $emailList=$request->get('email');
-        $user_id=$this->ExpToken["user_id"];
+    public function sendSyncRequest(Request $request)
+    {
+        $emailList = $request->get('email');
+        $user_id = $this->ExpToken["user_id"];
         $fromCompany =  Users::where('id', $user_id)->get()->toarray();
 
-        for($i=0;$i<count($emailList);$i++){
-            $email=$emailList[$i]['text'];
-            $toCompanyData =  Users::where('email', $email)->where('is_active',1)->where('role_id',1)->get()->toarray();
+        for ($i = 0; $i < count($emailList); $i++) {
+            $email = $emailList[$i]['text'];
+            $toCompanyData =  Users::where('email', $email)->where('is_active', 1)->where('role_id', 1)->get()->toarray();
 
-            if(!empty($toCompanyData)){
+            if (!empty($toCompanyData)) {
 
-               $toCompanyId=$toCompanyData[0]['id'];
+                $toCompanyId = $toCompanyData[0]['id'];
 
-               $syncFromToData= DB::select( DB::raw("SELECT * FROM sync_allows WHERE  from_user_company_id=".$user_id." AND to_user_company_id=".$toCompanyId.""));
+                $syncFromToData = DB::select(DB::raw("SELECT * FROM sync_allows WHERE  from_user_company_id=" . $user_id . " AND to_user_company_id=" . $toCompanyId . ""));
 
-               $syncToFromData= DB::select( DB::raw("SELECT * FROM sync_allows WHERE  from_user_company_id=".$toCompanyId." AND to_user_company_id=".$user_id." "));
+                $syncToFromData = DB::select(DB::raw("SELECT * FROM sync_allows WHERE  from_user_company_id=" . $toCompanyId . " AND to_user_company_id=" . $user_id . " "));
 
-                $fromCompanyName=$fromCompany[0]['company_name'];
+                $fromCompanyName = $fromCompany[0]['company_name'];
 
-                $yesUrl = Config::get('constants.activationUrl').'login/allow/yes/'.$user_id.'/'.$toCompanyId;
+                $yesUrl = Config::get('constants.activationUrl') . 'login/allow/yes/' . $user_id . '/' . $toCompanyId;
 
 
-                $noUrl = Config::get('constants.activationUrl').'login/allow/no/'.$user_id.'/'.$toCompanyId;
+                $noUrl = Config::get('constants.activationUrl') . 'login/allow/no/' . $user_id . '/' . $toCompanyId;
                 $body = "Dear " . $toCompanyData[0]['name'] . " <br/><br/>";
-                $body .= $fromCompanyName." company send to requested to you for add master datas in your account. If you want to then click on Yes otherwise click on No link ";
-                $body .="<br>";
-                $body .= "<a href='".$yesUrl."'>Yes, I want </a>    ";
-                $body .="<br>";
-                $body .= "<a href='".$noUrl."'>No Thanks</a>";
+                $body .= $fromCompanyName . " company send to requested to you for add master datas in your account. If you want to then click on Yes otherwise click on No link ";
+                $body .= "<br>";
+                $body .= "<a href='" . $yesUrl . "'>Yes, I want </a>    ";
+                $body .= "<br>";
+                $body .= "<a href='" . $noUrl . "'>No Thanks</a>";
 
 
                 $body .= "<br/><b>Thanks <br /> Salon Team</b>";
@@ -353,28 +353,27 @@ class ProductsController extends Middleweb_Controller
                 $mailData['user_id'] = $toCompanyId;
                 $mailData['user_company_id'] = $this->ExpToken["parent_id"];
                 $mailData['sub'] = 'Request for copy master data - Salon';
-                $is_allow_from_to=0;
-                $is_allow_to_from=0;
-                if(!empty($syncFromToData) && $syncFromToData[0]->is_allow_from_to==0){
+                $is_allow_from_to = 0;
+                $is_allow_to_from = 0;
+                if (!empty($syncFromToData) && $syncFromToData[0]->is_allow_from_to == 0) {
 
-                    $is_allow_from_to=1;
+                    $is_allow_from_to = 1;
                     Users::saveMail($mailData);
-                    $sunc=Sync_allow::find($syncFromToData[0]->id);
-                    $sunc->is_allow_from_to=1;
+                    $sunc = Sync_allow::find($syncFromToData[0]->id);
+                    $sunc->is_allow_from_to = 1;
                     $sunc->save();
+                } else if (!empty($syncToFromData) && $syncToFromData[0]->is_allow_to_from == 0) {
 
-                }else if(!empty($syncToFromData) && $syncToFromData[0]->is_allow_to_from==0){
-
-                    $is_allow_to_from=1;
+                    $is_allow_to_from = 1;
                     Users::saveMail($mailData);
-                    $sunc=Sync_allow::find($syncToFromData[0]->id);
-                    $sunc->is_allow_to_from=1;
+                    $sunc = Sync_allow::find($syncToFromData[0]->id);
+                    $sunc->is_allow_to_from = 1;
                     $sunc->save();
                 }
 
-               if(empty($syncFromToData) && empty($syncToFromData)){
+                if (empty($syncFromToData) && empty($syncToFromData)) {
 
-                    $insert_data=[];
+                    $insert_data = [];
                     $insert_data['from_user_company_id'] = $user_id;
                     $insert_data['to_user_company_id'] = $toCompanyId;
                     $insert_data['is_allow_from_to'] = 1;
@@ -383,9 +382,7 @@ class ProductsController extends Middleweb_Controller
                     $insert_data['updated_by'] = $this->ExpToken["user_id"];
                     Sync_allow::create($insert_data);
                     Users::saveMail($mailData);
-
-               }
-
+                }
             }
         }
 
@@ -424,13 +421,12 @@ class ProductsController extends Middleweb_Controller
         $productData = $request->all();
         foreach ($productData as $key => $value) {
 
-            $pro = DB::table('products')->where('id',$value['id'])->first();
+            $pro = DB::table('products')->where('id', $value['id'])->first();
 
             $newStock = number_format($pro->stocke) - number_format($value['quantity']);
-            if($newStock <= 0)
-            {
+            if ($newStock <= 0) {
                 DB::table('products')->where('id', $pro->id)->update(['stocke' => 0]);
-            }else{
+            } else {
                 DB::table('products')->where('id', $pro->id)->update(['stocke' => $newStock]);
             }
         }
@@ -439,8 +435,5 @@ class ProductsController extends Middleweb_Controller
             "data" => [],
         );
         return response()->json($response);
-
     }
-
-
 }

@@ -473,6 +473,7 @@ class InvoiceController extends Middleweb_Controller
             <tr>
                 <td><strong style="padding:5px;font-size:12px;">Date</strong></td>
                 <td><strong style="padding:5px;font-size:12px;">Item</strong></td>
+                <td><strong style="padding:5px;font-size:10px;">HSN Code</strong></td>
                 <td style="text-align:center;padding:5px;font-size: 12px;"><strong>Total</strong></td>
             </tr>';
         $item_details_down = '</tbody></table>';
@@ -511,11 +512,18 @@ class InvoiceController extends Middleweb_Controller
             } else {
                 $display_name = $single_invoice['display_name'];
             }
+            $hsnCode = "";
+            if (empty($single_invoice['hsn_code'])) {
+                $hsnCode = "-";
+            } else {
+                $hsnCode = $single_invoice['hsn_code'];
+            }
             //<td style='padding:5px;'>" . $single_invoice['discount_amount'] . "</td>
             $item_details_middle .=  "
                 <tr>
                     <td style='padding:5px;font-size:10px;font-weight:bold;'>" . $treatment_date_display . "</td>
                     <td style='padding:5px;font-size:10px;font-weight:bold;'>" . $single_invoice['quantity'] . " x " . $display_name . $single_row_comment . " " . $discount . "</td>
+                    <td style='padding:5px;font-size:10px;font-weight:bold;'>" . $hsnCode . "</td>
                     <td style='text-align: right;font-size:10px;font-weight:bold;padding:5px;'>₹" . $item_total_price . "</td>
                 </tr>";
             if ($data_id != 0) {
@@ -556,7 +564,7 @@ class InvoiceController extends Middleweb_Controller
             $item_details_middle1 .=  "<tr><td ><span style='padding:2px;'>" . $single_tax_name . " " . $single_tax_value .   " %</span></td><td style='text-align: right;padding:2px;'>₹" . $single_tax_total  . "</td></tr>";
         }
         if ($data_id == 0) {
-            $item_details_top2 = '<br><br><div><table id="tblTax1" border="0" cellpadding="1" cellspacing="1" style="width: 30%;float: right; clear: both;margin-bottom: 10px; border-color:#ccc;">
+            $item_details_top2 = '<br><br><div><table id="tblTax1" border="0" cellpadding="1" cellspacing="1" style="width: 100%; clear: both;margin-bottom: 10px; border-color:#ccc;">
         <tbody>
             <tr>
                 <td><strong style="padding:5px;font-size:12px;">Pay Method</strong></td>
@@ -570,7 +578,7 @@ class InvoiceController extends Middleweb_Controller
                     <td><strong style="padding:5px;font-size:12px;">BANK DETAILS</strong></td>
                 </tr>
                 <tr>
-                    <td><strong style="padding:5px;font-size:11px;">BHAKTI PATEL MAKEUP STUDIO SALON</strong></td>
+                    <td><strong style="padding:5px;font-size:10px;">BHAKTI PATEL MAKEUP STUDIO SALON</strong></td>
                 </tr>
                 <tr>
                     <td><strong style="padding:5px;font-size:11px;">HDFC0005198</strong></td>
@@ -653,7 +661,7 @@ class InvoiceController extends Middleweb_Controller
             $roundedSymbol = "-";
         }
 
-        $item_details_top3 = '<br><table id="tblTax1" border="0" cellpadding="1" cellspacing="1" style="width: 30%;float: right; clear: both;margin-bottom: 10px; border-color:#ccc;">
+        $item_details_top3 = '<br><table id="tblTax1" border="0" cellpadding="1" cellspacing="1" style="width: 100%;float: right; clear: both;margin-bottom: 10px; border-color:#ccc;">
         <tbody>
             <tr>
                 <td><strong style="padding:5px;font-size:12px;">Sub Total</strong></td>

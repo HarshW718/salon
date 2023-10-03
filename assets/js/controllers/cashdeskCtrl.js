@@ -860,6 +860,8 @@ app.controller("cashdeskCtrl", [
       }, {});
     const groupByTax = groupBy("tax_id");
     $scope.forDisplayData = function (display_data) {
+      // debugger;
+      console.log("display_data=========", display_data);
       angular.forEach(display_data, function (single_display_data, key) {
         if (single_display_data.which_one != "gift") {
           if (single_display_data.which_one != "coupon") {
@@ -1671,6 +1673,7 @@ app.controller("cashdeskCtrl", [
                     appointment_id: 0,
                     name: service.name,
                     display_name: display_name,
+                    hsn_code: "-",
                     display_sale_price: service.sales_price,
                     calculation_sale_price: parseFloat(
                       (
@@ -1711,6 +1714,7 @@ app.controller("cashdeskCtrl", [
                     appointment_id: 0,
                     name: service.name,
                     display_name: display_name,
+                    hsn_code: "-",
                     display_sale_price: service.sales_price,
                     calculation_sale_price: service.sales_price,
                     tax_id: service.tax_id,
@@ -1741,6 +1745,7 @@ app.controller("cashdeskCtrl", [
                   appointment_id: 0,
                   name: service.name,
                   display_name: display_name,
+                  hsn_code: "-",
                   display_sale_price: service.sales_price,
                   calculation_sale_price: service.sales_price,
                   tax_id: service.tax_id,
@@ -1802,6 +1807,7 @@ app.controller("cashdeskCtrl", [
                     appointment_id: 0,
                     name: service.name,
                     display_name: display_name,
+                    hsn_code: "-",
                     display_sale_price: service.membership_price,
                     calculation_sale_price: parseFloat(
                       (
@@ -1842,6 +1848,7 @@ app.controller("cashdeskCtrl", [
                     appointment_id: 0,
                     name: service.name,
                     display_name: display_name,
+                    hsn_code: "-",
                     display_sale_price: service.membership_price,
                     calculation_sale_price: service.membership_price,
                     tax_id: service.tax_id,
@@ -1871,6 +1878,7 @@ app.controller("cashdeskCtrl", [
                   appointment_id: 0,
                   name: service.name,
                   display_name: display_name,
+                  hsn_code: "-",
                   display_sale_price: service.membership_price,
                   calculation_sale_price: service.membership_price,
                   tax_id: service.tax_id,
@@ -1930,6 +1938,7 @@ app.controller("cashdeskCtrl", [
                     appointment_id: 0,
                     name: service.name,
                     display_name: display_name,
+                    hsn_code: "-",
                     display_sale_price: service.membership_price,
                     calculation_sale_price: parseFloat(
                       (
@@ -1971,6 +1980,7 @@ app.controller("cashdeskCtrl", [
                     appointment_id: 0,
                     name: service.name,
                     display_name: display_name,
+                    hsn_code: "-",
                     display_sale_price: service.membership_price,
                     calculation_sale_price: service.sales_price,
                     tax_id: service.tax_id,
@@ -2000,6 +2010,7 @@ app.controller("cashdeskCtrl", [
                   appointment_id: 0,
                   name: service.name,
                   display_name: display_name,
+                  hsn_code: "-",
                   display_sale_price: service.membership_price,
                   calculation_sale_price: service.sales_price,
                   tax_id: service.tax_id,
@@ -2052,6 +2063,7 @@ app.controller("cashdeskCtrl", [
                 appointment_id: 0,
                 name: service.name,
                 display_name: display_name,
+                hsn_code: "-",
                 display_sale_price: service.membership_price,
                 calculation_sale_price: service.membership_price,
                 tax_id: service.tax_id,
@@ -2141,6 +2153,7 @@ app.controller("cashdeskCtrl", [
       buttonDefaultText: "Click here to select products",
     };
     $scope.clickAddProduct = function () {
+      // debugger;
       if ($scope.select_products.length > 0) {
         var product_index = $scope.table_data.findIndex(function (single_data) {
           return single_data.id === $scope.select_products[0].id;
@@ -2150,6 +2163,7 @@ app.controller("cashdeskCtrl", [
           var product_ids = $scope.select_products.map(({ id }) => id);
           angular.forEach(product_ids, function (id, key) {
             $scope.products.find(function (product) {
+              console.log("product====", product);
               if (product.id == id) {
                 if (product.stocke > 0) {
                   $scope.display_cashdesk_data.push({
@@ -2204,6 +2218,7 @@ app.controller("cashdeskCtrl", [
     $scope.select_gender = [];
     $scope.gender_text = { buttonDefaultText: "Click here to select Gender" };
     $scope.clickAddProduct = function () {
+      // debugger;
       if ($scope.select_products.length > 0) {
         var product_index = $scope.table_data.findIndex(function (single_data) {
           return single_data.id === $scope.select_products[0].id;
@@ -2221,6 +2236,7 @@ app.controller("cashdeskCtrl", [
                     is_check: true,
                     appointment_id: 0,
                     name: product.name,
+                    hsn_code: product.hsn_code,
                     display_name: product.name,
                     display_sale_price: product.sale_price,
                     calculation_sale_price: product.sale_price,
